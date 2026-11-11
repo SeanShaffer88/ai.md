@@ -6,12 +6,12 @@
 #endif
 
 [Setup]
-AppId={{59DC98EE-A136-40C9-A7BD-EB0CC50E37C2}
-AppName=Quiet.md
+AppId={{5EEBB01D-7B53-4D36-9FFF-45B38525AC40}
+AppName=ai.md
 AppVersion={#AppVersion}
-AppPublisher=Quiet.md
-AppPublisherURL=https://github.com/s1dashu/quiet-md
-DefaultDirName={localappdata}\Programs\quiet.md
+AppPublisher=ai.md
+AppPublisherURL=https://github.com/SeanShaffer88/ai.md
+DefaultDirName={localappdata}\Programs\ai.md
 DisableDirPage=no
 DisableProgramGroupPage=yes
 DisableWelcomePage=yes
@@ -46,8 +46,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Messages]
 SelectDirLabel3=Choose an install folder. Your notes are stored separately.
-SelectTasksLabel2=Make Quiet.md easier to reach.
-FinishedLabel=Quiet.md is ready. A quiet place for your notes.
+SelectTasksLabel2=Make ai.md easier to reach.
+FinishedLabel=ai.md is ready. A quiet place for your notes.
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a desktop shortcut"; Flags: unchecked
@@ -85,5 +85,5 @@ end;
 
 procedure InitializeWizard;
 begin
-  WizardForm.Caption := 'Quiet.md';
+  WizardForm.Caption := 'ai.md';
 end;
