@@ -13,6 +13,10 @@
 //! `QUIET_MD_UPDATE_URL` points the check at another folder (testing; it also
 //! enables the check in unsigned builds). The public key can be replaced at
 //! build time with `QUIET_MD_UPDATE_PUBKEY`.
+//!
+//! ai.md fork: the updater is disabled — see `UPDATER_ENABLED`. This fork has
+//! no update channel of its own, and the upstream channel must never replace
+//! the fork with Quiet.md; ai.md releases ship through GitHub Releases.
 
 use gpui::*;
 use serde::Deserialize;
@@ -21,6 +25,10 @@ use std::process::{Command, Stdio};
 use std::time::Duration;
 
 const BASE: &str = "https://download.quiet.md/latest";
+/// ai.md fork: no self-update — see the module note. A switch rather than a
+/// deletion, so upstream merges stay small; while false, nothing here ever
+/// reaches the network and every state settles at `State::Unsupported`.
+const UPDATER_ENABLED: bool = false;
 const KEY: &str = match option_env!("QUIET_MD_UPDATE_PUBKEY") { Some(k) => k, None => include_str!("../packaging/update-key.pub") };
 
 #[derive(Clone, Debug, PartialEq, Deserialize)]
@@ -61,6 +69,10 @@ fn set(state: State, cx: &mut App) {
 
 /// Starts the periodic check.
 pub fn init(cx: &mut App) {
+    if !UPDATER_ENABLED {
+        cx.set_global(Updater { state: State::Unsupported, told: None, last: None });
+        return;
+    }
     cx.set_global(Updater { state: State::Idle, told: None, last: None });
     cx.spawn(async |cx| {
         cx.background_executor().timer(Duration::from_secs(10)).await;
@@ -190,6 +202,7 @@ pub(crate) fn newer(a: &str, b: &str) -> bool {
 
 /// This copy can replace itself: an installed, release-signed build.
 fn supported() -> bool {
+    if !UPDATER_ENABLED { return false }
     if platform().is_none() || public_key().is_none() { return false }
     if override_url().is_some() { return true }
     if crate::devtools::scripted() { return false }
