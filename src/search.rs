@@ -248,7 +248,14 @@ impl Workspace {
     pub(crate) fn catalog_hits(&self, cx: &App) -> Vec<fdl_core::catalog::CatalogEntry> {
         let q = self.query(cx);
         if q.is_empty() { return vec![]; }
-        self.catalog.data.search(&q, None).into_iter().cloned().collect()
+        // Asked several times per frame while the switcher is open;
+        // the answer only changes with the query.
+        if let Some((q0, hits)) = &*self.catalog.switcher_cache.borrow() && *q0 == q {
+            return hits.clone();
+        }
+        let hits: Vec<fdl_core::catalog::CatalogEntry> = self.catalog.data.search(&q, None).into_iter().cloned().collect();
+        *self.catalog.switcher_cache.borrow_mut() = Some((q, hits.clone()));
+        hits
     }
 
     fn search_total(&self, cx: &App) -> usize {
