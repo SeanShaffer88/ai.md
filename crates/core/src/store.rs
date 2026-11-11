@@ -375,13 +375,75 @@ pub fn read_bounded(path: &std::path::Path, limit: u64) -> Result<Vec<u8>> {
     Ok(bytes)
 }
 
+/// Recursive copy for the one-time portable import; `format.json` goes last
+/// at each level so its presence in the copy means the copy finished.
+fn copy_dir_all(src: &std::path::Path, dst: &std::path::Path) -> Result<()> {
+    std::fs::create_dir_all(dst)?;
+    let mut marker = None;
+    for entry in std::fs::read_dir(src)? {
+        let entry = entry?;
+        let (from, to) = (entry.path(), dst.join(entry.file_name()));
+        if entry.file_type()?.is_dir() {
+            copy_dir_all(&from, &to)?;
+        } else if entry.file_name() == "format.json" {
+            marker = Some((from, to));
+        } else {
+            std::fs::copy(&from, &to)?;
+        }
+    }
+    if let Some((from, to)) = marker {
+        std::fs::copy(&from, &to)?;
+    }
+    Ok(())
+}
+
 impl Store {
-    /// `QUIET_MD_HOME`, else a folder of
-    /// its own in the user's Documents, where they can see and back it up.
+    /// `QUIET_MD_HOME`, else the portable data folder when running portable,
+    /// else a folder of its own in the user's Documents, where they can see
+    /// and back it up.
     pub fn root_dir() -> PathBuf {
-        std::env::var_os("QUIET_MD_HOME")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| dirs::document_dir().or_else(|| dirs::home_dir().map(|h| h.join("Documents"))).unwrap_or_else(|| PathBuf::from(".")).join("Quiet.md"))
+        if let Some(p) = std::env::var_os("QUIET_MD_HOME") {
+            return PathBuf::from(p);
+        }
+        Self::exe_dir().and_then(|d| Self::portable_root(&d)).unwrap_or_else(Self::documents_root)
+    }
+
+    /// The default library: a folder of its own in the user's Documents.
+    fn documents_root() -> PathBuf {
+        dirs::document_dir().or_else(|| dirs::home_dir().map(|h| h.join("Documents"))).unwrap_or_else(|| PathBuf::from(".")).join("Quiet.md")
+    }
+
+    /// The folder the running executable lives in.
+    fn exe_dir() -> Option<PathBuf> {
+        std::env::current_exe().ok().and_then(|p| p.parent().map(|d| d.to_path_buf()))
+    }
+
+    /// The portable data folder for an executable living in `exe_dir`: its
+    /// `data` folder, when a `portable.txt` marker sits beside the executable
+    /// or the data folder is already there. The portable download ships the
+    /// marker; the installed copy has neither and keeps the Documents library.
+    pub fn portable_root(exe_dir: &std::path::Path) -> Option<PathBuf> {
+        (exe_dir.join("portable.txt").is_file() || exe_dir.join("data").is_dir()).then(|| exe_dir.join("data"))
+    }
+
+    /// First portable run: bring the existing Documents library into the
+    /// portable data folder, so switching to the portable build never loses
+    /// notes. The Documents copy is left untouched, and the data folder's
+    /// format marker (written by `open_at`) keeps this a one-time copy.
+    fn import_documents_library_once() {
+        if std::env::var_os("QUIET_MD_HOME").is_some() {
+            return;
+        }
+        let Some(root) = Self::exe_dir().and_then(|d| Self::portable_root(&d)) else { return };
+        Self::import_library(&root, &Self::documents_root());
+    }
+
+    /// Copy `src` into a not-yet-initialized `root`; a no-op once `root`
+    /// holds a library of its own.
+    fn import_library(root: &std::path::Path, src: &std::path::Path) {
+        if !root.join("format.json").exists() && src != root && src.join("format.json").exists() {
+            let _ = copy_dir_all(src, root);
+        }
     }
 
     /// Where pasted / inserted images are copied to.
@@ -392,6 +454,7 @@ impl Store {
     }
 
     pub fn open() -> Result<Self> {
+        Self::import_documents_library_once();
         Self::open_at(Self::root_dir())
     }
 
@@ -1526,6 +1589,37 @@ mod tests {
         s.save(&id, &doc("新")).unwrap();
         assert_eq!(s.load(&id).unwrap().title.text, "新");
     }
+    #[test]
+    fn portable_root_needs_a_marker_or_data_folder() {
+        let lib = Lib::new("portable-root");
+        std::fs::create_dir_all(&lib.0).unwrap();
+        assert_eq!(Store::portable_root(&lib.0), None);
+        std::fs::write(lib.0.join("portable.txt"), "portable").unwrap();
+        assert_eq!(Store::portable_root(&lib.0), Some(lib.0.join("data")));
+    }
+
+    #[test]
+    fn portable_root_accepts_an_existing_data_folder() {
+        let lib = Lib::new("portable-data");
+        std::fs::create_dir_all(lib.0.join("data")).unwrap();
+        assert_eq!(Store::portable_root(&lib.0), Some(lib.0.join("data")));
+    }
+
+    #[test]
+    fn portable_import_copies_a_documents_library_once() {
+        let src = Lib::new("import-src");
+        let mut s = src.open();
+        s.create_from(&doc("carried over")).unwrap();
+        let dst = Lib::new("import-dst");
+        Store::import_library(&dst.0, &src.0);
+        let mut reopened = dst.open();
+        assert_eq!(reopened.list().len(), 1);
+        // A second import must not overwrite what the portable copy became.
+        s.create_from(&doc("documents only")).unwrap();
+        Store::import_library(&dst.0, &src.0);
+        assert_eq!(reopened.list().len(), 1);
+    }
+
     #[test]
     fn corrupt_settings_are_preserved_not_silently_reset() {
         let lib = Lib::new("corrupt-settings");
