@@ -1,0 +1,17 @@
+{
+  "id": "guide-claude-squad",
+  "name": "Claude Squad",
+  "kind": "guide",
+  "summary": "Claude Squad: a terminal app for managing multiple AI coding agents, such as Claude Code and Codex, in isolated git workspaces.",
+  "source_name": "smtg-ai/claude-squad (GitHub)",
+  "source_url": "https://github.com/smtg-ai/claude-squad",
+  "license": "AGPL-3.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

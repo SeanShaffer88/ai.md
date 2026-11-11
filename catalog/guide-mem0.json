@@ -1,0 +1,17 @@
+{
+  "id": "guide-mem0",
+  "name": "Mem0",
+  "kind": "guide",
+  "summary": "Mem0 adds persistent long-term memory to AI agents and apps, offered as a hosted platform or a self-hosted open-source library.",
+  "source_name": "Mem0 documentation",
+  "source_url": "https://docs.mem0.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

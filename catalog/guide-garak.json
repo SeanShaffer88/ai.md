@@ -1,0 +1,17 @@
+{
+  "id": "guide-garak",
+  "name": "Garak",
+  "kind": "guide",
+  "summary": "Garak is an LLM vulnerability scanner that probes models for prompt injection, jailbreaks, data leakage, toxicity and other weaknesses.",
+  "source_name": "NVIDIA/garak (GitHub)",
+  "source_url": "https://github.com/NVIDIA/garak",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

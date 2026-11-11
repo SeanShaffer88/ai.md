@@ -1,0 +1,17 @@
+{
+  "id": "guide-opik",
+  "name": "Opik",
+  "kind": "guide",
+  "summary": "Opik is an open-source platform for tracing, evaluating and monitoring LLM applications, RAG systems and agentic workflows.",
+  "source_name": "comet-ml/opik (GitHub)",
+  "source_url": "https://github.com/comet-ml/opik",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

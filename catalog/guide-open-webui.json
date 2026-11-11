@@ -1,0 +1,17 @@
+{
+  "id": "guide-open-webui",
+  "name": "Open WebUI",
+  "kind": "guide",
+  "summary": "Documentation for Open WebUI, a self-hosted AI platform with an extensible, offline-capable interface for Ollama and OpenAI-compatible APIs.",
+  "source_name": "Open WebUI documentation",
+  "source_url": "https://docs.openwebui.com/",
+  "license": "See site",
+  "clients": [
+    "Self-hosters"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-hf-diffusers",
+  "name": "Hugging Face Diffusers",
+  "kind": "guide",
+  "summary": "Documentation for Diffusers, Hugging Face's library of pretrained diffusion models and building blocks for image, video and audio generation workflows.",
+  "source_name": "Hugging Face Diffusers documentation",
+  "source_url": "https://huggingface.co/docs/diffusers",
+  "license": "See site",
+  "clients": [
+    "ML developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

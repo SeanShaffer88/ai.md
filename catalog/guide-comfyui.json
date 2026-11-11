@@ -1,0 +1,17 @@
+{
+  "id": "guide-comfyui",
+  "name": "ComfyUI",
+  "kind": "guide",
+  "summary": "Modular diffusion model GUI, API and backend with a node-graph interface for building image, video, audio and 3D generation workflows that run locally.",
+  "source_name": "Comfy-Org/ComfyUI (GitHub)",
+  "source_url": "https://github.com/comfy-org/ComfyUI",
+  "license": "GPL-3.0",
+  "clients": [
+    "AI creators"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

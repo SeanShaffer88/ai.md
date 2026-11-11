@@ -1,0 +1,17 @@
+{
+  "id": "guide-beeai-framework",
+  "name": "BeeAI Framework",
+  "kind": "guide",
+  "summary": "BeeAI Framework: an open-source framework, hosted by the Linux Foundation, for building production multi-agent systems in Python and TypeScript.",
+  "source_name": "BeeAI Framework documentation",
+  "source_url": "https://framework.beeai.dev/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

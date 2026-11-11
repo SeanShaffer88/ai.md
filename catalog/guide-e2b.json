@@ -1,0 +1,17 @@
+{
+  "id": "guide-e2b",
+  "name": "E2B",
+  "kind": "guide",
+  "summary": "E2B: a cloud sandbox service that lets AI agents safely execute code, run shell commands and use files in isolated Linux VMs.",
+  "source_name": "E2B documentation",
+  "source_url": "https://docs.e2b.dev/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

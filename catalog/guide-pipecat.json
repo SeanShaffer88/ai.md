@@ -1,0 +1,17 @@
+{
+  "id": "guide-pipecat",
+  "name": "Pipecat",
+  "kind": "guide",
+  "summary": "Pipecat is an open-source ecosystem for building realtime voice and multimodal AI agents, with a Python pipeline framework and client SDKs.",
+  "source_name": "Pipecat documentation",
+  "source_url": "https://docs.pipecat.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

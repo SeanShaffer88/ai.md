@@ -1,0 +1,17 @@
+{
+  "id": "guide-lightrag",
+  "name": "LightRAG",
+  "kind": "guide",
+  "summary": "LightRAG is a lightweight, graph-based retrieval-augmented generation framework that builds knowledge graphs from documents for fast, accurate querying.",
+  "source_name": "HKUDS/LightRAG (GitHub)",
+  "source_url": "https://github.com/HKUDS/LightRAG",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

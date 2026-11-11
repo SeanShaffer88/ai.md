@@ -1,0 +1,17 @@
+{
+  "id": "guide-label-studio",
+  "name": "Label Studio",
+  "kind": "guide",
+  "summary": "Label Studio is a data labeling platform with pre-built templates and custom labeling interfaces for text, image, audio and video training data.",
+  "source_name": "Label Studio documentation",
+  "source_url": "https://labelstud.io/guide/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

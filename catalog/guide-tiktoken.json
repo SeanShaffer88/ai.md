@@ -1,0 +1,17 @@
+{
+  "id": "guide-tiktoken",
+  "name": "tiktoken",
+  "kind": "guide",
+  "summary": "OpenAI's fast BPE tokenizer library for encoding text and counting tokens for OpenAI's models.",
+  "source_name": "openai/tiktoken (GitHub)",
+  "source_url": "https://github.com/openai/tiktoken",
+  "license": "MIT",
+  "clients": [
+    "Python developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

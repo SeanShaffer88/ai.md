@@ -1,0 +1,17 @@
+{
+  "id": "guide-crawl4ai",
+  "name": "Crawl4AI",
+  "kind": "guide",
+  "summary": "Crawl4AI is an open-source web crawler and scraper that turns web pages into clean, LLM-ready Markdown and structured data for RAG and agents.",
+  "source_name": "unclecode/crawl4ai (GitHub)",
+  "source_url": "https://github.com/unclecode/crawl4ai",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

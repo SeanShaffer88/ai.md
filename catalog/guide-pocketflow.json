@@ -1,0 +1,17 @@
+{
+  "id": "guide-pocketflow",
+  "name": "PocketFlow",
+  "kind": "guide",
+  "summary": "PocketFlow: a minimalist 100-line LLM framework for building agents, workflows and RAG apps as graphs.",
+  "source_name": "The-Pocket/PocketFlow (GitHub)",
+  "source_url": "https://github.com/The-Pocket/PocketFlow",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

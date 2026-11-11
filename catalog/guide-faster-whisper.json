@@ -1,0 +1,17 @@
+{
+  "id": "guide-faster-whisper",
+  "name": "Faster Whisper",
+  "kind": "guide",
+  "summary": "Faster Whisper is a reimplementation of OpenAI's Whisper speech-to-text model using CTranslate2, running up to 4 times faster with less memory, with 8-bit quantization.",
+  "source_name": "SYSTRAN/faster-whisper (GitHub)",
+  "source_url": "https://github.com/SYSTRAN/faster-whisper",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

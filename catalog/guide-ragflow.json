@@ -1,0 +1,17 @@
+{
+  "id": "guide-ragflow",
+  "name": "RAGFlow",
+  "kind": "guide",
+  "summary": "RAGFlow is an open-source retrieval-augmented generation engine with deep document understanding, template-based chunking and grounded citations for building AI systems.",
+  "source_name": "infiniflow/ragflow (GitHub)",
+  "source_url": "https://github.com/infiniflow/ragflow",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

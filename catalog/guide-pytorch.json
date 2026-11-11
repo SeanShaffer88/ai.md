@@ -1,0 +1,17 @@
+{
+  "id": "guide-pytorch",
+  "name": "PyTorch",
+  "kind": "guide",
+  "summary": "Documentation for PyTorch, the open-source tensor library for deep learning on GPUs and CPUs, from research prototyping to production deployment.",
+  "source_name": "PyTorch documentation",
+  "source_url": "https://docs.pytorch.org/docs/stable/index.html",
+  "license": "See site",
+  "clients": [
+    "ML developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-semantic-kernel",
+  "name": "Semantic Kernel",
+  "kind": "guide",
+  "summary": "Microsoft's model-agnostic SDK for building, orchestrating and deploying AI agents and multi-agent systems in Python, .NET and Java; Microsoft now offers its Agent Framework as the successor.",
+  "source_name": "microsoft/semantic-kernel (GitHub)",
+  "source_url": "https://github.com/microsoft/semantic-kernel",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

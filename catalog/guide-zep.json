@@ -1,0 +1,17 @@
+{
+  "id": "guide-zep",
+  "name": "Zep",
+  "kind": "guide",
+  "summary": "Zep is a context layer for agents that unifies business data, documents and conversations into temporal context graphs agents can retrieve.",
+  "source_name": "Zep documentation",
+  "source_url": "https://help.getzep.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

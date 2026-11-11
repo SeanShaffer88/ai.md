@@ -1,0 +1,17 @@
+{
+  "id": "guide-langflow",
+  "name": "Langflow",
+  "kind": "guide",
+  "summary": "Langflow: an open-source, Python-based visual framework for building AI applications, agents and MCP-powered flows.",
+  "source_name": "Langflow documentation",
+  "source_url": "https://docs.langflow.org/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

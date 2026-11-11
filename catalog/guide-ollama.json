@@ -1,0 +1,17 @@
+{
+  "id": "guide-ollama",
+  "name": "Ollama",
+  "kind": "guide",
+  "summary": "Documentation for Ollama: run open models on your own computer or use cloud models, and build them into desktop apps, coding agents and applications through its API.",
+  "source_name": "Ollama documentation",
+  "source_url": "https://docs.ollama.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

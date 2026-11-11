@@ -1,0 +1,17 @@
+{
+  "id": "guide-mcp-use",
+  "name": "mcp-use",
+  "kind": "guide",
+  "summary": "Full-stack TypeScript framework for building MCP servers and MCP Apps for ChatGPT and Claude, with typed tools, native views and a built-in inspector.",
+  "source_name": "mcp-use/mcp-use (GitHub)",
+  "source_url": "https://github.com/mcp-use/mcp-use",
+  "license": "MIT",
+  "clients": [
+    "MCP developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

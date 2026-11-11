@@ -1,0 +1,17 @@
+{
+  "id": "guide-pr-agent",
+  "name": "PR Agent",
+  "kind": "guide",
+  "summary": "PR Agent: an open-source AI tool that reviews pull requests and suggests code improvements on GitHub, GitLab, Bitbucket and Azure DevOps.",
+  "source_name": "The-PR-Agent/pr-agent (GitHub)",
+  "source_url": "https://github.com/The-PR-Agent/pr-agent",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

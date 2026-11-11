@@ -1,0 +1,17 @@
+{
+  "id": "guide-onnx-runtime",
+  "name": "ONNX Runtime",
+  "kind": "guide",
+  "summary": "Documentation for ONNX Runtime, the cross-platform accelerator for running machine learning models built with PyTorch, TensorFlow and other frameworks.",
+  "source_name": "ONNX Runtime documentation",
+  "source_url": "https://onnxruntime.ai/docs/",
+  "license": "See site",
+  "clients": [
+    "ML developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

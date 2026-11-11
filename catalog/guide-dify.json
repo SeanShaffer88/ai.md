@@ -1,0 +1,17 @@
+{
+  "id": "guide-dify",
+  "name": "Dify",
+  "kind": "guide",
+  "summary": "Dify: an open-source platform for building AI agents, agentic workflows and chatbots on your own data, self-hosted or in its cloud.",
+  "source_name": "Dify documentation",
+  "source_url": "https://docs.dify.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

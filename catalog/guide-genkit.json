@@ -1,0 +1,17 @@
+{
+  "id": "guide-genkit",
+  "name": "Genkit",
+  "kind": "guide",
+  "summary": "Genkit: Google's open-source framework for building AI apps and agents in TypeScript, Go, Python and Dart, deployable to Firebase and elsewhere.",
+  "source_name": "Genkit documentation",
+  "source_url": "https://genkit.dev/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

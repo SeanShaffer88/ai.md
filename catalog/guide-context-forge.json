@@ -1,0 +1,17 @@
+{
+  "id": "guide-context-forge",
+  "name": "ContextForge MCP Gateway",
+  "kind": "guide",
+  "summary": "IBM's open-source gateway, registry and proxy that federates MCP, A2A and REST/gRPC APIs behind one governed endpoint for AI clients.",
+  "source_name": "IBM/mcp-context-forge (GitHub)",
+  "source_url": "https://github.com/IBM/mcp-context-forge",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

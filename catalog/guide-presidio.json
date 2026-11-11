@@ -1,0 +1,17 @@
+{
+  "id": "guide-presidio",
+  "name": "Presidio",
+  "kind": "guide",
+  "summary": "Presidio is an open-source framework for detecting, redacting, masking and anonymizing sensitive data (PII) across text, images and structured data.",
+  "source_name": "data-privacy-stack/presidio (GitHub)",
+  "source_url": "https://github.com/data-privacy-stack/presidio",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

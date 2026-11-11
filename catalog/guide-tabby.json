@@ -1,0 +1,17 @@
+{
+  "id": "guide-tabby",
+  "name": "Tabby",
+  "kind": "guide",
+  "summary": "Tabby: an open-source, self-hosted AI coding assistant that runs your own LLM-powered code completion server.",
+  "source_name": "Tabby documentation",
+  "source_url": "https://tabby.tabbyml.com/docs/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

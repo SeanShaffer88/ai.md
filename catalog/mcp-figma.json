@@ -1,0 +1,17 @@
+{
+  "id": "mcp-figma",
+  "name": "Figma MCP Server",
+  "kind": "mcp",
+  "summary": "Figma's official MCP server: give AI agents design context from Figma files, generate code from selected frames, and write native content back to the canvas.",
+  "source_name": "Figma developer documentation",
+  "source_url": "https://developers.figma.com/docs/figma-mcp-server/",
+  "license": "See site",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

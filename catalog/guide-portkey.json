@@ -1,0 +1,17 @@
+{
+  "id": "guide-portkey",
+  "name": "Portkey",
+  "kind": "guide",
+  "summary": "Portkey is an AI gateway that routes, monitors and secures LLM requests across 250+ models, with retries, caching, guardrails and observability.",
+  "source_name": "Portkey documentation",
+  "source_url": "https://portkey.ai/docs",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

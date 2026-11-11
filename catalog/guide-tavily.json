@@ -1,0 +1,17 @@
+{
+  "id": "guide-tavily",
+  "name": "Tavily",
+  "kind": "guide",
+  "summary": "Tavily is a web API for AI agents that provides real-time search, page extraction, site crawling and research as clean, LLM-ready content.",
+  "source_name": "Tavily documentation",
+  "source_url": "https://docs.tavily.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}
