@@ -23,7 +23,7 @@ MinVersion=10.0.19041
 OutputDir=..\..\dist\windows
 OutputBaseFilename=quiet-md-{#AppVersion}-windows-x64-setup
 SetupIconFile=..\..\assets\branding\app-icon.ico
-UninstallDisplayIcon={app}\quiet_md.exe
+UninstallDisplayIcon={app}\ai_md.exe
 WizardStyle=modern light
 WizardSmallImageFile=wizard-logo.bmp
 WizardSmallImageBackColor=$FFFFFF
@@ -53,29 +53,29 @@ FinishedLabel=Quiet.md is ready. A quiet place for your notes.
 Name: "desktopicon"; Description: "Create a desktop shortcut"; Flags: unchecked
 
 [Files]
-Source: "{#AppSource}\quiet_md.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#AppSource}\ai_md.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#AppSource}\vcruntime140.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\LICENSE"; DestDir: "{app}"
 Source: "..\..\THIRD_PARTY.md"; DestDir: "{app}"
 
 [Icons]
-Name: "{userprograms}\Quiet.md"; Filename: "{app}\quiet_md.exe"; WorkingDir: "{app}"
-Name: "{userdesktop}\Quiet.md"; Filename: "{app}\quiet_md.exe"; WorkingDir: "{app}"; Tasks: desktopicon
+Name: "{userprograms}\ai.md"; Filename: "{app}\ai_md.exe"; WorkingDir: "{app}"
+Name: "{userdesktop}\ai.md"; Filename: "{app}\ai_md.exe"; WorkingDir: "{app}"; Tasks: desktopicon
 
 ; "Open with" for Markdown files (not the default app): they are edited in place.
 [Registry]
 Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown"; ValueType: string; ValueName: ""; ValueData: "Markdown"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\quiet_md.exe,0"
-Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\quiet_md.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\ai_md.exe,0"
+Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\ai_md.exe"" ""%1"""
 Root: HKA; Subkey: "Software\Classes\.md\OpenWithProgids"; ValueType: string; ValueName: "QuietMd.Markdown"; ValueData: ""; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\.markdown\OpenWithProgids"; ValueType: string; ValueName: "QuietMd.Markdown"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\Applications\quiet_md.exe\SupportedTypes"; ValueType: string; ValueName: ".md"; ValueData: ""; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\Applications\quiet_md.exe\SupportedTypes"; ValueType: string; ValueName: ".markdown"; ValueData: ""
+Root: HKA; Subkey: "Software\Classes\Applications\ai_md.exe\SupportedTypes"; ValueType: string; ValueName: ".md"; ValueData: ""; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\Applications\ai_md.exe\SupportedTypes"; ValueType: string; ValueName: ".markdown"; ValueData: ""
 
 [Run]
-Filename: "{app}\quiet_md.exe"; Description: "Launch Quiet.md"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\ai_md.exe"; Description: "Launch ai.md"; Flags: nowait postinstall skipifsilent
 ; The in-app updater installs silently with /UPDATE=1 and expects the app back afterwards.
-Filename: "{app}\quiet_md.exe"; Flags: nowait; Check: IsUpdate
+Filename: "{app}\ai_md.exe"; Flags: nowait; Check: IsUpdate
 
 [Code]
 function IsUpdate: Boolean;
