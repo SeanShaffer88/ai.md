@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/home.png" width="100%" alt="The Quiet.md home screen: a document tree on the left and all notes in a grid on the right.">
+  <img src="docs/images/catalog.png" width="100%" alt="The ai.md Catalog: prompt templates, MCP servers, skills and guides as cards, with kind filters and a starter pick.">
 </p>
 
 > [!NOTE]
@@ -105,6 +105,21 @@ A 120 Hz display gives each frame 8.3 ms. Even at P95 on a million-character doc
 - **Import and export**: import Markdown and Feishu (Lark) DocxXML; export Markdown and PDF, or print directly. Pasting from Feishu or a web page keeps the structure.
 - **Shortcuts**: press `⌘ /` (`Ctrl+/` on Windows) to see them all. Every one can be rebound. On Windows, Ctrl stands in for ⌘ and Alt for ⌥; the app and the Getting started guides show the keys for your system.
 - **Themes**: four built-in styles — Craft, Feishu, Notion and Obsidian — each with a dark variant, or write your own in CSS; see [docs/THEMES.md](docs/THEMES.md).
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/images/editor.png" width="100%" alt="The editor, showing the built-in Welcome guide in dark mode.">
+</p>
+
+<p align="center">
+  <img src="docs/images/doc-menu.png" width="49%" alt="The document menu, including the Insert prompt action added by ai.md.">
+  <img src="docs/images/settings.png" width="49%" alt="Settings, General page.">
+</p>
+
+<p align="center">
+  <img src="docs/images/about.png" width="49%" alt="The About page: ai.md, version 0.2.0.">
+</p>
 
 ## Contributors
 
