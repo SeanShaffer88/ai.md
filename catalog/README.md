@@ -70,3 +70,12 @@ two placeholder forms:
 3. Keep the summary factual and short. Mark `starter` only for entries a new
    user should try first.
 4. Confirm the file parses as JSON before submitting it.
+
+## Your own entries
+
+Put a `catalog-custom.json` file in the app's documents folder (the
+folder shown under Settings → Documents) to add your own entries or
+override bundled ones. The file is a JSON array of entry objects in
+the same shape as the files here; an entry whose `id` matches a
+bundled entry replaces it, and a new `id` is added. Changes apply the
+next time the app starts.
