@@ -70,7 +70,7 @@ fn system_english() -> bool {
 }
 
 impl Default for Preferences {
-    fn default() -> Self { Preferences { theme: String::new(), feishu: true, english: system_english(), remote_images: true, quick_hotkey: true, auto_update: true, appearance: String::new(), seen_version: String::new(), motion: String::new(), new_default: String::new(), last_new: String::new() } }
+    fn default() -> Self { Preferences { theme: String::new(), feishu: true, english: system_english(), remote_images: false, quick_hotkey: true, auto_update: true, appearance: String::new(), seen_version: String::new(), motion: String::new(), new_default: String::new(), last_new: String::new() } }
 }
 
 impl Preferences {
