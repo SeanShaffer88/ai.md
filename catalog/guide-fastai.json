@@ -1,0 +1,17 @@
+{
+  "id": "guide-fastai",
+  "name": "Fast.ai — Practical Deep Learning",
+  "kind": "guide",
+  "summary": "A free, top-down deep learning course: train useful models in the first lessons, then work down to the foundations.",
+  "source_name": "fast.ai",
+  "source_url": "https://course.fast.ai/",
+  "license": "See site",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

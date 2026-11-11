@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-generative-ai",
+  "name": "Awesome Generative AI",
+  "kind": "prompt-pack",
+  "summary": "A curated list of generative AI projects and services across text, image, audio and video.",
+  "source_name": "steven2358 (community)",
+  "source_url": "https://github.com/steven2358/awesome-generative-ai",
+  "license": "CC0-1.0",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

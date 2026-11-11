@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-langchain",
+  "name": "Awesome LangChain",
+  "kind": "prompt-pack",
+  "summary": "A curated list of tools, templates and projects built with the LangChain framework.",
+  "source_name": "kyrolabs (community)",
+  "source_url": "https://github.com/kyrolabs/awesome-langchain",
+  "license": "CC0-1.0",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

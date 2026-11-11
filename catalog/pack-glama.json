@@ -1,0 +1,17 @@
+{
+  "id": "pack-glama",
+  "name": "Glama MCP Directory",
+  "kind": "prompt-pack",
+  "summary": "A directory of MCP servers with hosted inspection: schemas, tools and quality signals for each server before you install anything.",
+  "source_name": "Glama",
+  "source_url": "https://glama.ai/mcp/servers",
+  "license": "See site",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

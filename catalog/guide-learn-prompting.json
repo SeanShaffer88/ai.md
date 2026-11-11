@@ -1,0 +1,17 @@
+{
+  "id": "guide-learn-prompting",
+  "name": "Learn Prompting",
+  "kind": "guide",
+  "summary": "A free, open prompting course from basics to advanced techniques, with exercises. A gentler on-ramp than the reference guides.",
+  "source_name": "Learn Prompting (community)",
+  "source_url": "https://learnprompting.org/docs/introduction",
+  "license": "See site",
+  "clients": [
+    "Any AI chat"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

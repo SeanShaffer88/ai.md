@@ -1,0 +1,18 @@
+{
+  "id": "guide-mcp-rust-sdk",
+  "name": "MCP Rust SDK (rmcp)",
+  "kind": "guide",
+  "summary": "The official Rust SDK for the Model Context Protocol, published on crates.io as rmcp. For native, single-binary MCP servers.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/rust-sdk",
+  "license": "Apache-2.0 / MIT",
+  "clients": [
+    "Rust developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "cargo add rmcp"
+}

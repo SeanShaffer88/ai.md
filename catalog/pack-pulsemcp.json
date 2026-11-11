@@ -1,0 +1,17 @@
+{
+  "id": "pack-pulsemcp",
+  "name": "PulseMCP",
+  "kind": "prompt-pack",
+  "summary": "A directory and newsletter tracking new MCP servers and clients, with usage estimates. Useful for spotting what is gaining traction.",
+  "source_name": "PulseMCP",
+  "source_url": "https://www.pulsemcp.com/",
+  "license": "See site",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

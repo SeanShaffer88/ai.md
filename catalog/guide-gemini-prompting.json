@@ -1,0 +1,17 @@
+{
+  "id": "guide-gemini-prompting",
+  "name": "Gemini Prompting Strategies",
+  "kind": "guide",
+  "summary": "Google's official prompting strategies for Gemini: structure, examples, and how to iterate on prompts systematically.",
+  "source_name": "Google",
+  "source_url": "https://ai.google.dev/gemini-api/docs/prompting-strategies",
+  "license": "See site",
+  "clients": [
+    "Any AI chat"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

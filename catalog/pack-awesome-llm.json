@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-llm",
+  "name": "Awesome LLM",
+  "kind": "prompt-pack",
+  "summary": "A curated list of large language model resources: models, training, deployment and notable papers.",
+  "source_name": "Hannibal046 (community)",
+  "source_url": "https://github.com/Hannibal046/Awesome-LLM",
+  "license": "CC0-1.0",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

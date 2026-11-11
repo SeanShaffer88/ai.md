@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-ai-agents",
+  "name": "Awesome AI Agents",
+  "kind": "prompt-pack",
+  "summary": "A curated list of autonomous AI agent projects and frameworks. Note the CC BY-NC-SA license: free for non-commercial use with attribution.",
+  "source_name": "e2b-dev (community)",
+  "source_url": "https://github.com/e2b-dev/awesome-ai-agents",
+  "license": "CC BY-NC-SA 4.0",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

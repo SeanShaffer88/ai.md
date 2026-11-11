@@ -1,0 +1,17 @@
+{
+  "id": "guide-openai-agents",
+  "name": "OpenAI — A Practical Guide to Building Agents",
+  "kind": "guide",
+  "summary": "OpenAI's practitioner guide (PDF): when agents are worth building, the core components, and the guardrails that keep them safe.",
+  "source_name": "OpenAI",
+  "source_url": "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf",
+  "license": "See site",
+  "clients": [
+    "Any AI chat"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

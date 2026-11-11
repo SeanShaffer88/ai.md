@@ -1,0 +1,18 @@
+{
+  "id": "guide-mcp-python-sdk",
+  "name": "MCP Python SDK",
+  "kind": "guide",
+  "summary": "The official Python SDK for building MCP servers and clients. The fastest route to a working server in Python.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/python-sdk",
+  "license": "MIT",
+  "clients": [
+    "Python developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "pip install mcp"
+}

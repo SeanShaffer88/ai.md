@@ -1,0 +1,17 @@
+{
+  "id": "guide-deeplearning-ai",
+  "name": "DeepLearning.AI Short Courses",
+  "kind": "guide",
+  "summary": "Short, focused courses on current practice — agents, RAG, fine-tuning and evaluation — many taught with the teams behind the tools.",
+  "source_name": "DeepLearning.AI",
+  "source_url": "https://www.deeplearning.ai/courses",
+  "license": "See site",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-ms-ai-beginners",
+  "name": "Microsoft — AI for Beginners",
+  "kind": "guide",
+  "summary": "A 12-week, 24-lesson curriculum covering AI broadly: neural networks, computer vision, natural language processing and ethics.",
+  "source_name": "Microsoft",
+  "source_url": "https://github.com/microsoft/AI-For-Beginners",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

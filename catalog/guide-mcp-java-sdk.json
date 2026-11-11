@@ -1,0 +1,17 @@
+{
+  "id": "guide-mcp-java-sdk",
+  "name": "MCP Java SDK",
+  "kind": "guide",
+  "summary": "The official Java SDK for Model Context Protocol servers and clients, maintained with Spring. Published on Maven Central as io.modelcontextprotocol.sdk.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/java-sdk",
+  "license": "MIT",
+  "clients": [
+    "Java developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

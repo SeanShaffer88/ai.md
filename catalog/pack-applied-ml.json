@@ -1,0 +1,17 @@
+{
+  "id": "pack-applied-ml",
+  "name": "Applied ML (eugeneyan)",
+  "kind": "prompt-pack",
+  "summary": "Papers and engineering posts from companies running ML in production, organized by problem. The reality-check companion to the theory guides.",
+  "source_name": "Eugene Yan (community)",
+  "source_url": "https://github.com/eugeneyan/applied-ml",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-ms-genai-beginners",
+  "name": "Microsoft — Generative AI for Beginners",
+  "kind": "guide",
+  "summary": "21 lessons on building with generative AI: prompting, chat apps, function calling, vector databases and agents, with code in Python and TypeScript.",
+  "source_name": "Microsoft",
+  "source_url": "https://github.com/microsoft/generative-ai-for-beginners",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-karpathy-zero-to-hero",
+  "name": "Karpathy — Neural Networks: Zero to Hero",
+  "kind": "guide",
+  "summary": "Andrej Karpathy's course building neural networks from scratch, lesson by lesson, ending in a working GPT (nanoGPT). The clearest ground-up path into how LLMs work.",
+  "source_name": "Andrej Karpathy",
+  "source_url": "https://github.com/karpathy/nanoGPT",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}
