@@ -177,6 +177,7 @@ pub struct Settings {
     pub catalog_risk: Option<String>,
     /// 运行提示词: the last values used per Run prompt sheet, keyed by
     /// the sheet's title, so reopening a prompt refills your answers.
+    /// Answers for secret-looking variables are dropped in save_settings.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub run_values: BTreeMap<String, Vec<(String, String)>>,
     /// Main window size, remembered like the quick note window's.
@@ -373,6 +374,13 @@ pub fn read_bounded(path: &std::path::Path, limit: u64) -> Result<Vec<u8>> {
     file.take(limit + 1).read_to_end(&mut bytes)?;
     anyhow::ensure!(bytes.len() as u64 <= limit, "文件超过导出大小限制");
     Ok(bytes)
+}
+
+/// Names that mark a prompt variable as a secret — `api_key`,
+/// `access_token`, `db_password`… (substrings of the lowercased name).
+fn is_secret_name(name: &str) -> bool {
+    let n = name.to_lowercase();
+    ["key", "token", "password", "passwd", "secret", "credential"].iter().any(|w| n.contains(w))
 }
 
 /// Recursive copy for the one-time portable import; `format.json` goes last
@@ -1033,7 +1041,15 @@ impl Store {
     }
 
     pub fn save_settings(&self, s: &Settings) -> Result<()> {
-        write_atomic(&self.root.join("settings.json"), &serde_json::to_vec_pretty(s)?)
+        // Never persist a Run-sheet answer typed for a secret-looking
+        // variable: settings.json is a plain file in the library, and
+        // the sheet works fine refilling everything else.
+        let mut s = s.clone();
+        for pairs in s.run_values.values_mut() {
+            pairs.retain(|(name, _)| !is_secret_name(name));
+        }
+        s.run_values.retain(|_, pairs| !pairs.is_empty());
+        write_atomic(&self.root.join("settings.json"), &serde_json::to_vec_pretty(&s)?)
     }
 
     /// 重命名 a document that isn't open: rewrite its title on disk.
@@ -1618,6 +1634,21 @@ mod tests {
         s.create_from(&doc("documents only")).unwrap();
         Store::import_library(&dst.0, &src.0);
         assert_eq!(reopened.list().len(), 1);
+    }
+
+    #[test]
+    fn secret_run_answers_are_not_saved() {
+        let lib = Lib::new("run-values");
+        let store = lib.open();
+        let mut s = store.settings();
+        s.run_values.insert("Deploy".into(), vec![
+            ("region".into(), "eu".into()),
+            ("api_key".into(), "sk-live".into()),
+            ("auth_token".into(), "t".into()),
+        ]);
+        store.save_settings(&s).unwrap();
+        let back = store.settings();
+        assert_eq!(back.run_values["Deploy"], vec![("region".to_string(), "eu".to_string())]);
     }
 
     #[test]

@@ -21,7 +21,7 @@
 <p align="center">
   <a href="https://download.quiet.md/latest/quiet-md-macos-arm64.zip"><img src="docs/images/download-macos.svg" height="56" alt="Download for macOS"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe"><img src="docs/images/download-windows.svg" height="56" alt="Download for Windows"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-windows.svg" height="56" alt="Download for Windows"></a>
   &nbsp;
   <a href="https://download.quiet.md/latest/quiet-md-x86_64.AppImage"><img src="docs/images/download-linux.svg" height="56" alt="Download for Linux"></a>
 </p>
@@ -41,7 +41,7 @@
 > [!NOTE]
 > ai.md is a fork of [Quiet.md](https://github.com/s1dashu/quiet-md). It keeps every Quiet.md feature and adds a Catalog: browsable, copyable entries for AI prompts, MCP servers, skills and guides, stored one file per entry under `catalog/`.
 >
-> ai.md is in **beta** and changing quickly. If you hit a bug or have an idea, please [open an issue](https://github.com/s1dashu/quiet-md/issues) — or better, send a pull request.
+> ai.md is in **beta** and changing quickly. If you hit a bug or have an idea, please [open an issue](https://github.com/SeanShaffer88/ai.md/issues) — or better, send a pull request.
 
 ## Why Quiet.md
 
@@ -56,7 +56,7 @@
 <p align="center">
   <a href="https://download.quiet.md/latest/quiet-md-macos-arm64.zip"><img src="docs/images/download-macos.svg" height="56" alt="Download for macOS"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe"><img src="docs/images/download-windows.svg" height="56" alt="Download for Windows"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-windows.svg" height="56" alt="Download for Windows"></a>
   &nbsp;
   <a href="https://download.quiet.md/latest/quiet-md-x86_64.AppImage"><img src="docs/images/download-linux.svg" height="56" alt="Download for Linux"></a>
 </p>
@@ -64,7 +64,7 @@
 | Platform | Package | Requirements |
 |---|---|---|
 | **macOS** (Apple Silicon) | [quiet-md-macos-arm64.zip](https://download.quiet.md/latest/quiet-md-macos-arm64.zip) | macOS 13 or later |
-| **Windows** (x64) | [quiet-md-windows-x64-setup.exe](https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe) | Windows 10 version 2004 or later |
+| **Windows** (x64) | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases) (this fork) | Windows 10 version 2004 or later |
 | **Linux** (x86_64, experimental) | [quiet-md-x86_64.AppImage](https://download.quiet.md/latest/quiet-md-x86_64.AppImage) | glibc 2.35 or later (Ubuntu 22.04 and newer) |
 | **macOS** (Intel) | [quiet-md-macos-x86_64.zip](https://download.quiet.md/latest/quiet-md-macos-x86_64.zip) | macOS 13 or later |
 
@@ -72,7 +72,7 @@
 - **Windows**: run the installer. By default it installs for the current user only, and uninstalling never deletes your notes. If SmartScreen appears on first launch, click **More info → Run anyway**. The portable zip needs no install: unzip it anywhere and run `ai_md.exe`. The portable build keeps its library in a `data` folder beside the executable (the installed build uses a `Quiet.md` folder in your Documents); on its first run it copies an existing Documents library into that folder and leaves the original untouched.
 - **Linux** (experimental): `chmod +x quiet-md-*.AppImage` and run it; without FUSE, add `--appimage-extract-and-run`. AppImage 0.1.10 and later support in-app updates; older Linux versions need a one-time manual install. Interactive testing so far covers Omarchy on Wayland; see the [Linux notes](CONTRIBUTING.md#linux-experimental).
 
-You can also download from [Quiet.md](https://quiet.md/?lang=en). Every release and its SHA-256 checksums are on [GitHub Releases](https://github.com/s1dashu/quiet-md/releases).
+You can also download from [Quiet.md](https://quiet.md/?lang=en). ai.md's own releases and their SHA-256 checksums are on [GitHub Releases](https://github.com/SeanShaffer88/ai.md/releases).
 
 On first launch, Quiet.md puts a **Getting started** guide into an empty library — a ten-minute tour of the main features. Existing notes are never overwritten.
 
