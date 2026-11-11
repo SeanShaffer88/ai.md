@@ -720,7 +720,7 @@ impl Workspace {
     fn about_page(&self, cx: &mut Context<Self>) -> AnyElement {
         div().w_full().flex().flex_col().gap(px(28.)).child(div().w_full().pt(px(24.)).flex().flex_col().items_center().gap(px(10.))
             .child(img(about_icon()).size(px(88.)))
-            .child(div().text_size(px(20.)).line_height(px(26.)).font_weight(FontWeight::SEMIBOLD).child("Quiet.md"))
+            .child(div().text_size(px(20.)).line_height(px(26.)).font_weight(FontWeight::SEMIBOLD).child("ai.md"))
             .child(div().text_size(px(13.)).line_height(px(18.)).text_color(Theme::text_caption()).child(format!("{} {}", tr("版本", "Version"), env!("CARGO_PKG_VERSION"))))
             .child(div().text_size(px(13.)).line_height(px(20.)).text_color(Theme::text_caption()).child(tr("本地优先的笔记应用：无需账号，文档就是你电脑上的文件。", "Local-first notes: no account, your documents are files on your Mac."))))
             .child(group(None, vec![update_row(cx).into_any_element()]))
@@ -1058,7 +1058,7 @@ pub(crate) fn localize(text: &str, english: bool) -> &str {
         "重试" => "Retry",
         "不再提示" => "Do not ask again",
         "放弃修改" => "Discard changes",
-        "Quiet.md · 快速笔记" => "Quiet.md · Quick note",
+        "Quiet.md · 快速笔记" => "ai.md · Quick note",
         "没有匹配结果，换个关键词试试吧" => "No results. Try another search term.",
         "本文被以下文档所引用" => "Referenced by these documents",
         "隐藏引用列表" => "Hide references",
