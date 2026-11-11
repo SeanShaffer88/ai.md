@@ -1,0 +1,17 @@
+{
+  "id": "guide-dair",
+  "name": "Prompt Engineering Guide (DAIR)",
+  "kind": "guide",
+  "summary": "The comprehensive community guide: techniques, papers, and RAG and agent prompting, kept current.",
+  "source_name": "DAIR.AI (community)",
+  "source_url": "https://www.promptingguide.ai/",
+  "license": "MIT",
+  "clients": [
+    "Any AI chat"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

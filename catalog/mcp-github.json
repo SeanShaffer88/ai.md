@@ -1,0 +1,22 @@
+{
+  "id": "mcp-github",
+  "name": "GitHub MCP Server",
+  "kind": "mcp",
+  "summary": "GitHub's official server: repositories, issues, pull requests and Actions from your AI client, using your own token.",
+  "source_name": "GitHub",
+  "source_url": "https://github.com/github/github-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "VS Code",
+    "Cursor",
+    "most MCP clients"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": true,
+  "verified": "2026-11-10",
+  "config": "{\n  \"mcpServers\": {\n    \"github\": {\n      \"url\": \"https://api.githubcopilot.com/mcp/\",\n      \"headers\": { \"Authorization\": \"Bearer YOUR_GITHUB_TOKEN\" }\n    }\n  }\n}"
+}

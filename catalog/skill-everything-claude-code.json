@@ -1,0 +1,19 @@
+{
+  "id": "skill-everything-claude-code",
+  "name": "Everything Claude Code",
+  "kind": "skill",
+  "summary": "A big field-tested collection of agents, skills, commands and rules for Claude Code, gathered from real daily use.",
+  "source_name": "affaan-m (community)",
+  "source_url": "https://github.com/affaan-m/everything-claude-code",
+  "license": "MIT",
+  "clients": [
+    "Claude Code"
+  ],
+  "risks": [
+    "files",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "git clone https://github.com/affaan-m/everything-claude-code"
+}

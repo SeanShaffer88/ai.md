@@ -1,0 +1,21 @@
+{
+  "id": "mcp-stripe",
+  "name": "Stripe Agent Toolkit",
+  "kind": "mcp",
+  "summary": "Stripe's official tools for agents, including MCP access to payments APIs. Use a restricted key, never your main key.",
+  "source_name": "Stripe",
+  "source_url": "https://github.com/stripe/ai",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "most MCP clients"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx -y @stripe/agent-toolkit --tools=all --stripe-secret-key=YOUR_RESTRICTED_KEY"
+}

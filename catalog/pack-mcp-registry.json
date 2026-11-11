@@ -1,0 +1,17 @@
+{
+  "id": "pack-mcp-registry",
+  "name": "MCP Registry",
+  "kind": "prompt-pack",
+  "summary": "The official community registry for discovering public MCP servers. Not a prompt pack: it is where new servers are published first.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://registry.modelcontextprotocol.io/",
+  "license": "See site",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

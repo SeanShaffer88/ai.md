@@ -1,0 +1,18 @@
+{
+  "id": "guide-openai-prompting",
+  "name": "OpenAI Prompt Engineering Guide",
+  "kind": "guide",
+  "summary": "OpenAI's own strategy and tactics for GPT-class models, including guidance for reasoning models.",
+  "source_name": "OpenAI",
+  "source_url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
+  "license": "See site",
+  "clients": [
+    "ChatGPT",
+    "OpenAI API"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": true,
+  "verified": "2026-11-10"
+}

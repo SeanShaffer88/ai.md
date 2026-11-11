@@ -1,0 +1,18 @@
+{
+  "id": "test-plan",
+  "name": "Test Plan",
+  "kind": "prompt",
+  "summary": "A focused test plan for a feature: happy path, boundaries, failure cases, and regressions, each with setup, action, and expected result. Uses {{feature}} and {{stack}}.",
+  "source_name": "ai.md catalog",
+  "source_url": "https://github.com/SeanShaffer88/ai.md",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "body": "Write a test plan for this feature: {{feature}}\n\nUse {{stack = the project's existing test stack}}.\n\nCover:\n- The happy path, end to end.\n- Boundaries, and empty or invalid input.\n- Failure cases: what the user sees, and how the system recovers.\n- Existing behavior a regression here would break.\n\nFor each test, give a name, the setup, the action, and the expected result. Mark which tests must be automated and which can stay manual. Keep the list small enough that a developer would actually write all of it — cut anything that tests the same behavior twice."
+}

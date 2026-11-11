@@ -1,0 +1,23 @@
+{
+  "id": "mcp-git",
+  "name": "Git (official reference server)",
+  "kind": "mcp",
+  "summary": "Reads and works with a local Git repository: status, diffs, log and commits in the repos you point it at.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/servers",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "VS Code",
+    "most MCP clients"
+  ],
+  "risks": [
+    "files",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "uvx mcp-server-git --repository C:\\path\\to\\repo",
+  "config": "{\n  \"mcpServers\": {\n    \"git\": {\n      \"command\": \"uvx\",\n      \"args\": [\"mcp-server-git\", \"--repository\", \"C:\\\\path\\\\to\\\\repo\"]\n    }\n  }\n}"
+}

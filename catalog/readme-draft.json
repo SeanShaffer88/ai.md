@@ -1,0 +1,18 @@
+{
+  "id": "readme-draft",
+  "name": "README Draft",
+  "kind": "prompt",
+  "summary": "Drafts a README with a TL;DR up top and honest TODO markers wherever information is missing, instead of invented features. Uses {{project_name}}, {{what_it_does}} and {{install_steps}}.",
+  "source_name": "ai.md catalog",
+  "source_url": "https://github.com/SeanShaffer88/ai.md",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "body": "Draft a README for a project called {{project_name}}.\n\nWhat it does: {{what_it_does}}\n\nInstallation steps:\n{{install_steps}}\n\nUse this structure:\n- A TL;DR section at the top: two or three sentences a newcomer can act on.\n- What it is and who it is for.\n- Install, using exactly the steps given above.\n- A short usage example.\n- A Limitations section — leave a TODO placeholder there rather than inventing limitations.\n\nWrite in plain language. Do not invent features, commands, or options that are not in what I gave you. Where information is missing, put a TODO marker instead of guessing."
+}

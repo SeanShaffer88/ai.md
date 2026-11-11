@@ -1,0 +1,22 @@
+{
+  "id": "mcp-memory",
+  "name": "Memory (official reference server)",
+  "kind": "mcp",
+  "summary": "A local knowledge-graph memory so a client can remember facts about you and your projects between chats.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/servers",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "VS Code",
+    "most MCP clients"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx -y @modelcontextprotocol/server-memory",
+  "config": "{\n  \"mcpServers\": {\n    \"memory\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-memory\"]\n    }\n  }\n}"
+}

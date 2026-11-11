@@ -1,0 +1,18 @@
+{
+  "id": "guide-mcp-csharp-sdk",
+  "name": "MCP C# SDK",
+  "kind": "guide",
+  "summary": "The official .NET SDK for building your own MCP servers and clients, maintained with Microsoft. The starting point for a Windows-side server.",
+  "source_name": "Model Context Protocol / Microsoft",
+  "source_url": "https://github.com/modelcontextprotocol/csharp-sdk",
+  "license": "MIT",
+  "clients": [
+    ".NET developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "dotnet add package ModelContextProtocol --prerelease"
+}

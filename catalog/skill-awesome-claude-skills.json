@@ -1,0 +1,19 @@
+{
+  "id": "skill-awesome-claude-skills",
+  "name": "Awesome Claude Skills",
+  "kind": "skill",
+  "summary": "A large community-curated list of Claude skills. A discovery aid: read any skill fully before using it, skills are instructions an AI will follow.",
+  "source_name": "ComposioHQ (community)",
+  "source_url": "https://github.com/ComposioHQ/awesome-claude-skills",
+  "license": "See repository",
+  "clients": [
+    "Claude",
+    "Claude Code"
+  ],
+  "risks": [
+    "files",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-context-engineering",
+  "name": "Effective Context Engineering for AI Agents",
+  "kind": "guide",
+  "summary": "How to treat the context window as a finite resource: compaction, note-taking and sub-agents, from Anthropic's engineers.",
+  "source_name": "Anthropic",
+  "source_url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+  "license": "See site",
+  "clients": [
+    "Any agent builder"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

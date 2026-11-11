@@ -1,0 +1,18 @@
+{
+  "id": "commit-message",
+  "name": "Commit Message",
+  "kind": "prompt",
+  "summary": "Turns a diff into a ready-to-paste commit message that explains why the change was made, not just what it does. Uses {{diff}} and {{style}}.",
+  "source_name": "ai.md catalog",
+  "source_url": "https://github.com/SeanShaffer88/ai.md",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "body": "Write a commit message for the change below, in the style of {{style = Conventional Commits}}.\n\n```diff\n{{diff}}\n```\n\nRules:\n- The subject line states what changed and stays under 72 characters.\n- If the change needs more than a subject, add a body that explains why the change was made. The diff already shows what it does; the message must supply the reason.\n- Mention any user-visible behavior change, breaking change, or migration step explicitly.\n- Output only the commit message, ready to paste. No commentary around it."
+}
