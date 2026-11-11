@@ -1,0 +1,38 @@
+//! Bundled catalog entries, one JSON file per entry under `catalog/`
+//! (see catalog/README.md for the format). Generated list; add a line
+//! here when you add an entry file.
+
+pub(crate) const ENTRIES: &[&str] = &[
+    include_str!("../catalog/bug-hunt.json"),
+    include_str!("../catalog/code-review-pro.json"),
+    include_str!("../catalog/commit-message.json"),
+    include_str!("../catalog/explain-code.json"),
+    include_str!("../catalog/guide-anthropic-prompting.json"),
+    include_str!("../catalog/guide-building-agents.json"),
+    include_str!("../catalog/guide-context-engineering.json"),
+    include_str!("../catalog/guide-dair.json"),
+    include_str!("../catalog/guide-mcp-csharp-sdk.json"),
+    include_str!("../catalog/guide-openai-prompting.json"),
+    include_str!("../catalog/mcp-aws.json"),
+    include_str!("../catalog/mcp-brave-search.json"),
+    include_str!("../catalog/mcp-chrome-devtools.json"),
+    include_str!("../catalog/mcp-cloudflare.json"),
+    include_str!("../catalog/mcp-context7.json"),
+    include_str!("../catalog/mcp-fetch.json"),
+    include_str!("../catalog/mcp-filesystem.json"),
+    include_str!("../catalog/mcp-git.json"),
+    include_str!("../catalog/mcp-github.json"),
+    include_str!("../catalog/mcp-memory.json"),
+    include_str!("../catalog/mcp-official-collection.json"),
+    include_str!("../catalog/mcp-playwright.json"),
+    include_str!("../catalog/mcp-sequential-thinking.json"),
+    include_str!("../catalog/mcp-stripe.json"),
+    include_str!("../catalog/mcp-time.json"),
+    include_str!("../catalog/pack-awesome-chatgpt-prompts.json"),
+    include_str!("../catalog/pack-mcp-registry.json"),
+    include_str!("../catalog/readme-draft.json"),
+    include_str!("../catalog/skill-anthropic-skills.json"),
+    include_str!("../catalog/skill-awesome-claude-skills.json"),
+    include_str!("../catalog/skill-everything-claude-code.json"),
+    include_str!("../catalog/test-plan.json"),
+];
