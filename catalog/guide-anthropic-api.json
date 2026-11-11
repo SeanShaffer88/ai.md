@@ -1,0 +1,17 @@
+{
+  "id": "guide-anthropic-api",
+  "name": "Anthropic API",
+  "kind": "guide",
+  "summary": "Anthropic's Claude Platform documentation: everything needed to integrate Claude into applications, from a first API call to production.",
+  "source_name": "Claude Platform Docs (Anthropic)",
+  "source_url": "https://docs.anthropic.com/",
+  "license": "See site",
+  "clients": [
+    "API developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

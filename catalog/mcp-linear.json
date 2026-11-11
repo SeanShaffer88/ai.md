@@ -1,0 +1,19 @@
+{
+  "id": "mcp-linear",
+  "name": "Linear MCP Server",
+  "kind": "mcp",
+  "summary": "Linear's official hosted MCP server: find, create and update issues, projects and comments in Linear from a compatible AI client, with OAuth sign-in.",
+  "source_name": "Linear documentation",
+  "source_url": "https://linear.app/docs/mcp",
+  "license": "See site",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11",
+  "install": "npx -y mcp-remote https://mcp.linear.app/mcp",
+  "config": "{\n  \"mcpServers\": {\n    \"linear\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-remote\", \"https://mcp.linear.app/mcp\"]\n    }\n  }\n}"
+}

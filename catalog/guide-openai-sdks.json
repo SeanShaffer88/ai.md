@@ -1,0 +1,17 @@
+{
+  "id": "guide-openai-sdks",
+  "name": "OpenAI SDKs",
+  "kind": "guide",
+  "summary": "OpenAI's guide to its official SDKs and CLI for building with the OpenAI API, with community libraries listed separately.",
+  "source_name": "OpenAI API documentation",
+  "source_url": "https://developers.openai.com/api/docs/libraries",
+  "license": "See site",
+  "clients": [
+    "API developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

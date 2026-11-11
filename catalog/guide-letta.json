@@ -1,0 +1,17 @@
+{
+  "id": "guide-letta",
+  "name": "Letta",
+  "kind": "guide",
+  "summary": "Letta is a platform for building stateful agents with long-term memory that learn from experience and improve with use.",
+  "source_name": "Letta documentation",
+  "source_url": "https://docs.letta.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

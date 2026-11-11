@@ -1,0 +1,17 @@
+{
+  "id": "guide-litellm",
+  "name": "LiteLLM",
+  "kind": "guide",
+  "summary": "LiteLLM is an open-source AI gateway that gives one OpenAI-format API for 100+ LLM providers, with virtual keys, budgets and per-request cost tracking.",
+  "source_name": "LiteLLM documentation",
+  "source_url": "https://docs.litellm.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-plandex",
+  "name": "Plandex",
+  "kind": "guide",
+  "summary": "Plandex: a terminal-based AI coding agent designed for large projects, with a diff review sandbox and controlled command execution.",
+  "source_name": "plandex-ai/plandex (GitHub)",
+  "source_url": "https://github.com/plandex-ai/plandex",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

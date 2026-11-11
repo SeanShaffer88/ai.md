@@ -1,0 +1,17 @@
+{
+  "id": "guide-kilo-code",
+  "name": "Kilo Code",
+  "kind": "guide",
+  "summary": "Kilo Code: an open-source AI coding agent for VS Code, JetBrains IDEs and the CLI, with access to hundreds of models.",
+  "source_name": "Kilo-Org/kilocode (GitHub)",
+  "source_url": "https://github.com/Kilo-Org/kilocode",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

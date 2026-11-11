@@ -1,0 +1,17 @@
+{
+  "id": "guide-strands-agents",
+  "name": "Strands Agents",
+  "kind": "guide",
+  "summary": "Strands Agents: AWS's open-source toolkit for building production AI agents in Python and TypeScript with any model provider.",
+  "source_name": "Strands Agents documentation",
+  "source_url": "https://strandsagents.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

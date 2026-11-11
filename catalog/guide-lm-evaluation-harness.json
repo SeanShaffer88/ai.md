@@ -1,0 +1,17 @@
+{
+  "id": "guide-lm-evaluation-harness",
+  "name": "LM Evaluation Harness",
+  "kind": "guide",
+  "summary": "The LM Evaluation Harness is a unified framework for few-shot evaluation of language models on 60+ academic benchmarks, and backs the Hugging Face Open LLM Leaderboard.",
+  "source_name": "EleutherAI/lm-evaluation-harness (GitHub)",
+  "source_url": "https://github.com/EleutherAI/lm-evaluation-harness",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

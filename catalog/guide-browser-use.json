@@ -1,0 +1,17 @@
+{
+  "id": "guide-browser-use",
+  "name": "Browser Use",
+  "kind": "guide",
+  "summary": "Browser Use: an open-source library and cloud service that lets AI agents control web browsers to complete tasks.",
+  "source_name": "Browser Use documentation",
+  "source_url": "https://docs.browser-use.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

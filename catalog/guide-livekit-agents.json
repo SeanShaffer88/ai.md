@@ -1,0 +1,17 @@
+{
+  "id": "guide-livekit-agents",
+  "name": "LiveKit Agents",
+  "kind": "guide",
+  "summary": "LiveKit Agents is a framework for building realtime voice and multimodal agents that join LiveKit rooms as full participants.",
+  "source_name": "LiveKit documentation",
+  "source_url": "https://docs.livekit.io/agents/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-skyvern",
+  "name": "Skyvern",
+  "kind": "guide",
+  "summary": "Skyvern: a tool that automates browser-based workflows using LLMs and computer vision, with a Playwright-compatible SDK and a no-code workflow builder.",
+  "source_name": "Skyvern-AI/skyvern (GitHub)",
+  "source_url": "https://github.com/Skyvern-AI/skyvern",
+  "license": "AGPL-3.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

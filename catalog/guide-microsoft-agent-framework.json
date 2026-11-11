@@ -1,0 +1,17 @@
+{
+  "id": "guide-microsoft-agent-framework",
+  "name": "Microsoft Agent Framework",
+  "kind": "guide",
+  "summary": "Microsoft Agent Framework: Microsoft's framework and documentation for building agents and multi-agent workflows in Python and .NET.",
+  "source_name": "Microsoft Learn — Agent Framework",
+  "source_url": "https://learn.microsoft.com/en-us/agent-framework/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

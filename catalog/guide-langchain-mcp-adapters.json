@@ -1,0 +1,17 @@
+{
+  "id": "guide-langchain-mcp-adapters",
+  "name": "LangChain MCP Adapters",
+  "kind": "guide",
+  "summary": "Library that converts MCP tools into LangChain tools and connects LangChain and LangGraph agents to multiple MCP servers; the repo is archived, with MCP support moved into LangChain itself.",
+  "source_name": "langchain-ai/langchain-mcp-adapters (GitHub)",
+  "source_url": "https://github.com/langchain-ai/langchain-mcp-adapters",
+  "license": "MIT",
+  "clients": [
+    "Python developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

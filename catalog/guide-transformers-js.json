@@ -1,0 +1,17 @@
+{
+  "id": "guide-transformers-js",
+  "name": "Transformers.js",
+  "kind": "guide",
+  "summary": "Documentation for Transformers.js: run Hugging Face Transformers models directly in the browser using ONNX Runtime, with no server required.",
+  "source_name": "Hugging Face Transformers.js documentation",
+  "source_url": "https://huggingface.co/docs/transformers.js",
+  "license": "See site",
+  "clients": [
+    "Web developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

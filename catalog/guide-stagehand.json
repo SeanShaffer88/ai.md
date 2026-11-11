@@ -1,0 +1,17 @@
+{
+  "id": "guide-stagehand",
+  "name": "Stagehand",
+  "kind": "guide",
+  "summary": "Stagehand: a browser automation framework that mixes AI-powered actions with deterministic Playwright-style control.",
+  "source_name": "Stagehand documentation",
+  "source_url": "https://docs.stagehand.dev/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

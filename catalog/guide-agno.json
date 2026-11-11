@@ -1,0 +1,17 @@
+{
+  "id": "guide-agno",
+  "name": "Agno",
+  "kind": "guide",
+  "summary": "Agno: a platform for building agents and running them as durable services with AgentOS, in your own cloud.",
+  "source_name": "Agno documentation",
+  "source_url": "https://docs.agno.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

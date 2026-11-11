@@ -1,0 +1,17 @@
+{
+  "id": "guide-langfuse",
+  "name": "Langfuse",
+  "kind": "guide",
+  "summary": "Langfuse is an open-source AI engineering platform for agent observability, evaluations and prompt management, built on OpenTelemetry.",
+  "source_name": "langfuse/langfuse (GitHub)",
+  "source_url": "https://github.com/langfuse/langfuse",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

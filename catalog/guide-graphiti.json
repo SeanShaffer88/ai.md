@@ -1,0 +1,17 @@
+{
+  "id": "guide-graphiti",
+  "name": "Graphiti",
+  "kind": "guide",
+  "summary": "Graphiti is a framework for building and querying temporal knowledge graphs that track how facts change over time, for AI agents.",
+  "source_name": "getzep/graphiti (GitHub)",
+  "source_url": "https://github.com/getzep/graphiti",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

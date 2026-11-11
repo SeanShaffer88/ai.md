@@ -1,0 +1,17 @@
+{
+  "id": "guide-docsgpt",
+  "name": "DocsGPT",
+  "kind": "guide",
+  "summary": "DocsGPT: a self-hosted, open-source platform that turns your documents into AI agents that answer with sources.",
+  "source_name": "arc53/DocsGPT (GitHub)",
+  "source_url": "https://github.com/arc53/DocsGPT",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}
