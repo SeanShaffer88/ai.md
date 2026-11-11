@@ -78,7 +78,7 @@ jobs:
           Copy-Item $built.FullName $env:SETUP_NAME
           $stage = 'portable-stage'
           New-Item -ItemType Directory -Force $stage | Out-Null
-          Copy-Item 'target/release/quiet_md.exe' $stage
+          Copy-Item 'target/release/quiet_md.exe' "$stage/ai_md.exe"
           Copy-Item 'LICENSE' $stage
           Compress-Archive -Path "$stage/*" -DestinationPath $env:ZIP_NAME
           $lines = foreach ($f in @($env:SETUP_NAME, $env:ZIP_NAME)) {
@@ -86,9 +86,9 @@ jobs:
           }
           ($lines -join "`n") + "`n" | Set-Content -NoNewline 'SHA256SUMS.txt'
           @"
-          ai.md $env:TAG — first release of the ai.md fork.
+          ai.md $env:TAG.
 
-          Adds a Catalog of AI prompts, MCP servers, skills and guides (32 bundled entries, one file per entry under catalog/), prompt variables with a Run prompt fill-in sheet, an Insert prompt palette, catalog results in the quick switcher, and a consent-gated Run for install commands. Every Quiet.md feature is unchanged, and existing libraries open as before.
+          A Catalog of AI prompts, MCP servers, skills and guides (one file per entry under catalog/), prompt variables with a Run prompt fill-in sheet, an Insert prompt palette, catalog results in the quick switcher, and a consent-gated Run for install commands. Every Quiet.md feature is unchanged, and existing libraries open as before. The application executable is ai_md.exe.
 
           Windows: **$env:SETUP_NAME** (installs for the current user; uninstalling never deletes your notes) or **$env:ZIP_NAME** (portable, no install). The builds are unsigned — if SmartScreen appears on first launch, click **More info → Run anyway**.
           "@ | Set-Content 'release-notes.md'
