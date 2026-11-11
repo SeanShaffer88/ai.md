@@ -1,0 +1,22 @@
+{
+  "id": "mcp-filesystem",
+  "name": "Filesystem (official reference server)",
+  "kind": "mcp",
+  "summary": "Lets an AI client read and write files, but only inside the folders you list. The safest first server to try.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/servers",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "VS Code",
+    "most MCP clients"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": true,
+  "verified": "2026-11-10",
+  "install": "npx -y @modelcontextprotocol/server-filesystem C:\\Users\\you\\Documents\\prompts",
+  "config": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"C:\\\\Users\\\\you\\\\Documents\\\\prompts\"]\n    }\n  }\n}"
+}

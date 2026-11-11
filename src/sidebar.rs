@@ -136,7 +136,9 @@ impl Workspace {
         // The nav is just 主页: 36px items, a blue tint when selected. Its
         // icon column (x 17) is shared with 搜索 and the doc rows.
         let home_on = self.view == View::Home;
-        let nav = div().flex_none().pt(px(4.)).pb(px(4.)).px(px(SB_X)).child(
+        let catalog_on = self.view == View::Catalog;
+        let nav = div().flex_none().pt(px(4.)).pb(px(4.)).px(px(SB_X)).flex().flex_col().gap(px(2.))
+            .child(
             div()
                 .id("nav-home")
                 .h(px(ROW_H))
@@ -160,7 +162,31 @@ impl Workspace {
                 )
                 .child(crate::settings::tr("主页", "Home"))
                 .on_click(cx.listener(|w, _, _, cx| w.show_view(View::Home, cx))),
-        );
+            )
+            .child(
+            div()
+                .id("nav-catalog")
+                .h(px(ROW_H))
+                .pl(px(6.))
+                .pr(px(4.))
+                .flex()
+                .items_center()
+                .rounded(px(ROW_R))
+                .cursor_pointer()
+                .text_size(px(13.))
+                .line_height(px(20.))
+                .when(catalog_on, |d| d.bg(Theme::sidebar_selected()).text_color(Theme::text()))
+                .when(!catalog_on, |d| d.text_color(Theme::sidebar_text()).hover(|s| s.bg(Theme::sidebar_hover())))
+                .child(
+                    div().size(px(20.)).flex_none().flex().items_center().justify_center().mr(px(9.)).child(icon(
+                        "library",
+                        ROW_ICON,
+                        Theme::icon(),
+                    )),
+                )
+                .child(crate::settings::tr("目录", "Catalog"))
+                .on_click(cx.listener(|w, _, _, cx| w.show_view(View::Catalog, cx))),
+            );
 
         let mut list = div().flex().flex_col().px(px(SB_X)).pb(px(8.));
         // Pinned docs are shortcuts: they stay in 我的文档 too.

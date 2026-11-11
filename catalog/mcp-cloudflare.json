@@ -1,0 +1,20 @@
+{
+  "id": "mcp-cloudflare",
+  "name": "Cloudflare MCP Servers",
+  "kind": "mcp",
+  "summary": "Cloudflare's remote MCP servers for Workers, DNS and observability. Connects with your Cloudflare account sign-in.",
+  "source_name": "Cloudflare",
+  "source_url": "https://github.com/cloudflare/mcp-server-cloudflare",
+  "license": "Apache-2.0",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "most MCP clients"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

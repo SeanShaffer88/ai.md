@@ -219,6 +219,26 @@ impl Workspace {
                     .on_click(cx.listener(|w, _, window, cx| w.open_doc_info(window, cx))),
             )
             .child(divider())
+            .when(entry.is_some_and(|e| e.body.contains("{{")), |d| d.child(
+                menu_item("dm-run-prompt", "braces", crate::settings::tr("运行提示词", "Run prompt"), false, false)
+                    .on_hover(hover_sub(None))
+                    .on_click(cx.listener(|w, _, window, cx| {
+                        w.close_doc_menu(cx);
+                        if let Some(cur) = &w.current && let Some(e) = w.entries.iter().find(|x| &x.id == cur) {
+                            let (title, body) = (e.title.clone(), e.body.clone());
+                            w.open_run_sheet(title, body.to_string(), window, cx);
+                        }
+                    })),
+            ))
+            .child(
+                menu_item("dm-insert-prompt", "library", crate::settings::tr("插入提示词…", "Insert prompt…"), false, false)
+                    .on_hover(hover_sub(None))
+                    .on_click(cx.listener(|w, _, window, cx| {
+                        w.close_doc_menu(cx);
+                        w.open_insert_palette(window, cx);
+                    })),
+            )
+            .child(divider())
             // 更多 and 删除 share the last group.
             .child(menu_item("dm-more", "ellipsis", crate::settings::text("更多"), true, sub == Some(DocSub::More)).on_hover(hover_sub(Some(DocSub::More))))
             .child(

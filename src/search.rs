@@ -240,10 +240,31 @@ impl Workspace {
 
     /// First result is selected; an empty result list has no selection.
     pub(crate) fn default_search_sel(&self, cx: &App) -> Option<usize> {
-        (!self.search_results(cx).is_empty()).then_some(0)
+        (self.search_total(cx) > 0).then_some(0)
+    }
+
+    /// Catalog entries matching the query (the quick switcher searches the
+    /// library and the catalog together; catalog hits list after documents).
+    pub(crate) fn catalog_hits(&self, cx: &App) -> Vec<fdl_core::catalog::CatalogEntry> {
+        let q = self.query(cx);
+        if q.is_empty() { return vec![]; }
+        self.catalog.data.search(&q, None).into_iter().cloned().collect()
+    }
+
+    fn search_total(&self, cx: &App) -> usize {
+        self.search_results(cx).len() + self.catalog_hits(cx).len()
     }
 
     pub(crate) fn pick_search(&mut self, row: usize, window: &mut Window, cx: &mut Context<Self>) {
+        let docs = self.search_results(cx).len();
+        if row >= docs {
+            let hits = self.catalog_hits(cx);
+            let Some(hit) = hits.get(row - docs) else { return };
+            let id = hit.id.clone();
+            self.close_search(window, cx);
+            self.open_catalog_entry(&id, cx);
+            return;
+        }
         let Some(id) = self.search_results(cx).get(row).map(|e| e.id.clone()) else { return };
         self.close_search(window, cx);
         self.open(&id, window, cx);
@@ -253,7 +274,7 @@ impl Workspace {
     }
 
     pub(crate) fn move_search_sel(&mut self, delta: isize, cx: &mut Context<Self>) {
-        let n = self.search_results(cx).len();
+        let n = self.search_total(cx);
         if n == 0 { self.search_sel = None; return; }
         let next = match self.search_sel {
             Some(i) => (i as isize + delta).rem_euclid(n as isize) as usize,
@@ -262,7 +283,8 @@ impl Workspace {
         };
         self.search_sel = Some(next);
         let title = usize::from(self.query(cx).is_empty());
-        self.search_scroll.scroll_to_item(next + title);
+        let section = usize::from(!self.query(cx).is_empty() && !self.catalog_hits(cx).is_empty() && next >= self.search_results(cx).len());
+        self.search_scroll.scroll_to_item(next + title + section);
         cx.notify();
     }
 
@@ -384,7 +406,7 @@ impl Workspace {
                     .child(crate::settings::tr("最近浏览", "Recently viewed")),
             );
         }
-        if results.is_empty() && !q.is_empty() {
+        if results.is_empty() && self.catalog_hits(cx).is_empty() && !q.is_empty() {
             list = list.child(
                 div()
                     .flex_none()
@@ -398,6 +420,31 @@ impl Workspace {
         }
         for (i, e) in results.iter().enumerate() {
             list = list.child(self.search_row(e, i, &q, window, cx));
+        }
+        let hits = self.catalog_hits(cx);
+        if !hits.is_empty() {
+            list = list.child(
+                div().flex_none().h(px(36.)).pt(px(2.)).px(px(12.)).flex().items_center()
+                    .text_size(px(12.)).line_height(px(18.)).text_color(Theme::text_caption())
+                    .child(crate::settings::tr("目录", "Catalog")),
+            );
+            for (j, hit) in hits.iter().enumerate() {
+                let ix = results.len() + j;
+                list = list.child(
+                    div().id(("catalog-hit", j)).flex_none().pt(px(8.)).pr(px(8.)).pb(px(8.)).pl(px(12.))
+                        .flex().items_center().rounded(px(ROW_RADIUS)).cursor_pointer()
+                        .when(self.search_sel == Some(ix), |d| d.bg(Theme::fill_hover()))
+                        .on_hover(cx.listener(move |w, hovered: &bool, _, cx| {
+                            if *hovered && w.search_sel != Some(ix) { w.search_sel = Some(ix); cx.notify(); }
+                        }))
+                        .on_click(cx.listener(move |w, _, window, cx| w.pick_search(ix, window, cx)))
+                        .child(crate::ui::icon("library", 16., Theme::icon()))
+                        .child(div().ml(px(10.)).flex_1().min_w_0().text_size(px(13.5)).text_color(Theme::text())
+                            .overflow_hidden().whitespace_nowrap().text_ellipsis().child(hit.name.clone()))
+                        .child(div().flex_none().text_size(px(12.)).text_color(Theme::text_disabled())
+                            .child(format!("{} · {}", crate::settings::tr("目录", "Catalog"), crate::catalog::kind_label(&hit.kind)))),
+                );
+            }
         }
 
         let footer = div()

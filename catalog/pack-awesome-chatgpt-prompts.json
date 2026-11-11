@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-chatgpt-prompts",
+  "name": "Awesome ChatGPT Prompts",
+  "kind": "prompt-pack",
+  "summary": "One of the largest prompt-pattern collections: role prompts for writers, developers, marketers and more. Useful as examples and starting points.",
+  "source_name": "f (community)",
+  "source_url": "https://github.com/f/prompts.chat",
+  "license": "CC0-1.0",
+  "clients": [
+    "Any AI chat"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": true,
+  "verified": "2026-11-10"
+}

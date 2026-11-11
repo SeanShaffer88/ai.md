@@ -1,4 +1,4 @@
-<h1 align="center">Quiet.md</h1>
+<h1 align="center">ai.md</h1>
 
 <p align="center">
   <b>速くて静かな、ローカルのノートアプリです。</b><br>

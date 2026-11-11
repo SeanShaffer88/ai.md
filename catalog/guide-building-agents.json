@@ -1,0 +1,17 @@
+{
+  "id": "guide-building-agents",
+  "name": "Building Effective Agents",
+  "kind": "guide",
+  "summary": "Anthropic's patterns for agent systems: workflows vs agents, chaining, routing and orchestrator-workers, from what actually worked.",
+  "source_name": "Anthropic",
+  "source_url": "https://www.anthropic.com/research/building-effective-agents",
+  "license": "See site",
+  "clients": [
+    "Any agent builder"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

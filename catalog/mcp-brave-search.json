@@ -1,0 +1,23 @@
+{
+  "id": "mcp-brave-search",
+  "name": "Brave Search MCP",
+  "kind": "mcp",
+  "summary": "Web search through Brave's index, from the company itself. Needs a free Brave Search API key.",
+  "source_name": "Brave",
+  "source_url": "https://github.com/brave/brave-search-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "VS Code",
+    "most MCP clients"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx -y @brave/brave-search-mcp-server",
+  "config": "{\n  \"mcpServers\": {\n    \"brave-search\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@brave/brave-search-mcp-server\"],\n      \"env\": { \"BRAVE_API_KEY\": \"YOUR_KEY\" }\n    }\n  }\n}"
+}

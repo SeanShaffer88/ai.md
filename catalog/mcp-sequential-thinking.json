@@ -1,0 +1,22 @@
+{
+  "id": "mcp-sequential-thinking",
+  "name": "Sequential Thinking (official reference server)",
+  "kind": "mcp",
+  "summary": "Gives the AI a scratchpad for breaking a hard problem into steps it can revise as it goes.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/servers",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "VS Code",
+    "most MCP clients"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx -y @modelcontextprotocol/server-sequential-thinking",
+  "config": "{\n  \"mcpServers\": {\n    \"sequential-thinking\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sequential-thinking\"]\n    }\n  }\n}"
+}

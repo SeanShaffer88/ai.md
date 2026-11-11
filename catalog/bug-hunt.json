@@ -1,0 +1,18 @@
+{
+  "id": "bug-hunt",
+  "name": "Bug Hunt",
+  "kind": "prompt",
+  "summary": "Structured debugging help: likely causes ranked by evidence, each with the test that confirms or rules it out, then the smallest confident fix. Uses {{symptom}}, {{code}} and {{already_tried}}.",
+  "source_name": "ai.md catalog",
+  "source_url": "https://github.com/SeanShaffer88/ai.md",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "body": "Help me hunt down a bug. Do not guess wildly — reason from the evidence.\n\nSymptom: {{symptom}}\n\nRelevant code:\n```\n{{code}}\n```\n\nAlready tried: {{already_tried = nothing yet}}\n\nFirst, list the most likely causes in order. For each one, name the single observation or test that would confirm it or rule it out. Then walk the code path the symptom implies and point at the exact lines that could produce it. If the code provided cannot produce the symptom, say what extra code or information you need instead of guessing. End with the smallest fix you are confident in, and how to verify it worked."
+}

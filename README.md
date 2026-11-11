@@ -1,7 +1,7 @@
-<h1 align="center">Quiet.md</h1>
+<h1 align="center">ai.md</h1>
 
 <p align="center">
-  <b>A fast, quiet, local notes app.</b><br>
+  <b>A fast, quiet, local notes app — with a built-in catalog of AI prompts, MCP servers, skills and guides.</b><br>
   Drawn natively with Rust + GPUI. Your notes stay on your computer, stored in the Feishu (Lark) DocxXML format.
 </p>
 
@@ -39,7 +39,9 @@
 </p>
 
 > [!NOTE]
-> Quiet.md is in **beta** and changing quickly. If you hit a bug or have an idea, please [open an issue](https://github.com/s1dashu/quiet-md/issues) — or better, send a pull request.
+> ai.md is a fork of [Quiet.md](https://github.com/s1dashu/quiet-md). It keeps every Quiet.md feature and adds a Catalog: browsable, copyable entries for AI prompts, MCP servers, skills and guides, stored one file per entry under `catalog/`.
+>
+> ai.md is in **beta** and changing quickly. If you hit a bug or have an idea, please [open an issue](https://github.com/s1dashu/quiet-md/issues) — or better, send a pull request.
 
 ## Why Quiet.md
 

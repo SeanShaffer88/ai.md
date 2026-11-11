@@ -180,6 +180,7 @@ pub struct RowMenu {
 pub enum View {
     Doc,
     Home,
+    Catalog,
     Folder,
     Trash,
     Settings,
@@ -268,6 +269,8 @@ pub struct Workspace {
     pub confirm: Option<Confirm>,
     pub view: View,
     pub home: crate::home::Home,
+    /// The bundled catalog (see `catalog.rs`); additive, read-only data.
+    pub catalog: crate::catalog::CatalogState,
     pub settings_scroll: ScrollHandle,
     /// 回收站 rows, refreshed when the page opens or changes.
     pub trash: Vec<crate::store::TrashEntry>,
@@ -441,6 +444,7 @@ impl Workspace {
             confirm: None,
             view: View::Doc,
             home: Default::default(),
+            catalog: crate::catalog::CatalogState::new(window, cx),
             settings_scroll: ScrollHandle::new(),
             trash: vec![],
             trash_menu: None,
@@ -1310,6 +1314,9 @@ impl Render for Workspace {
         let create_menu = self.render_create_menu(cx);
         let import_menu = self.render_import_menu(cx);
         let search = self.render_search(window, cx);
+        let run_sheet = self.render_run_sheet(window, cx);
+        let run_consent = self.render_run_consent(cx);
+        let insert_palette = self.render_insert_palette(window, cx);
         let doc_menu = self.render_doc_menu(window, cx);
         let doc_info = self.render_doc_info(cx);
         let confirm = self.render_confirm(cx);
@@ -1343,6 +1350,7 @@ impl Render for Workspace {
                 )
                 .into_any_element(),
             View::Home => self.render_home(window, cx),
+            View::Catalog => self.render_catalog(window, cx),
             View::Folder => self.render_folder(window, cx),
             View::Trash => self.render_trash(cx),
             View::Settings => self.render_settings(cx),
@@ -1484,6 +1492,9 @@ impl Render for Workspace {
             .children(move_dlg)
             .children(export_md)
             .children(search)
+            .children(run_sheet)
+            .children(run_consent)
+            .children(insert_palette)
             .children(resize_overlay)
             .children(folder_drag_overlay)
             .when(self.file_history.busy, |d| d.child(deferred(div().id("file-history-pending").absolute().inset_0().occlude()

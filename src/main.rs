@@ -4,6 +4,8 @@
 pub(crate) const APP_ID: &str = "com.s1dashu.quietmd";
 
 mod app;
+mod catalog;
+mod catalog_data;
 mod shared_store;
 mod quick_note;
 mod assets;
@@ -92,7 +94,7 @@ fn open_main_window(scripted: bool, cx: &mut App) {
             app_id: Some(crate::APP_ID.into()),
             window_decorations: if cfg!(target_os = "linux") { Some(WindowDecorations::Client) } else { None },
             titlebar: Some(TitlebarOptions {
-                title: Some("Quiet.md".into()),
+                title: Some("ai.md".into()),
                 appears_transparent: cfg!(any(target_os = "macos", target_os = "windows")),
                 traffic_light_position: Some(point(px(20.), px(app::HEADER_H / 2. - 7.))),
             }),

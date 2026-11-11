@@ -1,0 +1,22 @@
+{
+  "id": "mcp-context7",
+  "name": "Context7",
+  "kind": "mcp",
+  "summary": "Looks up current, version-specific documentation for libraries so generated code uses today's API, not last year's.",
+  "source_name": "Upstash",
+  "source_url": "https://github.com/upstash/context7",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "VS Code",
+    "most MCP clients"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": true,
+  "verified": "2026-11-10",
+  "install": "npx -y @upstash/context7-mcp",
+  "config": "{\n  \"mcpServers\": {\n    \"context7\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@upstash/context7-mcp\"]\n    }\n  }\n}"
+}

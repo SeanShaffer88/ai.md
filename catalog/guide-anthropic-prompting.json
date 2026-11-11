@@ -1,0 +1,17 @@
+{
+  "id": "guide-anthropic-prompting",
+  "name": "Anthropic Prompt Engineering Guide",
+  "kind": "guide",
+  "summary": "The primary-source guide to prompting Claude: clarity, examples, structure and extended thinking. Read this before folklore.",
+  "source_name": "Anthropic",
+  "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+  "license": "See site",
+  "clients": [
+    "Claude"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": true,
+  "verified": "2026-11-10"
+}

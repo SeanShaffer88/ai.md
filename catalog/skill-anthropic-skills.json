@@ -1,0 +1,20 @@
+{
+  "id": "skill-anthropic-skills",
+  "name": "Claude Skills (official examples)",
+  "kind": "skill",
+  "summary": "Anthropic's official skill examples: document handling, design, testing and more, in the standard SKILL.md format other tools copy.",
+  "source_name": "Anthropic",
+  "source_url": "https://github.com/anthropics/skills",
+  "license": "Apache-2.0 (code) / source-available examples",
+  "clients": [
+    "Claude",
+    "Claude Code"
+  ],
+  "risks": [
+    "files",
+    "commands"
+  ],
+  "starter": true,
+  "verified": "2026-11-10",
+  "install": "/plugin marketplace add anthropics/skills"
+}

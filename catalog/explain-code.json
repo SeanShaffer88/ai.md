@@ -1,0 +1,18 @@
+{
+  "id": "explain-code",
+  "name": "Explain Code",
+  "kind": "prompt",
+  "summary": "Explains unfamiliar code at the reader's level: purpose first, then how it runs, then the parts that are fragile or easy to misuse. Uses {{code}} and {{audience}}.",
+  "source_name": "ai.md catalog",
+  "source_url": "https://github.com/SeanShaffer88/ai.md",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "body": "Explain the code below to {{audience = a competent developer new to this codebase}}.\n\n```\n{{code}}\n```\n\nStart with one sentence: what this code is for. Then explain how it works in the order it runs, naming the important inputs, outputs, and side effects. Call out anything surprising, fragile, or easy to misuse, and explain any term or pattern the reader may not know the first time it appears. Skip line-by-line narration of the obvious. Finish with the two or three things someone changing this code must be careful about."
+}
