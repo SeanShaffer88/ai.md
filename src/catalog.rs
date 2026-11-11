@@ -22,6 +22,9 @@ pub(crate) const KINDS: [(&str, &str, &str); 5] = [
     ("guide", "指南", "Guides"),
 ];
 
+/// The "can touch" vocabulary, in menu order.
+pub(crate) const RISKS: [&str; 6] = ["none", "files", "commands", "network", "api-key", "read-only"];
+
 pub(crate) fn kind_label(kind: &str) -> &'static str {
     match kind {
         "mcp" => crate::settings::tr("MCP 服务器", "MCP server"),
@@ -94,6 +97,17 @@ pub struct CatalogState {
     pub data: Catalog,
     pub search: Entity<TextField>,
     pub kind: Option<&'static str>,
+    /// The "can touch" filter; remembered in `settings.json`.
+    pub risk: Option<&'static str>,
+    pub risk_open: bool,
+    /// Show starter picks only.
+    pub starters_only: bool,
+    /// The last browse results and the inputs that produced them, so
+    /// a repaint does not re-filter and re-sort the whole catalog.
+    pub results_cache: Option<(String, Option<&'static str>, Option<&'static str>, bool, CatalogSort, Vec<String>, Vec<CatalogEntry>)>,
+    /// The quick switcher's catalog hits for the last query it asked
+    /// about (it asks several times per frame while open).
+    pub switcher_cache: std::cell::RefCell<Option<(String, Vec<CatalogEntry>)>>,
     pub layout: CatalogLayout,
     pub sort: CatalogSort,
     pub sort_open: bool,
@@ -121,6 +135,7 @@ pub struct CatalogState {
 /// One fill-in field of the Run prompt sheet.
 pub struct RunField {
     pub name: String,
+    pub default: Option<String>,
     pub field: Entity<TextField>,
 }
 
@@ -136,7 +151,7 @@ pub struct RunSheet {
 impl CatalogState {
     pub(crate) fn new(window: &mut Window, cx: &mut Context<Workspace>) -> Self {
         let data = fdl_core::catalog::load_catalog(crate::catalog_data::ENTRIES)
-            .unwrap_or_else(|e| { crate::logging::write(&format!("catalog: {e}")); Catalog { entries: vec![] } });
+            .unwrap_or_else(|e| { crate::logging::write(&format!("catalog: {e}")); Catalog::default() });
         let search = cx.new(|cx| {
             let mut f = TextField::new(crate::settings::tr("搜索目录", "Search the catalog"), cx);
             f.placeholder_color = Theme::text_disabled();
@@ -169,6 +184,11 @@ impl CatalogState {
             data,
             search,
             kind: None,
+            risk: None,
+            risk_open: false,
+            starters_only: false,
+            results_cache: None,
+            switcher_cache: std::cell::RefCell::new(None),
             layout: CatalogLayout::Grid,
             sort: CatalogSort::NameAsc,
             sort_open: false,
@@ -206,22 +226,31 @@ fn pill_button(id: &'static str, label: &str, primary: bool) -> Stateful<Div> {
 }
 
 impl Workspace {
-    fn catalog_results(&self, cx: &App) -> Vec<CatalogEntry> {
+    fn catalog_results(&mut self, cx: &App) -> Vec<CatalogEntry> {
         let q = self.catalog.search.read(cx).text.clone();
-        let mut results: Vec<CatalogEntry> = self.catalog.data.search(&q, self.catalog.kind).into_iter().cloned().collect();
-        let kind_rank = |k: &str| KINDS.iter().position(|(id, _, _)| *id == k).unwrap_or(KINDS.len());
-        match self.catalog.sort {
-            CatalogSort::NameAsc => results.sort_by_key(|e| e.name.to_lowercase()),
-            CatalogSort::NameDesc => results.sort_by_key(|e| std::cmp::Reverse(e.name.to_lowercase())),
-            CatalogSort::Kind => results.sort_by_key(|e| (kind_rank(&e.kind), e.name.to_lowercase())),
-            CatalogSort::Starter => results.sort_by_key(|e| (!e.starter, e.name.to_lowercase())),
-            CatalogSort::Newest => results.sort_by_key(|e| (std::cmp::Reverse(e.verified.clone()), e.name.to_lowercase())),
+        let key = (q, self.catalog.kind, self.catalog.risk, self.catalog.starters_only, self.catalog.sort, self.catalog.favorites.clone());
+        if let Some((q0, k0, r0, s0, so0, f0, cached)) = &self.catalog.results_cache
+            && *q0 == key.0 && *k0 == key.1 && *r0 == key.2 && *s0 == key.3 && *so0 == key.4 && *f0 == key.5
+        {
+            return cached.clone();
         }
-        // The user's favorites float to the top of every ordering
-        // (the sort above is stable, so their relative order survives).
-        let favs = &self.catalog.favorites;
-        if !favs.is_empty() { results.sort_by_key(|e| !favs.contains(&e.id)); }
+        let mut results = self.catalog.data.browse(&key.0, key.1, key.2, key.3);
+        fdl_core::catalog::arrange(&mut results, key.4.key(), &key.5);
+        self.catalog.results_cache = Some((key.0, key.1, key.2, key.3, key.4, key.5, results.clone()));
         results
+    }
+
+    /// The user's own entries: `catalog-custom.json` in the library
+    /// folder (a JSON array of entry objects) merges over the bundled
+    /// catalog — same id replaces, new id appends.
+    pub(crate) fn load_custom_catalog(&mut self) {
+        let path = crate::store::Store::root_dir().join("catalog-custom.json");
+        if let Ok(text) = std::fs::read_to_string(&path) {
+            match self.catalog.data.merge_custom(&text) {
+                Ok(n) => crate::logging::write(&format!("catalog: merged {n} custom entries")),
+                Err(e) => crate::logging::write(&format!("catalog: {e}")),
+            }
+        }
     }
 
     /// The catalog's view, sort and favorites are remembered
@@ -231,6 +260,7 @@ impl Workspace {
         self.catalog.layout = if s.catalog_list { CatalogLayout::List } else { CatalogLayout::Grid };
         self.catalog.sort = s.catalog_sort.as_deref().map(CatalogSort::of).unwrap_or(CatalogSort::NameAsc);
         self.catalog.favorites = s.catalog_favorites.clone();
+        self.catalog.risk = s.catalog_risk.as_deref().and_then(|r| RISKS.iter().find(|x| **x == r).copied());
     }
 
     fn save_catalog_prefs(&mut self) {
@@ -238,6 +268,7 @@ impl Workspace {
         s.catalog_list = self.catalog.layout == CatalogLayout::List;
         s.catalog_sort = Some(self.catalog.sort.key().to_string());
         s.catalog_favorites = self.catalog.favorites.clone();
+        s.catalog_risk = self.catalog.risk.map(|r| r.to_string());
         if let Err(e) = self.store.save_settings(&s) { eprintln!("无法保存目录视图：{e}"); }
     }
 
@@ -284,6 +315,8 @@ impl Workspace {
                     .child(icon("search", 15., Theme::text_disabled()))
                     .child(div().flex_1().min_w_0().flex().child(self.catalog.search.clone())),
             );
+        let results = self.catalog_results(cx);
+        let total = self.catalog.data.entries.len();
         // Kind tabs as GitHub-style pills: bordered, the active one filled
         // with the accent color.
         let tab = |id: &'static str, label: &'static str, kind: Option<&'static str>| {
@@ -300,10 +333,32 @@ impl Workspace {
         for (kind, zh, en) in KINDS {
             tabs = tabs.child(tab(kind, crate::settings::tr(zh, en), Some(kind)));
         }
+        let starters_on = self.catalog.starters_only;
+        tabs = tabs.child(div().id("catalog-tab-starters").h(px(28.)).px(px(12.)).flex().items_center().rounded(px(999.)).cursor_pointer()
+            .border_1().text_size(px(13.)).line_height(px(20.))
+            .when(starters_on, |d| d.bg(Theme::primary()).border_color(Theme::primary()).text_color(Theme::bg_body()).font_weight(FontWeight::SEMIBOLD))
+            .when(!starters_on, |d| d.border_color(Theme::line_border()).text_color(Theme::text_caption()).hover(|s| s.bg(Theme::fill_hover())))
+            .child(crate::settings::tr("★ 入门", "★ Starters"))
+            .on_click(cx.listener(|w, _, _, cx| { w.catalog.starters_only = !w.catalog.starters_only; cx.notify(); })));
         // Sort menu button + grid/list toggle, at the right of the tabs row.
         let sort_label = SORTS.iter().find(|(s, _, _)| *s == self.catalog.sort).map(|(_, zh, en)| crate::settings::tr(zh, en)).unwrap_or("");
         let sort_open = self.catalog.sort_open;
+        let risk_label_text = match self.catalog.risk {
+            Some(r) => risk_label(r),
+            None => crate::settings::tr("全部", "All"),
+        };
+        let risk_open = self.catalog.risk_open;
         tabs = tabs.child(div().flex_1())
+            .child(div().mr(px(10.)).text_size(px(12.5)).text_color(Theme::text_disabled())
+                .child({ let n = results.len(); crate::localized_format!("{n} / {total} 个条目", "{n} of {total} entries") }))
+            .child(div().id("catalog-risk-btn").h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
+                .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
+                .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
+                .when(risk_open, |d| d.bg(Theme::fill_hover_strong()))
+                .when(!risk_open, |d| d.hover(|s| s.bg(Theme::fill_hover())))
+                .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_label_text))
+                .child(icon("chevron-down", 12., Theme::text_caption()))
+                .on_click(cx.listener(|w, _, _, cx| { w.catalog.risk_open = !w.catalog.risk_open; w.catalog.sort_open = false; cx.notify(); })))
             .child(div().id("catalog-sort-btn").h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
                 .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
                 .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
@@ -312,13 +367,28 @@ impl Workspace {
                 .child(icon("sort-down", 14., Theme::text_caption()))
                 .child(sort_label)
                 .child(icon("chevron-down", 12., Theme::text_caption()))
-                .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = !w.catalog.sort_open; cx.notify(); })))
+                .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = !w.catalog.sort_open; w.catalog.risk_open = false; cx.notify(); })))
             .child(div().ml(px(10.)).flex().items_center().gap(px(2.)).p(px(2.)).rounded(px(9.)).bg(Theme::fill_hover_strong())
                 .child(self.view_toggle_btn("catalog-view-grid", "view-grid", CatalogLayout::Grid, cx))
                 .child(self.view_toggle_btn("catalog-view-list", "view-list", CatalogLayout::List, cx)));
-        let results = self.catalog_results(cx);
+        let filtered = !self.catalog.search.read(cx).text.trim().is_empty() || self.catalog.kind.is_some() || self.catalog.risk.is_some() || self.catalog.starters_only;
         let body: AnyElement = if results.is_empty() {
-            crate::trash::empty_state("illus/empty-list.svg", crate::settings::tr("没有匹配的条目", "No entries match")).into_any_element()
+            let mut wrap = div().relative().flex_1().min_h_0()
+                .child(crate::trash::empty_state("illus/empty-list.svg", crate::settings::tr("没有匹配的条目", "No entries match")));
+            if filtered {
+                wrap = wrap.child(div().absolute().left_0().right_0().bottom(px(150.)).flex().justify_center()
+                    .child(pill_button("catalog-clear-filters", crate::settings::tr("清除搜索和筛选", "Clear search & filters"), false)
+                        .on_click(cx.listener(|w, _, _, cx| {
+                            let f = w.catalog.search.clone();
+                            f.update(cx, |f, cx| f.set_text("", cx));
+                            w.catalog.kind = None;
+                            w.catalog.risk = None;
+                            w.catalog.starters_only = false;
+                            w.save_catalog_prefs();
+                            cx.notify();
+                        }))));
+            }
+            wrap.into_any_element()
         } else if self.catalog.layout == CatalogLayout::List {
             let mut list = div().flex().flex_col().gap(px(10.)).p(px(24.));
             for (ix, e) in results.iter().enumerate() {
@@ -334,11 +404,12 @@ impl Workspace {
         };
         let page = div().flex_1().min_w_0().h_full().flex().flex_col().child(header).child(tabs).child(body);
         let mut root = div().relative().flex_1().min_w_0().h_full().flex().child(page);
-        if self.catalog.sort_open {
+        if self.catalog.sort_open || self.catalog.risk_open {
             root = root
                 .child(div().id("catalog-sort-catcher").absolute().inset_0()
-                    .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = false; cx.notify(); })))
-                .child(self.catalog_sort_menu(cx));
+                    .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = false; w.catalog.risk_open = false; cx.notify(); })));
+            if self.catalog.sort_open { root = root.child(self.catalog_sort_menu(cx)); }
+            if self.catalog.risk_open { root = root.child(self.catalog_risk_menu(cx)); }
         }
         root.into_any_element()
     }
@@ -369,6 +440,29 @@ impl Workspace {
             );
         }
         div().absolute().top(px(112.)).right(px(24.)).w(px(230.)).rounded(px(12.)).border_1().border_color(Theme::line_border())
+            .bg(Theme::bg_body()).shadow(theme::shadow_dialog()).child(menu).into_any_element()
+    }
+
+    fn catalog_risk_menu(&self, cx: &mut Context<Self>) -> AnyElement {
+        let mut menu = div().flex().flex_col().py(px(6.));
+        let add = |menu: Div, ix: usize, risk: Option<&'static str>, label: &str| {
+            let on = self.catalog.risk == risk;
+            menu.child(
+                div().id(("catalog-risk", ix)).mx(px(6.)).px(px(10.)).h(px(30.)).flex().items_center().gap(px(8.)).rounded(px(8.)).cursor_pointer()
+                    .text_size(px(13.)).line_height(px(20.))
+                    .when(on, |d| d.text_color(Theme::text()).font_weight(FontWeight::SEMIBOLD))
+                    .when(!on, |d| d.text_color(Theme::text_caption()))
+                    .hover(|s| s.bg(Theme::fill_hover()))
+                    .child(div().w(px(14.)).flex_none().flex().items_center().when(on, |d| d.child(icon("check", 13., Theme::primary()))))
+                    .child(label.to_string())
+                    .on_click(cx.listener(move |w, _, _, cx| { w.catalog.risk = risk; w.catalog.risk_open = false; w.save_catalog_prefs(); cx.notify(); })),
+            )
+        };
+        menu = add(menu, 0, None, crate::settings::tr("全部", "All"));
+        for (i, r) in RISKS.iter().enumerate() {
+            menu = add(menu, i + 1, Some(r), risk_label(r));
+        }
+        div().absolute().top(px(112.)).right(px(268.)).w(px(210.)).rounded(px(12.)).border_1().border_color(Theme::line_border())
             .bg(Theme::bg_body()).shadow(theme::shadow_dialog()).child(menu).into_any_element()
     }
 
@@ -421,6 +515,8 @@ impl Workspace {
 
     fn render_catalog_detail(&mut self, e: &CatalogEntry, _window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
         let header = crate::trash::page_header(self, crate::settings::tr("目录", "Catalog"), 26., cx);
+        let today_days = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| (d.as_secs() / 86400) as i64).unwrap_or(0);
+        let stale = fdl_core::catalog::verified_age_days(&e.verified, today_days).is_some_and(|age| age > 180);
         let meta = format!(
             "{} {}  ·  {} {}  ·  {} {}  ·  {} {}",
             crate::settings::tr("来源", "Source"), e.source_name,
@@ -437,6 +533,9 @@ impl Workspace {
                 .on_click(cx.listener(|w, _, _, cx| { w.catalog.selected = None; cx.notify(); })))
             .child(div().mt(px(14.)).text_size(px(26.)).line_height(px(34.)).font_weight(FontWeight::BOLD).text_color(Theme::text()).child(e.name.clone()))
             .child(div().mt(px(6.)).text_size(px(13.)).line_height(px(20.)).text_color(Theme::text_disabled()).child(meta))
+            .when(stale, |d| d
+                .child(div().mt(px(8.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::text_caption())
+                    .child(crate::settings::tr("这条已经很久没有复核了 — 安装前请先到来源处确认。", "Not re-checked in over six months — verify it at the source before installing."))))
             .child(div().mt(px(16.)).text_size(px(14.5)).line_height(px(23.)).text_color(Theme::text()).child(e.summary.clone()))
             .child(div().mt(px(22.)).text_size(px(12.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::text_disabled())
                 .child(crate::settings::tr("能访问什么", "WHAT IT CAN TOUCH")))
@@ -513,7 +612,26 @@ impl Workspace {
     /// document, then open it. The catalog itself stays read-only.
     pub(crate) fn save_catalog_entry(&mut self, id: &str, window: &mut Window, cx: &mut Context<Self>) {
         let Some(e) = self.catalog.entry(id).cloned() else { return };
-        let md = fdl_core::catalog::fork_markdown(&e);
+        if let Some(existing) = self.entries.iter().find(|en| en.title.trim() == e.name).map(|en| en.id.clone()) {
+            self.show_toast(crate::settings::tr("已在你的文档中", "Already in your documents"), cx);
+            self.open(&existing, window, cx);
+            return;
+        }
+        let t = crate::settings::tr;
+        let labels = fdl_core::catalog::ForkLabels {
+            type_: t("类型", "Type").to_string(),
+            source: t("来源", "Source").to_string(),
+            license: t("许可证", "License").to_string(),
+            works_with: t("适用于", "Works with").to_string(),
+            can_touch: t("能访问", "Can touch").to_string(),
+            verified: t("目录核查", "Catalog verified").to_string(),
+            install: t("安装", "Install").to_string(),
+            config: t("配置", "Config").to_string(),
+            prompt: t("提示词", "Prompt").to_string(),
+            my_notes: t("我的笔记", "My notes").to_string(),
+            notes_tip: t("安装前请先到来源处核实。服务器和技能运行时拥有真实权限。", "Verify the entry at its source before installing. Servers and skills run with real permissions.").to_string(),
+        };
+        let md = fdl_core::catalog::fork_markdown_labeled(&e, &labels);
         let mut doc = crate::markdown::parse_file(&md, &e.name, None);
         if doc.blocks.is_empty() { doc.blocks.push(fdl_core::model::Block::text("")); }
         match self.store.create_markdown(&doc, crate::markdown::front_matter(&md).0) {
@@ -545,6 +663,10 @@ impl Workspace {
                     .child(crate::settings::tr("运行这条安装命令？", "Run this install command?")))
                 .child(div().mt(px(8.)).text_size(px(13.5)).line_height(px(21.)).text_color(Theme::text_caption())
                     .child(crate::settings::tr("它会在你的电脑上以你的权限运行。可以随时停止。", "It runs on your computer with your permissions. You can stop it at any time.")))
+                .child(div().mt(px(10.)).text_size(px(12.5)).text_color(Theme::text_disabled())
+                    .child(format!("{}: {} — {}", crate::settings::tr("来源", "Source"), e.source_name, e.source_url)))
+                .child((if e.risks.is_empty() { vec!["none".to_string()] } else { e.risks.clone() }).iter().fold(div().mt(px(8.)).flex().items_center().gap(px(8.))
+                    .child(div().text_size(px(12.5)).text_color(Theme::text_disabled()).child(format!("{}:", crate::settings::tr("能访问", "Can touch")))), |d, r| d.child(chip(risk_label(r)))))
                 .child(div().mt(px(14.)).p(px(12.)).rounded(px(9.)).bg(Theme::bg_overlay()).border_1().border_color(Theme::line_border())
                     .text_size(px(12.5)).font_family(theme::MONO_FONT).text_color(Theme::text_code()).child(install))
                 .child(div().mt(px(20.)).flex().justify_end().gap(px(10.))
@@ -580,14 +702,32 @@ impl Workspace {
                 let name = e.name.clone();
                 cx.spawn(async move |this, cx| {
                     let out = std::thread::spawn(move || {
-                        let child = slot.lock().unwrap().take().unwrap();
-                        let out = child.wait_with_output();
-                        match out {
+                        let mut child = slot.lock().unwrap().take().unwrap();
+                        // A hung installer must not run forever: stop
+                        // it after two minutes, like Stop would.
+                        let start = std::time::Instant::now();
+                        let mut timed_out = false;
+                        loop {
+                            match child.try_wait() {
+                                Ok(Some(_)) => break,
+                                Ok(None) => {
+                                    if start.elapsed() > std::time::Duration::from_secs(120) {
+                                        let _ = child.kill();
+                                        timed_out = true;
+                                        break;
+                                    }
+                                    std::thread::sleep(std::time::Duration::from_millis(100));
+                                }
+                                Err(_) => break,
+                            }
+                        }
+                        match child.wait_with_output() {
                             Ok(o) => {
                                 let mut s = String::from_utf8_lossy(&o.stdout).into_owned();
                                 s.push_str(&String::from_utf8_lossy(&o.stderr));
+                                if timed_out { s.push_str("\n(stopped after 120 seconds)"); }
                                 let tail: String = s.lines().rev().take(12).collect::<Vec<_>>().into_iter().rev().collect::<Vec<_>>().join("\n");
-                                (tail, o.status.success())
+                                (tail, o.status.success() && !timed_out)
                             }
                             Err(err) => (err.to_string(), false),
                         }
@@ -637,7 +777,15 @@ impl Workspace {
             subs.push(cx.subscribe(&field, |_, _, ev: &TextFieldEvent, cx| {
                 if matches!(ev, TextFieldEvent::Changed) { cx.notify(); }
             }));
-            fields.push(RunField { name: var.name.clone(), field });
+            fields.push(RunField { name: var.name.clone(), default: var.default.clone(), field });
+        }
+        // Your last answers for this prompt come back prefilled.
+        let saved = self.store.settings().run_values.get(&title).cloned().unwrap_or_default();
+        for f in &fields {
+            if let Some((_, v)) = saved.iter().find(|(n, _)| *n == f.name) && !v.is_empty() {
+                let v = v.clone();
+                f.field.update(cx, |fld, cx| fld.set_text(&v, cx));
+            }
         }
         if let Some(first) = fields.first() {
             window.focus(&first.field.focus_handle(cx));
@@ -682,13 +830,36 @@ impl Workspace {
                     .child(div().text_size(px(12.5)).text_color(Theme::text_disabled())
                         .child(crate::localized_format!("已填 {filled} / {total}", "Filled {filled} of {total}")))
                     .child(div().flex_1())
+                    .when(run.fields.iter().any(|f| f.default.is_some()), |d| d
+                        .child(pill_button("run-defaults", crate::settings::tr("填入默认值", "Use defaults"), false)
+                            .on_click(cx.listener(|w, _, _, cx| {
+                                if let Some(run) = &w.catalog.run {
+                                    for f in &run.fields {
+                                        if let Some(def) = &f.default {
+                                            let def = def.clone();
+                                            f.field.update(cx, |fld, cx| fld.set_text(&def, cx));
+                                        }
+                                    }
+                                }
+                                cx.notify();
+                            })))
+                        .child(div().w(px(10.))))
                     .child(pill_button("run-copy", crate::settings::tr("复制提示词", "Copy prompt"), complete)
                         .when(complete, |d| d.on_click(cx.listener(move |w, _, _, cx| {
                             let run = w.catalog.run.as_ref().unwrap();
+                            let title = run.title.clone();
                             let values: Vec<(String, String)> = run.fields.iter().map(|f| (f.name.clone(), f.field.read(cx).text.clone())).collect();
                             if let Ok(text) = fdl_core::prompt::render(&run.template, &values) {
                                 w.copy_text(&text, cx);
                                 w.catalog.run = None;
+                                // Remember the answers for next time.
+                                let mut s = w.store.settings();
+                                s.run_values.insert(title, values.into_iter().filter(|(_, v)| !v.trim().is_empty()).collect());
+                                while s.run_values.len() > 20 {
+                                    let first = s.run_values.keys().next().unwrap().clone();
+                                    s.run_values.remove(&first);
+                                }
+                                if let Err(e) = w.store.save_settings(&s) { crate::logging::write(&format!("run values: {e}")); }
                                 cx.notify();
                             }
                         }))))
@@ -718,7 +889,9 @@ impl Workspace {
 
     fn insert_results(&self, cx: &App) -> Vec<CatalogEntry> {
         let q = self.catalog.insert_search.read(cx).text.clone();
-        self.catalog.data.search(&q, Some("prompt")).into_iter().cloned().collect()
+        let mut results: Vec<CatalogEntry> = self.catalog.data.search(&q, Some("prompt")).into_iter().cloned().collect();
+        fdl_core::catalog::arrange(&mut results, "starter", &[]);
+        results
     }
 
     pub(crate) fn move_insert_sel(&mut self, delta: isize, cx: &mut Context<Self>) {
@@ -755,8 +928,11 @@ impl Workspace {
                 .child(crate::settings::tr("没有匹配的提示词", "No prompts match")));
         }
         for (i, e) in results.iter().enumerate() {
+            let blanks = e.body.as_deref().map(|b| fdl_core::prompt::parse_template(b).variables.len()).unwrap_or(0);
             list = list.child(
                 div().id(("insert-prompt", i)).flex_none().px(px(12.)).py(px(9.)).flex().items_center().rounded(px(8.)).cursor_pointer()
+                    .when(blanks > 0, |d| d.child(div().absolute().right(px(12.)).text_size(px(11.5)).text_color(Theme::text_disabled())
+                        .child(format!("{} {}", blanks, crate::settings::tr("个空格", "blanks")))))
                     .when(self.catalog.insert_sel == Some(i), |d| d.bg(Theme::fill_hover()))
                     .on_hover(cx.listener(move |w, hovered: &bool, _, cx| {
                         if *hovered && w.catalog.insert_sel != Some(i) { w.catalog.insert_sel = Some(i); cx.notify(); }
@@ -782,5 +958,19 @@ impl Workspace {
                     .text_size(px(12.)).text_color(Theme::text_caption())
                     .child(crate::settings::tr("↑↓ 选择，Enter 插入到光标处", "Use ↑↓ to select, Enter to insert at the cursor"))));
         Some(modal.into_any_element())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    /// The shipped data itself must stay valid as the catalog grows:
+    /// unique ids, known kinds and risk tags, real dates, and prompt
+    /// entries that actually carry a prompt.
+    #[test]
+    fn bundled_catalog_data_is_valid() {
+        let catalog = fdl_core::catalog::load_catalog(crate::catalog_data::ENTRIES).unwrap();
+        assert!(catalog.entries.len() >= 100);
+        let problems = fdl_core::catalog::validate_catalog(&catalog);
+        assert!(problems.is_empty(), "{problems:?}");
     }
 }
