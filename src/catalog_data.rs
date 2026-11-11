@@ -56,7 +56,6 @@ pub static ENTRIES: &[&str] = &[
     include_str!("../catalog/guide-openai-cookbook.json"),
     include_str!("../catalog/guide-openai-prompting.json"),
     include_str!("../catalog/guide-openinterpreter.json"),
-    include_str!("../catalog/guide-prompt-engineering.json"),
     include_str!("../catalog/guide-promptflow.json"),
     include_str!("../catalog/guide-swarm.json"),
     include_str!("../catalog/guide-toolhive.json"),

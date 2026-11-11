@@ -164,6 +164,14 @@ pub struct Settings {
     pub home_folders_first: bool,
     #[serde(default)]
     pub home_manual_initialized: bool,
+    /// 目录: list instead of grid, the sort order, and the user's
+    /// favorite entry ids (starred entries float to the top).
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub catalog_list: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub catalog_sort: Option<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub catalog_favorites: Vec<String>,
     /// Main window size, remembered like the quick note window's.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub window_size: Option<[f32; 2]>,

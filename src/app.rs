@@ -469,6 +469,7 @@ impl Workspace {
         };
         ws.sort();
         ws.load_home();
+        ws.load_catalog_prefs();
         // An empty library opens on 主页's empty state; only a quick note
         // window starts a document of its own.
         match document.or_else(|| (!quick).then(|| ws.entries.first().map(|e| e.id.clone())).flatten()) {
