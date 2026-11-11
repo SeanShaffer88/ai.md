@@ -1,6 +1,7 @@
 mod button;
 mod caption;
 mod catalogue;
+mod context_menu;
 mod countdown;
 mod cover;
 pub use fdl_core::editor::core;

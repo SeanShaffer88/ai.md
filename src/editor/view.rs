@@ -153,6 +153,8 @@ pub struct Editor {
     pub goal_x: Option<Pixels>,
     pub slash: Option<Slash>,
     pub menu: Option<Menu>,
+    /// Right-click context menu: the window position it opened at.
+    pub ctx_menu: Option<Point<Pixels>>,
     pub menu_hovered: bool,
     /// Toolbar suppressed after typing / Esc until the selection changes.
     pub toolbar_hidden: bool,
@@ -385,6 +387,7 @@ impl Editor {
             goal_x: None,
             slash: None,
             menu: None,
+            ctx_menu: None,
             menu_hovered: false,
             toolbar_hidden: false,
             pointer_hidden: false,
@@ -1734,7 +1737,9 @@ impl Editor {
         if self.cropping() {
             return self.cancel_crop(cx);
         }
-        if self.mention.is_some() {
+        if self.ctx_menu.is_some() {
+            self.ctx_menu = None;
+        } else if self.mention.is_some() {
             self.mention = None;
         } else if self.slash.is_some() || self.menu.is_some() {
             self.slash = None;
@@ -1756,7 +1761,7 @@ impl Editor {
         self.changed(window, cx);
     }
 
-    fn on_select_all(&mut self, _: &k::SelectAll, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_select_all(&mut self, _: &k::SelectAll, window: &mut Window, cx: &mut Context<Self>) {
         if !self.guard(window, cx) {
             return;
         }
@@ -1785,14 +1790,14 @@ impl Editor {
         true
     }
 
-    fn on_copy(&mut self, _: &k::Copy, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_copy(&mut self, _: &k::Copy, window: &mut Window, cx: &mut Context<Self>) {
         if !self.guard(window, cx) {
             return;
         }
         self.copy_selection(cx);
     }
 
-    fn on_cut(&mut self, _: &k::Cut, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_cut(&mut self, _: &k::Cut, window: &mut Window, cx: &mut Context<Self>) {
         if !self.guard(window, cx) || !self.copy_selection(cx) {
             return;
         }
@@ -1808,12 +1813,12 @@ impl Editor {
 
     /// ⌘V. Our own copies paste as DocxXML; other apps' HTML is converted;
     /// images win over their text fallback; plain text is read as Markdown.
-    fn on_paste(&mut self, _: &k::Paste, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_paste(&mut self, _: &k::Paste, window: &mut Window, cx: &mut Context<Self>) {
         self.paste(false, window, cx);
     }
 
     /// ⌘⇧V 粘贴为纯文本.
-    fn on_paste_plain(&mut self, _: &k::PastePlain, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_paste_plain(&mut self, _: &k::PastePlain, window: &mut Window, cx: &mut Context<Self>) {
         self.paste(true, window, cx);
     }
 
@@ -1903,7 +1908,7 @@ impl Editor {
         self.changed(window, cx);
     }
 
-    fn on_undo(&mut self, _: &k::Undo, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_undo(&mut self, _: &k::Undo, window: &mut Window, cx: &mut Context<Self>) {
         if !self.guard(window, cx) {
             return;
         }
@@ -1914,7 +1919,7 @@ impl Editor {
         self.changed(window, cx);
     }
 
-    fn on_redo(&mut self, _: &k::Redo, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_redo(&mut self, _: &k::Redo, window: &mut Window, cx: &mut Context<Self>) {
         if !self.guard(window, cx) {
             return;
         }
@@ -1933,37 +1938,37 @@ impl Editor {
         cx.emit(EditorEvent::Save);
     }
 
-    fn on_bold(&mut self, _: &k::Bold, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_bold(&mut self, _: &k::Bold, window: &mut Window, cx: &mut Context<Self>) {
         if self.guard(window, cx) {
             self.toggle_mark(Mark::Bold, window, cx);
         }
     }
 
-    fn on_italic(&mut self, _: &k::Italic, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_italic(&mut self, _: &k::Italic, window: &mut Window, cx: &mut Context<Self>) {
         if self.guard(window, cx) {
             self.toggle_mark(Mark::Italic, window, cx);
         }
     }
 
-    fn on_underline(&mut self, _: &k::Underline, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_underline(&mut self, _: &k::Underline, window: &mut Window, cx: &mut Context<Self>) {
         if self.guard(window, cx) {
             self.toggle_mark(Mark::Underline, window, cx);
         }
     }
 
-    fn on_strike(&mut self, _: &k::Strike, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_strike(&mut self, _: &k::Strike, window: &mut Window, cx: &mut Context<Self>) {
         if self.guard(window, cx) {
             self.toggle_mark(Mark::Strike, window, cx);
         }
     }
 
-    fn on_inline_code(&mut self, _: &k::InlineCode, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_inline_code(&mut self, _: &k::InlineCode, window: &mut Window, cx: &mut Context<Self>) {
         if self.guard(window, cx) {
             self.toggle_mark(Mark::Code, window, cx);
         }
     }
 
-    fn on_link(&mut self, _: &k::Link, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn on_link(&mut self, _: &k::Link, window: &mut Window, cx: &mut Context<Self>) {
         if self.guard(window, cx) {
             self.link_from_selection(window, cx);
         }
@@ -2176,7 +2181,7 @@ impl Editor {
 
     // ---- mouse
 
-    fn pos_at(&self, p: Point<Pixels>) -> Option<Pos> {
+    pub(super) fn pos_at(&self, p: Point<Pixels>) -> Option<Pos> {
         let us = self.core.units();
         let atomic = {
             let bb = self.block_bounds.borrow();
@@ -2219,6 +2224,7 @@ impl Editor {
     pub fn on_mouse_down(&mut self, ev: &MouseDownEvent, window: &mut Window, cx: &mut Context<Self>) {
         window.focus(&self.focus);
         self.reminder_blur(window, cx);
+        self.ctx_menu = None;
         self.menu = None;
         self.menu_hovered = false;
         self.slash = None;
