@@ -1,0 +1,17 @@
+{
+  "id": "guide-guidance",
+  "name": "Guidance",
+  "kind": "guide",
+  "summary": "Guidance (Microsoft): a language for controlling language models — constrain and steer generation with regex and grammars.",
+  "source_name": "guidance-ai/guidance (GitHub)",
+  "source_url": "https://github.com/guidance-ai/guidance",
+  "license": "MIT",
+  "clients": [
+    "Python developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

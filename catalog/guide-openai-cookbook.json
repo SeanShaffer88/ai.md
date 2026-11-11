@@ -1,0 +1,17 @@
+{
+  "id": "guide-openai-cookbook",
+  "name": "OpenAI Cookbook",
+  "kind": "guide",
+  "summary": "The OpenAI Cookbook: examples and guides for using the OpenAI API, from embeddings to agents.",
+  "source_name": "openai/openai-cookbook (GitHub)",
+  "source_url": "https://github.com/openai/openai-cookbook",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

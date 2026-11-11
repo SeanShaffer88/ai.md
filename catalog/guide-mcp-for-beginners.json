@@ -1,0 +1,17 @@
+{
+  "id": "guide-mcp-for-beginners",
+  "name": "MCP for Beginners",
+  "kind": "guide",
+  "summary": "Microsoft's open curriculum for MCP fundamentals: hands-on lessons and sample servers in several languages.",
+  "source_name": "microsoft/mcp-for-beginners (GitHub)",
+  "source_url": "https://github.com/microsoft/mcp-for-beginners",
+  "license": "MIT",
+  "clients": [
+    "Anyone learning MCP"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

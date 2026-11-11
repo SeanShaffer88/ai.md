@@ -1,0 +1,17 @@
+{
+  "id": "mcp-terraform",
+  "name": "Terraform MCP Server",
+  "kind": "mcp",
+  "summary": "HashiCorp's MCP server for the Terraform ecosystem: registry lookups, module and provider docs, and workspace automation.",
+  "source_name": "hashicorp/terraform-mcp-server (GitHub)",
+  "source_url": "https://github.com/hashicorp/terraform-mcp-server",
+  "license": "MPL-2.0",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

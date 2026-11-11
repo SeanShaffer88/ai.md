@@ -1,0 +1,17 @@
+{
+  "id": "guide-claude-code",
+  "name": "Claude Code",
+  "kind": "guide",
+  "summary": "Claude Code (Anthropic): an agentic coding tool in your terminal that understands your codebase. Commercial terms apply.",
+  "source_name": "anthropics/claude-code (GitHub)",
+  "source_url": "https://github.com/anthropics/claude-code",
+  "license": "Proprietary",
+  "clients": [
+    "Developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-agent-skills",
+  "name": "Awesome Agent Skills",
+  "kind": "prompt-pack",
+  "summary": "A curated collection of 1,000+ agent skills from official teams and the community, for Claude Code, Codex and more.",
+  "source_name": "VoltAgent/awesome-agent-skills (GitHub)",
+  "source_url": "https://github.com/VoltAgent/awesome-agent-skills",
+  "license": "MIT",
+  "clients": [
+    "AI coding agents"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

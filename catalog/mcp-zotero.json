@@ -1,0 +1,17 @@
+{
+  "id": "mcp-zotero",
+  "name": "Zotero MCP",
+  "kind": "mcp",
+  "summary": "Connect your Zotero research library to AI assistants: search references, pull notes and work with your sources.",
+  "source_name": "54yyyu/zotero-mcp (GitHub)",
+  "source_url": "https://github.com/54yyyu/zotero-mcp",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

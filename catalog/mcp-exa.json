@@ -1,0 +1,17 @@
+{
+  "id": "mcp-exa",
+  "name": "Exa MCP Server",
+  "kind": "mcp",
+  "summary": "Exa's MCP server for AI web search and crawling: high-quality search results and page extraction for your client.",
+  "source_name": "exa-labs/exa-mcp-server (GitHub)",
+  "source_url": "https://github.com/exa-labs/exa-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

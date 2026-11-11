@@ -1,0 +1,18 @@
+{
+  "id": "guide-mcp-inspector",
+  "name": "MCP Inspector",
+  "kind": "guide",
+  "summary": "The official MCP Inspector: a visual testing and debugging tool for MCP servers, run locally with npx.",
+  "source_name": "modelcontextprotocol/inspector (GitHub)",
+  "source_url": "https://github.com/modelcontextprotocol/inspector",
+  "license": "Apache-2.0 / MIT",
+  "clients": [
+    "MCP developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx @modelcontextprotocol/inspector"
+}

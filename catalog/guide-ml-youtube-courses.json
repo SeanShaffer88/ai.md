@@ -1,0 +1,17 @@
+{
+  "id": "guide-ml-youtube-courses",
+  "name": "ML YouTube Courses",
+  "kind": "guide",
+  "summary": "A curated index of the latest machine learning and AI courses on YouTube, maintained by DAIR.AI.",
+  "source_name": "dair-ai/ML-YouTube-Courses (GitHub)",
+  "source_url": "https://github.com/dair-ai/ML-YouTube-Courses",
+  "license": "CC0-1.0",
+  "clients": [
+    "ML learners"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-promptflow",
+  "name": "Prompt flow",
+  "kind": "guide",
+  "summary": "Prompt flow (Microsoft): build, test, evaluate and deploy LLM apps, from prototyping to production monitoring.",
+  "source_name": "microsoft/promptflow (GitHub)",
+  "source_url": "https://github.com/microsoft/promptflow",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

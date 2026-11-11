@@ -1,0 +1,17 @@
+{
+  "id": "mcp-trino",
+  "name": "MCP Trino",
+  "kind": "mcp",
+  "summary": "High-performance MCP server for Trino (Go): query distributed SQL data sources from your AI client.",
+  "source_name": "tuannvm/mcp-trino (GitHub)",
+  "source_url": "https://github.com/tuannvm/mcp-trino",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

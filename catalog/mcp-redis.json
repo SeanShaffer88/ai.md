@@ -1,0 +1,18 @@
+{
+  "id": "mcp-redis",
+  "name": "Redis MCP Server",
+  "kind": "mcp",
+  "summary": "The official Redis MCP server: a natural-language interface for managing and exploring Redis data from agentic apps.",
+  "source_name": "redis/mcp-redis (GitHub)",
+  "source_url": "https://github.com/redis/mcp-redis",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

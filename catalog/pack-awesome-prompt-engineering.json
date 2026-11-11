@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-prompt-engineering",
+  "name": "Awesome Prompt Engineering",
+  "kind": "prompt-pack",
+  "summary": "A hand-curated collection of prompt engineering resources: papers, tools, books, courses and examples.",
+  "source_name": "promptslab/Awesome-Prompt-Engineering (GitHub)",
+  "source_url": "https://github.com/promptslab/Awesome-Prompt-Engineering",
+  "license": "Apache-2.0",
+  "clients": [
+    "Anyone"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

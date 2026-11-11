@@ -1,0 +1,17 @@
+{
+  "id": "mcp-slack",
+  "name": "Slack MCP Server",
+  "kind": "mcp",
+  "summary": "Full-featured Slack MCP server: channels, DMs and group DMs, search and posting, including GovSlack support.",
+  "source_name": "korotovsky/slack-mcp-server (GitHub)",
+  "source_url": "https://github.com/korotovsky/slack-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

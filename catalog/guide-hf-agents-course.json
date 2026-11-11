@@ -1,0 +1,17 @@
+{
+  "id": "guide-hf-agents-course",
+  "name": "Hugging Face Agents Course",
+  "kind": "guide",
+  "summary": "The Hugging Face Agents Course: a free course on building agents, from fundamentals to a final project.",
+  "source_name": "huggingface/agents-course (GitHub)",
+  "source_url": "https://github.com/huggingface/agents-course",
+  "license": "Apache-2.0",
+  "clients": [
+    "Anyone learning agents"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

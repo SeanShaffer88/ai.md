@@ -1,0 +1,17 @@
+{
+  "id": "mcp-ms365",
+  "name": "Microsoft 365 MCP Server",
+  "kind": "mcp",
+  "summary": "MCP server for Microsoft 365: mail, calendar, files and Office services through the Microsoft Graph API.",
+  "source_name": "Softeria/ms-365-mcp-server (GitHub)",
+  "source_url": "https://github.com/Softeria/ms-365-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

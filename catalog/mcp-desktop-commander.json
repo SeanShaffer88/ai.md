@@ -1,0 +1,18 @@
+{
+  "id": "mcp-desktop-commander",
+  "name": "Desktop Commander MCP",
+  "kind": "mcp",
+  "summary": "Desktop Commander: terminal control, file search and diff-based file editing for your AI client, with auditing.",
+  "source_name": "wonderwhy-er/DesktopCommanderMCP (GitHub)",
+  "source_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx -y @wonderwhy-er/desktop-commander@latest"
+}

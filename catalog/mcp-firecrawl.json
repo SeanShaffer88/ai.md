@@ -1,0 +1,18 @@
+{
+  "id": "mcp-firecrawl",
+  "name": "Firecrawl MCP Server",
+  "kind": "mcp",
+  "summary": "Official Firecrawl MCP server: web search, scraping and crawling for AI agents, with API-key based access.",
+  "source_name": "firecrawl/firecrawl-mcp-server (GitHub)",
+  "source_url": "https://github.com/firecrawl/firecrawl-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx -y firecrawl-mcp"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-code2prompt",
+  "name": "code2prompt",
+  "kind": "guide",
+  "summary": "code2prompt: turn a codebase into a single LLM prompt with the source tree, templating and token counting.",
+  "source_name": "mufeedvh/code2prompt (GitHub)",
+  "source_url": "https://github.com/mufeedvh/code2prompt",
+  "license": "MIT",
+  "clients": [
+    "Developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

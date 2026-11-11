@@ -1,0 +1,17 @@
+{
+  "id": "mcp-sentry",
+  "name": "Sentry MCP Server",
+  "kind": "mcp",
+  "summary": "Sentry's MCP server: search issues, inspect errors and pull project data from Sentry into your AI client. Hosted and self-host options.",
+  "source_name": "getsentry/sentry-mcp (GitHub)",
+  "source_url": "https://github.com/getsentry/sentry-mcp",
+  "license": "FSL-1.1-ALv2",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

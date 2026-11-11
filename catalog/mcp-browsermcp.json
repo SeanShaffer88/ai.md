@@ -1,0 +1,19 @@
+{
+  "id": "mcp-browsermcp",
+  "name": "Browser MCP",
+  "kind": "mcp",
+  "summary": "Browser MCP: let AI applications control your own Chrome browser through a local extension and MCP server.",
+  "source_name": "BrowserMCP/mcp (GitHub)",
+  "source_url": "https://github.com/BrowserMCP/mcp",
+  "license": "Apache-2.0",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10",
+  "install": "npx @browsermcp/mcp@latest"
+}
