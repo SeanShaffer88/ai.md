@@ -556,6 +556,18 @@ impl Editor {
         cx.notify();
     }
 
+    /// Insert blocks at the caret (the catalog's prompt insert): the usual
+    /// checkpoint → Core → changed sequence, mirroring a file drop.
+    pub fn insert_blocks_at_caret(&mut self, blocks: Vec<Block>, window: &mut Window, cx: &mut Context<Self>) {
+        let Some(last) = blocks.last().map(|b| b.id) else { return };
+        self.core.checkpoint(core::EditKind::Other);
+        self.core.insert_blocks(blocks);
+        let p = self.core.ensure_paragraph_after(last);
+        self.core.sel = Selection::caret(Pos::new(p, 0));
+        window.focus(&self.focus);
+        self.changed(window, cx);
+    }
+
     fn guard(&self, window: &Window, cx: &mut Context<Self>) -> bool {
         if self.focus.is_focused(window) {
             true
