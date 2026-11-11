@@ -69,7 +69,7 @@
 | **macOS** (Intel) | [quiet-md-macos-x86_64.zip](https://download.quiet.md/latest/quiet-md-macos-x86_64.zip) | macOS 13 or later |
 
 - **macOS**: unzip and drag `quiet.md.app` into Applications. The app is signed and notarized by Apple.
-- **Windows**: run the installer. By default it installs for the current user only, and uninstalling never deletes your notes. If SmartScreen appears on first launch, click **More info → Run anyway**.
+- **Windows**: run the installer. By default it installs for the current user only, and uninstalling never deletes your notes. If SmartScreen appears on first launch, click **More info → Run anyway**. The portable zip needs no install: unzip it anywhere and run `ai_md.exe`. The portable build keeps its library in a `data` folder beside the executable (the installed build uses a `Quiet.md` folder in your Documents); on its first run it copies an existing Documents library into that folder and leaves the original untouched.
 - **Linux** (experimental): `chmod +x quiet-md-*.AppImage` and run it; without FUSE, add `--appimage-extract-and-run`. AppImage 0.1.10 and later support in-app updates; older Linux versions need a one-time manual install. Interactive testing so far covers Omarchy on Wayland; see the [Linux notes](CONTRIBUTING.md#linux-experimental).
 
 You can also download from [Quiet.md](https://quiet.md/?lang=en). Every release and its SHA-256 checksums are on [GitHub Releases](https://github.com/s1dashu/quiet-md/releases).
