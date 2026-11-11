@@ -1,4 +1,4 @@
-<h1 align="center">Quiet.md</h1>
+<h1 align="center">ai.md</h1>
 
 <p align="center">
   <b>一个又快又安静的本地笔记应用。</b><br>
