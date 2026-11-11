@@ -1,0 +1,17 @@
+{
+  "id": "pack-smithery",
+  "name": "Smithery",
+  "kind": "prompt-pack",
+  "summary": "A marketplace for MCP servers with hosted and local install options and per-client configuration snippets.",
+  "source_name": "Smithery",
+  "source_url": "https://smithery.ai/",
+  "license": "See site",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

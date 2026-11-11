@@ -1,0 +1,17 @@
+{
+  "id": "guide-illustrated-transformer",
+  "name": "The Illustrated Transformer",
+  "kind": "guide",
+  "summary": "Jay Alammar's visual walkthrough of the transformer architecture. The single best first explanation of attention and how the pieces fit.",
+  "source_name": "Jay Alammar",
+  "source_url": "https://jalammar.github.io/illustrated-transformer/",
+  "license": "See site",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

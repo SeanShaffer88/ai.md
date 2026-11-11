@@ -1,0 +1,17 @@
+{
+  "id": "pack-mcp-so",
+  "name": "MCP.so Directory",
+  "kind": "prompt-pack",
+  "summary": "A searchable web directory of MCP servers with categories and popularity signals. Good for discovering servers outside the official registry.",
+  "source_name": "MCP.so",
+  "source_url": "https://mcp.so/",
+  "license": "See site",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-mcp-servers",
+  "name": "Awesome MCP Servers",
+  "kind": "prompt-pack",
+  "summary": "A large community-curated collection of MCP servers, organized by what they connect to. The widest single list to browse.",
+  "source_name": "punkpeye (community)",
+  "source_url": "https://github.com/punkpeye/awesome-mcp-servers",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

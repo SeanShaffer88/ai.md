@@ -1,0 +1,17 @@
+{
+  "id": "guide-llm-course",
+  "name": "LLM Course (mlabonne)",
+  "kind": "guide",
+  "summary": "A course on large language models split into scientist and engineer tracks, with roadmaps and Colab notebooks for every topic.",
+  "source_name": "Maxime Labonne (community)",
+  "source_url": "https://github.com/mlabonne/llm-course",
+  "license": "Apache-2.0",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

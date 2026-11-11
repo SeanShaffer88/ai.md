@@ -1,0 +1,17 @@
+{
+  "id": "guide-ms-ml-beginners",
+  "name": "Microsoft — ML for Beginners",
+  "kind": "guide",
+  "summary": "A 12-week curriculum on classic machine learning: regression, classification, clustering and NLP basics, before the deep-learning layer.",
+  "source_name": "Microsoft",
+  "source_url": "https://github.com/microsoft/ML-For-Beginners",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-hf-llm-course",
+  "name": "Hugging Face LLM Course",
+  "kind": "guide",
+  "summary": "A free, structured course on large language models: transformers, fine-tuning, and sharing models, with runnable examples throughout.",
+  "source_name": "Hugging Face",
+  "source_url": "https://huggingface.co/learn/llm-course",
+  "license": "See site",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "pack-awesome-production-llm",
+  "name": "Awesome Production LLM",
+  "kind": "prompt-pack",
+  "summary": "A curated list of open-source libraries for running LLMs in production: serving, evaluation, observability and cost control.",
+  "source_name": "jihoo-kim (community)",
+  "source_url": "https://github.com/jihoo-kim/awesome-production-llm",
+  "license": "MIT",
+  "clients": [
+    "Any"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

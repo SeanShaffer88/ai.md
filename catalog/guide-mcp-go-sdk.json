@@ -1,0 +1,17 @@
+{
+  "id": "guide-mcp-go-sdk",
+  "name": "MCP Go SDK",
+  "kind": "guide",
+  "summary": "The official Go SDK for Model Context Protocol servers and clients, maintained with Google.",
+  "source_name": "Model Context Protocol",
+  "source_url": "https://github.com/modelcontextprotocol/go-sdk",
+  "license": "Apache-2.0 / MIT",
+  "clients": [
+    "Go developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}
