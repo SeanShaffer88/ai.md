@@ -44,10 +44,62 @@ pub(crate) fn risk_label(risk: &str) -> &'static str {
     }
 }
 
+/// How the catalog browse page lays its entries out.
+#[derive(Clone, Copy, PartialEq)]
+pub enum CatalogLayout {
+    Grid,
+    List,
+}
+
+/// How the catalog browse page orders its entries.
+#[derive(Clone, Copy, PartialEq)]
+pub enum CatalogSort {
+    NameAsc,
+    NameDesc,
+    Kind,
+    Starter,
+    Newest,
+}
+
+impl CatalogSort {
+    fn key(self) -> &'static str {
+        match self {
+            Self::NameAsc => "name",
+            Self::NameDesc => "name-desc",
+            Self::Kind => "kind",
+            Self::Starter => "starter",
+            Self::Newest => "newest",
+        }
+    }
+    fn of(key: &str) -> Self {
+        match key {
+            "name-desc" => Self::NameDesc,
+            "kind" => Self::Kind,
+            "starter" => Self::Starter,
+            "newest" => Self::Newest,
+            _ => Self::NameAsc,
+        }
+    }
+}
+
+pub(crate) const SORTS: [(CatalogSort, &str, &str); 5] = [
+    (CatalogSort::NameAsc, "名称 A–Z", "Name A–Z"),
+    (CatalogSort::NameDesc, "名称 Z–A", "Name Z–A"),
+    (CatalogSort::Kind, "按类型", "By kind"),
+    (CatalogSort::Starter, "入门推荐优先", "Starter picks first"),
+    (CatalogSort::Newest, "最近核查", "Recently checked"),
+];
+
 pub struct CatalogState {
     pub data: Catalog,
     pub search: Entity<TextField>,
     pub kind: Option<&'static str>,
+    pub layout: CatalogLayout,
+    pub sort: CatalogSort,
+    pub sort_open: bool,
+    /// The user's starred entry ids, remembered in `settings.json`;
+    /// they float to the top of the browse page.
+    pub favorites: Vec<String>,
     pub selected: Option<String>,
     pub scroll: ScrollHandle,
     pub detail_scroll: ScrollHandle,
@@ -117,6 +169,10 @@ impl CatalogState {
             data,
             search,
             kind: None,
+            layout: CatalogLayout::Grid,
+            sort: CatalogSort::NameAsc,
+            sort_open: false,
+            favorites: Vec::new(),
             selected: None,
             scroll: ScrollHandle::new(),
             detail_scroll: ScrollHandle::new(),
@@ -152,7 +208,66 @@ fn pill_button(id: &'static str, label: &str, primary: bool) -> Stateful<Div> {
 impl Workspace {
     fn catalog_results(&self, cx: &App) -> Vec<CatalogEntry> {
         let q = self.catalog.search.read(cx).text.clone();
-        self.catalog.data.search(&q, self.catalog.kind).into_iter().cloned().collect()
+        let mut results: Vec<CatalogEntry> = self.catalog.data.search(&q, self.catalog.kind).into_iter().cloned().collect();
+        let kind_rank = |k: &str| KINDS.iter().position(|(id, _, _)| *id == k).unwrap_or(KINDS.len());
+        match self.catalog.sort {
+            CatalogSort::NameAsc => results.sort_by_key(|e| e.name.to_lowercase()),
+            CatalogSort::NameDesc => results.sort_by_key(|e| std::cmp::Reverse(e.name.to_lowercase())),
+            CatalogSort::Kind => results.sort_by_key(|e| (kind_rank(&e.kind), e.name.to_lowercase())),
+            CatalogSort::Starter => results.sort_by_key(|e| (!e.starter, e.name.to_lowercase())),
+            CatalogSort::Newest => results.sort_by_key(|e| (std::cmp::Reverse(e.verified.clone()), e.name.to_lowercase())),
+        }
+        // The user's favorites float to the top of every ordering
+        // (the sort above is stable, so their relative order survives).
+        let favs = &self.catalog.favorites;
+        if !favs.is_empty() { results.sort_by_key(|e| !favs.contains(&e.id)); }
+        results
+    }
+
+    /// The catalog's view, sort and favorites are remembered
+    /// (`settings.json`), the same way the home page remembers its own.
+    pub(crate) fn load_catalog_prefs(&mut self) {
+        let s = self.store.settings();
+        self.catalog.layout = if s.catalog_list { CatalogLayout::List } else { CatalogLayout::Grid };
+        self.catalog.sort = s.catalog_sort.as_deref().map(CatalogSort::of).unwrap_or(CatalogSort::NameAsc);
+        self.catalog.favorites = s.catalog_favorites.clone();
+    }
+
+    fn save_catalog_prefs(&mut self) {
+        let mut s = self.store.settings();
+        s.catalog_list = self.catalog.layout == CatalogLayout::List;
+        s.catalog_sort = Some(self.catalog.sort.key().to_string());
+        s.catalog_favorites = self.catalog.favorites.clone();
+        if let Err(e) = self.store.save_settings(&s) { eprintln!("无法保存目录视图：{e}"); }
+    }
+
+    pub(crate) fn toggle_favorite(&mut self, id: &str, cx: &mut Context<Self>) {
+        if let Some(pos) = self.catalog.favorites.iter().position(|f| f == id) {
+            self.catalog.favorites.remove(pos);
+        } else {
+            self.catalog.favorites.push(id.to_string());
+        }
+        self.save_catalog_prefs();
+        cx.notify();
+    }
+
+    fn fav_button(&self, ix: usize, e: &CatalogEntry, cx: &mut Context<Self>) -> Stateful<Div> {
+        let fav = self.catalog.favorites.iter().any(|f| f == &e.id);
+        let id = e.id.clone();
+        div().id(("catalog-star", ix)).w(px(26.)).h(px(26.)).flex_none().flex().items_center().justify_center().rounded(px(7.)).cursor_pointer()
+            .hover(|s| s.bg(Theme::fill_hover()))
+            .child(icon(if fav { "star" } else { "star-off" }, 15., if fav { Theme::primary() } else { Theme::text_disabled() }))
+            .on_click(cx.listener(move |w, _, _, cx| { cx.stop_propagation(); w.toggle_favorite(&id, cx); }))
+    }
+
+    /// Quick copy: put the entry's install command on the clipboard
+    /// straight from the card or row, no trip to the detail page.
+    fn copy_install_btn(&self, ix: usize, e: &CatalogEntry, cx: &mut Context<Self>) -> Stateful<Div> {
+        let text = e.install.clone().unwrap_or_default();
+        div().id(("catalog-copy", ix)).w(px(26.)).h(px(26.)).flex_none().flex().items_center().justify_center().rounded(px(7.)).cursor_pointer()
+            .hover(|s| s.bg(Theme::fill_hover()))
+            .child(icon("copy", 13., Theme::text_caption()))
+            .on_click(cx.listener(move |w, _, _, cx| { cx.stop_propagation(); w.copy_text(&text, cx); }))
     }
 
     pub(crate) fn render_catalog(&mut self, window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
@@ -169,13 +284,14 @@ impl Workspace {
                     .child(icon("search", 15., Theme::text_disabled()))
                     .child(div().flex_1().min_w_0().flex().child(self.catalog.search.clone())),
             );
-        // Kind tabs, in the home page's segmented style.
+        // Kind tabs as GitHub-style pills: bordered, the active one filled
+        // with the accent color.
         let tab = |id: &'static str, label: &'static str, kind: Option<&'static str>| {
             let on = self.catalog.kind == kind;
-            div().id(id).mr(px(8.)).h(px(28.)).px(px(10.)).flex().items_center().rounded(px(9.)).cursor_pointer()
-                .text_size(px(13.)).line_height(px(20.))
-                .when(on, |d| d.bg(Theme::fill_hover_strong()).text_color(Theme::text()))
-                .when(!on, |d| d.text_color(Theme::text_caption()).hover(|s| s.bg(Theme::fill_hover())))
+            div().id(id).mr(px(8.)).h(px(28.)).px(px(12.)).flex().items_center().rounded(px(999.)).cursor_pointer()
+                .border_1().text_size(px(13.)).line_height(px(20.))
+                .when(on, |d| d.bg(Theme::primary()).border_color(Theme::primary()).text_color(Theme::bg_body()).font_weight(FontWeight::SEMIBOLD))
+                .when(!on, |d| d.border_color(Theme::line_border()).text_color(Theme::text_caption()).hover(|s| s.bg(Theme::fill_hover())))
                 .child(label)
                 .on_click(cx.listener(move |w, _, _, cx| { w.catalog.kind = kind; cx.notify(); }))
         };
@@ -184,9 +300,31 @@ impl Workspace {
         for (kind, zh, en) in KINDS {
             tabs = tabs.child(tab(kind, crate::settings::tr(zh, en), Some(kind)));
         }
+        // Sort menu button + grid/list toggle, at the right of the tabs row.
+        let sort_label = SORTS.iter().find(|(s, _, _)| *s == self.catalog.sort).map(|(_, zh, en)| crate::settings::tr(zh, en)).unwrap_or("");
+        let sort_open = self.catalog.sort_open;
+        tabs = tabs.child(div().flex_1())
+            .child(div().id("catalog-sort-btn").h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
+                .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
+                .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
+                .when(sort_open, |d| d.bg(Theme::fill_hover_strong()))
+                .when(!sort_open, |d| d.hover(|s| s.bg(Theme::fill_hover())))
+                .child(icon("sort-down", 14., Theme::text_caption()))
+                .child(sort_label)
+                .child(icon("chevron-down", 12., Theme::text_caption()))
+                .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = !w.catalog.sort_open; cx.notify(); })))
+            .child(div().ml(px(10.)).flex().items_center().gap(px(2.)).p(px(2.)).rounded(px(9.)).bg(Theme::fill_hover_strong())
+                .child(self.view_toggle_btn("catalog-view-grid", "view-grid", CatalogLayout::Grid, cx))
+                .child(self.view_toggle_btn("catalog-view-list", "view-list", CatalogLayout::List, cx)));
         let results = self.catalog_results(cx);
         let body: AnyElement = if results.is_empty() {
             crate::trash::empty_state("illus/empty-list.svg", crate::settings::tr("没有匹配的条目", "No entries match")).into_any_element()
+        } else if self.catalog.layout == CatalogLayout::List {
+            let mut list = div().flex().flex_col().gap(px(10.)).p(px(24.));
+            for (ix, e) in results.iter().enumerate() {
+                list = list.child(self.catalog_row(e, ix, cx));
+            }
+            div().id("catalog-list").flex_1().min_h_0().overflow_y_scroll().track_scroll(&self.catalog.scroll).child(list).into_any_element()
         } else {
             let mut grid = div().flex().flex_wrap().gap(px(18.)).p(px(24.));
             for (ix, e) in results.iter().enumerate() {
@@ -194,7 +332,69 @@ impl Workspace {
             }
             div().id("catalog-grid").flex_1().min_h_0().overflow_y_scroll().track_scroll(&self.catalog.scroll).child(grid).into_any_element()
         };
-        div().flex_1().min_w_0().h_full().flex().flex_col().child(header).child(tabs).child(body).into_any_element()
+        let page = div().flex_1().min_w_0().h_full().flex().flex_col().child(header).child(tabs).child(body);
+        let mut root = div().relative().flex_1().min_w_0().h_full().flex().child(page);
+        if self.catalog.sort_open {
+            root = root
+                .child(div().id("catalog-sort-catcher").absolute().inset_0()
+                    .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = false; cx.notify(); })))
+                .child(self.catalog_sort_menu(cx));
+        }
+        root.into_any_element()
+    }
+
+    fn view_toggle_btn(&self, id: &'static str, ic: &'static str, layout: CatalogLayout, cx: &mut Context<Self>) -> Stateful<Div> {
+        let on = self.catalog.layout == layout;
+        div().id(id).w(px(26.)).h(px(24.)).flex().items_center().justify_center().rounded(px(7.)).cursor_pointer()
+            .when(on, |d| d.bg(Theme::bg_body()).shadow(theme::shadow_card()))
+            .when(!on, |d| d.hover(|s| s.bg(Theme::fill_hover())))
+            .child(icon(ic, 15., if on { Theme::text() } else { Theme::text_caption() }))
+            .on_click(cx.listener(move |w, _, _, cx| { w.catalog.layout = layout; w.save_catalog_prefs(); cx.notify(); }))
+    }
+
+    fn catalog_sort_menu(&self, cx: &mut Context<Self>) -> AnyElement {
+        let mut menu = div().flex().flex_col().py(px(6.));
+        for (ix, (sort, zh, en)) in SORTS.iter().enumerate() {
+            let on = self.catalog.sort == *sort;
+            let sort = *sort;
+            menu = menu.child(
+                div().id(("catalog-sort", ix)).mx(px(6.)).px(px(10.)).h(px(30.)).flex().items_center().gap(px(8.)).rounded(px(8.)).cursor_pointer()
+                    .text_size(px(13.)).line_height(px(20.))
+                    .when(on, |d| d.text_color(Theme::text()).font_weight(FontWeight::SEMIBOLD))
+                    .when(!on, |d| d.text_color(Theme::text_caption()))
+                    .hover(|s| s.bg(Theme::fill_hover()))
+                    .child(div().w(px(14.)).flex_none().flex().items_center().when(on, |d| d.child(icon("check", 13., Theme::primary()))))
+                    .child(crate::settings::tr(zh, en))
+                    .on_click(cx.listener(move |w, _, _, cx| { w.catalog.sort = sort; w.catalog.sort_open = false; w.save_catalog_prefs(); cx.notify(); })),
+            );
+        }
+        div().absolute().top(px(112.)).right(px(24.)).w(px(230.)).rounded(px(12.)).border_1().border_color(Theme::line_border())
+            .bg(Theme::bg_body()).shadow(theme::shadow_dialog()).child(menu).into_any_element()
+    }
+
+    /// The list layout: the card design stretched wide and cut short —
+    /// name, kind and starter on one line, the summary on a single
+    /// truncated line, what it can touch at the right.
+    fn catalog_row(&self, e: &CatalogEntry, ix: usize, cx: &mut Context<Self>) -> AnyElement {
+        let id = e.id.clone();
+        let risks = if e.risks.is_empty() { vec!["none".to_string()] } else { e.risks.clone() };
+        let risk_text = risks.iter().map(|r| risk_label(r)).collect::<Vec<_>>().join(" · ");
+        div().id(("catalog-row", ix)).w_full().px(px(16.)).py(px(11.)).flex().items_center().gap(px(14.))
+            .rounded(px(10.)).border_1().border_color(Theme::line_border()).bg(Theme::bg_body()).shadow(theme::shadow_card())
+            .cursor_pointer().hover(|s| s.bg(Theme::fill_hover()))
+            .child(div().flex_1().min_w_0().flex().flex_col()
+                .child(div().flex().items_center().gap(px(8.))
+                    .child(div().text_size(px(15.)).line_height(px(20.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::primary()).child(e.name.clone()))
+                    .child(chip(kind_label(&e.kind)))
+                    .when(e.starter, |d| d.child(div().text_size(px(12.)).text_color(Theme::primary()).child(crate::settings::tr("★ 入门推荐", "★ Starter pick")))))
+                .child(div().mt(px(2.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::text_caption())
+                    .overflow_hidden().whitespace_nowrap().text_ellipsis().child(e.summary.clone())))
+            .child(div().flex_none().text_size(px(12.)).text_color(Theme::text_disabled())
+                .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_text)))
+            .when(e.install.is_some(), |d| d.child(self.copy_install_btn(ix, e, cx)))
+            .child(self.fav_button(ix, e, cx))
+            .on_click(cx.listener(move |w, _, _, cx| { w.catalog.selected = Some(id.clone()); w.catalog.detail_scroll.set_offset(point(px(0.), px(0.))); cx.notify(); }))
+            .into_any_element()
     }
 
     fn catalog_card(&self, e: &CatalogEntry, ix: usize, cx: &mut Context<Self>) -> AnyElement {
@@ -202,15 +402,19 @@ impl Workspace {
         let risks = if e.risks.is_empty() { vec!["none".to_string()] } else { e.risks.clone() };
         let risk_text = risks.iter().map(|r| risk_label(r)).collect::<Vec<_>>().join(" · ");
         div().id(("catalog-card", ix)).w(px(300.)).min_h(px(196.)).p(px(18.)).flex().flex_col()
-            .rounded(px(14.)).border_1().border_color(Theme::line_border()).bg(Theme::bg_body()).shadow(theme::shadow_card())
+            .rounded(px(10.)).border_1().border_color(Theme::line_border()).bg(Theme::bg_body()).shadow(theme::shadow_card())
             .cursor_pointer().hover(|s| s.bg(Theme::fill_hover()))
-            .child(div().text_size(px(16.)).line_height(px(22.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::text()).child(e.name.clone()))
+            .child(div().flex().items_start().gap(px(8.))
+                .child(div().flex_1().min_w_0().text_size(px(16.)).line_height(px(22.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::primary()).child(e.name.clone()))
+                .child(self.fav_button(ix, e, cx)))
             .child(div().mt(px(6.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::text_caption()).child(e.summary.clone()))
             .child(div().flex_1())
             .child(div().mt(px(12.)).flex().items_center().gap(px(8.)).child(chip(kind_label(&e.kind)))
                 .when(e.starter, |d| d.child(div().text_size(px(12.)).text_color(Theme::primary()).child(crate::settings::tr("★ 入门推荐", "★ Starter pick")))))
-            .child(div().mt(px(8.)).text_size(px(12.)).text_color(Theme::text_disabled())
-                .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_text)))
+            .child(div().mt(px(8.)).flex().items_center()
+                .child(div().flex_1().text_size(px(12.)).text_color(Theme::text_disabled())
+                    .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_text)))
+                .when(e.install.is_some(), |d| d.child(self.copy_install_btn(ix, e, cx))))
             .on_click(cx.listener(move |w, _, _, cx| { w.catalog.selected = Some(id.clone()); w.catalog.detail_scroll.set_offset(point(px(0.), px(0.))); cx.notify(); }))
             .into_any_element()
     }
@@ -259,6 +463,10 @@ impl Workspace {
         let mut btns = div().mt(px(26.)).flex().gap(px(10.))
             .child(pill_button("catalog-save", crate::settings::tr("保存到我的文档", "Save to my library"), true)
                 .on_click(cx.listener(move |w, _, window, cx| w.save_catalog_entry(&id, window, cx))));
+        let fav = self.catalog.favorites.iter().any(|f| f == &e.id);
+        let idf = e.id.clone();
+        btns = btns.child(pill_button("catalog-fav", if fav { crate::settings::tr("★ 已收藏", "★ Favorited") } else { crate::settings::tr("☆ 加入收藏", "☆ Add to favorites") }, false)
+            .on_click(cx.listener(move |w, _, _, cx| w.toggle_favorite(&idf, cx))));
         if e.body.is_some() {
             let id2 = e.id.clone();
             btns = btns.child(pill_button("catalog-run-prompt", crate::settings::tr("运行提示词", "Run prompt"), false)
