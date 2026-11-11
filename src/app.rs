@@ -22,7 +22,7 @@ use std::time::{Duration, Instant};
 const SAVE_DELAY: Duration = Duration::from_millis(500);
 const SAVE_MAX_DELAY: Duration = Duration::from_secs(2);
 
-actions!(workspace, [NewDoc, OpenFile, ImportDoc, ImportFolder, ToggleSidebar, FocusSearch, FindInDoc, ReplaceInDoc, OpenSettings, OpenAbout, CheckForUpdates, GoHome, CloseWindow, Quit,
+actions!(workspace, [NewDoc, OpenFile, ImportDoc, ImportFolder, ToggleSidebar, FocusSearch, FindInDoc, ReplaceInDoc, OpenSettings, OpenAbout, CheckForUpdates, GoHome, GoCatalog, CloseWindow, Quit,
     HideApp, HideOthers, ShowAll, Minimize, Zoom, ToggleFullScreen]);
 
 /// The menu bar, in the interface language.
@@ -98,6 +98,7 @@ pub fn bind_keys(cx: &mut App) {
         KeyBinding::new("cmd-shift-i", ImportDoc, None),
         KeyBinding::new("cmd-o", OpenFile, None),
         KeyBinding::new("cmd-alt-home", GoHome, None),
+        KeyBinding::new("cmd-alt-c", GoCatalog, None),
         KeyBinding::new("cmd-w", CloseWindow, None),
         KeyBinding::new("cmd-]", ToggleSidebar, None),
         KeyBinding::new("cmd-\\", ToggleSidebar, None),
@@ -470,6 +471,7 @@ impl Workspace {
         ws.sort();
         ws.load_home();
         ws.load_catalog_prefs();
+        ws.load_custom_catalog();
         // An empty library opens on 主页's empty state; only a quick note
         // window starts a document of its own.
         match document.or_else(|| (!quick).then(|| ws.entries.first().map(|e| e.id.clone())).flatten()) {
@@ -1404,6 +1406,7 @@ impl Render for Workspace {
             .on_action(cx.listener(|w, _: &OpenAbout, _, cx| w.open_settings(crate::settings::Page::About, cx)))
             .on_action(cx.listener(|w, _: &CheckForUpdates, _, cx| { w.open_settings(crate::settings::Page::About, cx); crate::update::check(true, cx); }))
             .on_action(cx.listener(|w, _: &GoHome, _, cx| w.show_view(View::Home, cx)))
+            .on_action(cx.listener(|w, _: &GoCatalog, _, cx| w.show_view(View::Catalog, cx)))
             .on_action(cx.listener(|w, _: &NewDoc, window, cx| w.new_doc(window, cx)))
             .on_action(cx.listener(|w, _: &ImportDoc, window, cx| w.open_import(window, cx)))
             .on_action(cx.listener(|w, _: &OpenFile, window, cx| w.open_file_dialog(window, cx)))

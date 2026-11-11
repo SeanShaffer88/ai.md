@@ -6,7 +6,7 @@ use crate::model::Document;
 use anyhow::{Context, Result};
 use std::io::Write;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 use crate::time::now;
 use std::time::UNIX_EPOCH;
@@ -172,6 +172,13 @@ pub struct Settings {
     pub catalog_sort: Option<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub catalog_favorites: Vec<String>,
+    /// 目录: the remembered "can touch" filter (a risk tag).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub catalog_risk: Option<String>,
+    /// 运行提示词: the last values used per Run prompt sheet, keyed by
+    /// the sheet's title, so reopening a prompt refills your answers.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub run_values: BTreeMap<String, Vec<(String, String)>>,
     /// Main window size, remembered like the quick note window's.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub window_size: Option<[f32; 2]>,
@@ -945,10 +952,21 @@ impl Store {
     }
 
     pub fn settings(&self) -> Settings {
-        std::fs::read(self.root.join("settings.json"))
-            .ok()
-            .and_then(|b| serde_json::from_slice(&b).ok())
-            .unwrap_or_default()
+        let path = self.root.join("settings.json");
+        let Ok(bytes) = std::fs::read(&path) else { return Settings::default() };
+        match serde_json::from_slice(&bytes) {
+            Ok(s) => s,
+            Err(_) => {
+                // A corrupt settings file used to be silently reset,
+                // losing favorites and preferences with no trace. Keep
+                // the first corrupt copy next to the original instead.
+                let backup = self.root.join("settings-corrupt.json");
+                if !bytes.is_empty() && !backup.exists() {
+                    let _ = std::fs::write(&backup, &bytes);
+                }
+                Settings::default()
+            }
+        }
     }
 
     pub fn save_settings(&self, s: &Settings) -> Result<()> {
@@ -1508,4 +1526,22 @@ mod tests {
         s.save(&id, &doc("新")).unwrap();
         assert_eq!(s.load(&id).unwrap().title.text, "新");
     }
+    #[test]
+    fn corrupt_settings_are_preserved_not_silently_reset() {
+        let lib = Lib::new("corrupt-settings");
+        let store = lib.open();
+        std::fs::write(lib.0.join("settings.json"), b"{not json").unwrap();
+        let s = store.settings();
+        assert!(s.catalog_favorites.is_empty());
+        let backup = std::fs::read(lib.0.join("settings-corrupt.json")).unwrap();
+        assert_eq!(backup, b"{not json");
+        // A later, different corruption does not replace the first copy.
+        std::fs::write(lib.0.join("settings.json"), b"[also bad").unwrap();
+        let _ = store.settings();
+        assert_eq!(std::fs::read(lib.0.join("settings-corrupt.json")).unwrap(), b"{not json");
+        // And a valid file loads normally again.
+        store.save_settings(&Settings { catalog_risk: Some("files".into()), ..Default::default() }).unwrap();
+        assert_eq!(store.settings().catalog_risk.as_deref(), Some("files"));
+    }
+
 }
