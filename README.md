@@ -113,12 +113,16 @@ A 120 Hz display gives each frame 8.3 ms. Even at P95 on a million-character doc
 </p>
 
 <p align="center">
+  <img src="docs/images/catalog-list.png" width="100%" alt="The Catalog in list view: the same entries as wide rows, with sorting and favorites.">
+</p>
+
+<p align="center">
   <img src="docs/images/doc-menu.png" width="49%" alt="The document menu, including the Insert prompt action added by ai.md.">
   <img src="docs/images/settings.png" width="49%" alt="Settings, General page.">
 </p>
 
 <p align="center">
-  <img src="docs/images/about.png" width="49%" alt="The About page: ai.md, version 0.2.0.">
+  <img src="docs/images/about.png" width="49%" alt="The About page: ai.md, version 0.2.2.">
 </p>
 
 ## Contributors
