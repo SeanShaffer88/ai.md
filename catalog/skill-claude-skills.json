@@ -1,0 +1,17 @@
+{
+  "id": "skill-claude-skills",
+  "name": "Claude Skills (Jeff Allan)",
+  "kind": "skill",
+  "summary": "A library of specialized skills for Claude Code covering the full stack, by Jeff Allan.",
+  "source_name": "Jeffallan/claude-skills (GitHub)",
+  "source_url": "https://github.com/Jeffallan/claude-skills",
+  "license": "MIT",
+  "clients": [
+    "Claude Code"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

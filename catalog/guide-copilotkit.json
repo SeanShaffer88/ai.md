@@ -1,0 +1,17 @@
+{
+  "id": "guide-copilotkit",
+  "name": "CopilotKit",
+  "kind": "guide",
+  "summary": "CopilotKit: the framework for building AI copilots and in-app agents, including AG-UI support.",
+  "source_name": "CopilotKit documentation",
+  "source_url": "https://docs.copilotkit.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-llms-from-scratch",
+  "name": "LLMs from Scratch",
+  "kind": "guide",
+  "summary": "Build a ChatGPT-like LLM in PyTorch from scratch, step by step — the companion repo to Raschka's book.",
+  "source_name": "rasbt/LLMs-from-scratch (GitHub)",
+  "source_url": "https://github.com/rasbt/LLMs-from-scratch",
+  "license": "Apache-2.0",
+  "clients": [
+    "Anyone learning LLMs"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

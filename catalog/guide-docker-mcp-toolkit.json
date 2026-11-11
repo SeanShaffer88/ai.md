@@ -1,0 +1,17 @@
+{
+  "id": "guide-docker-mcp-toolkit",
+  "name": "Docker MCP Toolkit",
+  "kind": "guide",
+  "summary": "Docker's MCP Catalog and Toolkit: discover, run and manage MCP servers as containers from Docker Desktop.",
+  "source_name": "Docker documentation",
+  "source_url": "https://docs.docker.com/ai/mcp-catalog-and-toolkit/",
+  "license": "See site",
+  "clients": [
+    "MCP developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

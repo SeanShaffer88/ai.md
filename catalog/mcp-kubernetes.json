@@ -1,0 +1,17 @@
+{
+  "id": "mcp-kubernetes",
+  "name": "Kubernetes MCP Server",
+  "kind": "mcp",
+  "summary": "MCP server for Kubernetes and OpenShift: inspect and manage clusters, pods and workloads from your AI client.",
+  "source_name": "containers/kubernetes-mcp-server (GitHub)",
+  "source_url": "https://github.com/containers/kubernetes-mcp-server",
+  "license": "Apache-2.0",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

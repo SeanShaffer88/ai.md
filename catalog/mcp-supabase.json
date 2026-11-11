@@ -1,0 +1,17 @@
+{
+  "id": "mcp-supabase",
+  "name": "Supabase MCP Server",
+  "kind": "mcp",
+  "summary": "Connect Supabase projects to AI assistants: manage tables, run queries and work with your project through MCP.",
+  "source_name": "supabase/mcp (GitHub)",
+  "source_url": "https://github.com/supabase/mcp",
+  "license": "Apache-2.0",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

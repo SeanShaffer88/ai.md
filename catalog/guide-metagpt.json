@@ -1,0 +1,17 @@
+{
+  "id": "guide-metagpt",
+  "name": "MetaGPT",
+  "kind": "guide",
+  "summary": "MetaGPT: a multi-agent framework that simulates a software company — roles that take a prompt to a codebase.",
+  "source_name": "FoundationAgents/MetaGPT (GitHub)",
+  "source_url": "https://github.com/FoundationAgents/MetaGPT",
+  "license": "MIT",
+  "clients": [
+    "Python developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

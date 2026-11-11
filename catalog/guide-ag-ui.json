@@ -1,0 +1,17 @@
+{
+  "id": "guide-ag-ui",
+  "name": "AG-UI Protocol",
+  "kind": "guide",
+  "summary": "AG-UI: the agent-user interaction protocol for streaming agent events, state and tool calls to frontends.",
+  "source_name": "AG-UI documentation",
+  "source_url": "https://docs.ag-ui.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

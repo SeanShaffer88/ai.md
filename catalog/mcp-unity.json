@@ -1,0 +1,17 @@
+{
+  "id": "mcp-unity",
+  "name": "Unity MCP",
+  "kind": "mcp",
+  "summary": "Unity MCP: a bridge between AI assistants and the Unity Editor — manage assets, scenes and scripts by prompt.",
+  "source_name": "CoplayDev/unity-mcp (GitHub)",
+  "source_url": "https://github.com/CoplayDev/unity-mcp",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-fastmcp",
+  "name": "FastMCP",
+  "kind": "guide",
+  "summary": "FastMCP: the Python framework for building MCP servers and clients — the fast, pythonic way to ship tools.",
+  "source_name": "FastMCP (gofastmcp.com)",
+  "source_url": "https://gofastmcp.com/",
+  "license": "See site",
+  "clients": [
+    "Python developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

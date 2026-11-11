@@ -1,0 +1,17 @@
+{
+  "id": "guide-a2a",
+  "name": "Agent2Agent (A2A) Protocol",
+  "kind": "guide",
+  "summary": "Agent2Agent (A2A): the open protocol for communication and interoperability between independent AI agents.",
+  "source_name": "a2aproject/A2A (GitHub)",
+  "source_url": "https://github.com/a2aproject/A2A",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

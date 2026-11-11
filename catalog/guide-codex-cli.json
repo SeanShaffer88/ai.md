@@ -1,0 +1,17 @@
+{
+  "id": "guide-codex-cli",
+  "name": "Codex CLI",
+  "kind": "guide",
+  "summary": "Codex CLI (OpenAI): a lightweight coding agent that runs in your terminal and works on your codebase.",
+  "source_name": "openai/codex (GitHub)",
+  "source_url": "https://github.com/openai/codex",
+  "license": "Apache-2.0",
+  "clients": [
+    "Developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

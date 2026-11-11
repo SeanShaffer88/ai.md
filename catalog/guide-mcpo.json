@@ -1,0 +1,17 @@
+{
+  "id": "guide-mcpo",
+  "name": "mcpo",
+  "kind": "guide",
+  "summary": "mcpo: a simple, secure proxy that exposes MCP servers as OpenAPI endpoints for tools like Open WebUI.",
+  "source_name": "open-webui/mcpo (GitHub)",
+  "source_url": "https://github.com/open-webui/mcpo",
+  "license": "MIT",
+  "clients": [
+    "MCP developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

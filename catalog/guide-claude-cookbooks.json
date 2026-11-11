@@ -1,0 +1,17 @@
+{
+  "id": "guide-claude-cookbooks",
+  "name": "Anthropic Cookbooks",
+  "kind": "guide",
+  "summary": "Anthropic's cookbooks: notebooks and recipes for effective ways of using Claude, from tool use to RAG.",
+  "source_name": "anthropics/claude-cookbooks (GitHub)",
+  "source_url": "https://github.com/anthropics/claude-cookbooks",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

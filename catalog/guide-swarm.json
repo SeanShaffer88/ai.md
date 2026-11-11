@@ -1,0 +1,17 @@
+{
+  "id": "guide-swarm",
+  "name": "Swarm (OpenAI)",
+  "kind": "guide",
+  "summary": "Swarm (OpenAI): an educational framework for lightweight, ergonomic multi-agent orchestration with handoffs.",
+  "source_name": "openai/swarm (GitHub)",
+  "source_url": "https://github.com/openai/swarm",
+  "license": "MIT",
+  "clients": [
+    "Python developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

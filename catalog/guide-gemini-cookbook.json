@@ -1,0 +1,17 @@
+{
+  "id": "guide-gemini-cookbook",
+  "name": "Google Gemini Cookbook",
+  "kind": "guide",
+  "summary": "The Gemini Cookbook: examples and guides for using Google's Gemini API.",
+  "source_name": "google-gemini/cookbook (GitHub)",
+  "source_url": "https://github.com/google-gemini/cookbook",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

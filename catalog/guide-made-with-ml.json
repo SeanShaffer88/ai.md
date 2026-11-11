@@ -1,0 +1,17 @@
+{
+  "id": "guide-made-with-ml",
+  "name": "Made With ML",
+  "kind": "guide",
+  "summary": "Made With ML: learn to design, develop, deploy and iterate on production-grade ML applications.",
+  "source_name": "GokuMohandas/Made-With-ML (GitHub)",
+  "source_url": "https://github.com/GokuMohandas/Made-With-ML",
+  "license": "MIT",
+  "clients": [
+    "ML learners"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

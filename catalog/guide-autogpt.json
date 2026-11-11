@@ -1,0 +1,17 @@
+{
+  "id": "guide-autogpt",
+  "name": "AutoGPT",
+  "kind": "guide",
+  "summary": "AutoGPT: the autonomous agent platform — build and run continuous AI agents with a visual workflow builder.",
+  "source_name": "Significant-Gravitas/AutoGPT (GitHub)",
+  "source_url": "https://github.com/Significant-Gravitas/AutoGPT",
+  "license": "See repo",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-anthropic-courses",
+  "name": "Anthropic Courses",
+  "kind": "guide",
+  "summary": "Anthropic's educational courses: API fundamentals, prompt engineering and real-world prompting.",
+  "source_name": "anthropics/courses (GitHub)",
+  "source_url": "https://github.com/anthropics/courses",
+  "license": "See repo",
+  "clients": [
+    "Anyone learning AI"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

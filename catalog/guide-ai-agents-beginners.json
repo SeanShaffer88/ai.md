@@ -1,0 +1,17 @@
+{
+  "id": "guide-ai-agents-beginners",
+  "name": "AI Agents for Beginners",
+  "kind": "guide",
+  "summary": "Microsoft's 18-lesson course for getting started building AI agents, with code in Python and .NET.",
+  "source_name": "microsoft/ai-agents-for-beginners (GitHub)",
+  "source_url": "https://github.com/microsoft/ai-agents-for-beginners",
+  "license": "MIT",
+  "clients": [
+    "Anyone learning agents"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

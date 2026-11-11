@@ -1,0 +1,17 @@
+{
+  "id": "mcp-excel",
+  "name": "Excel MCP Server",
+  "kind": "mcp",
+  "summary": "Excel MCP server: create and edit workbooks with formulas, charts, PivotTables and formatting from your AI client.",
+  "source_name": "haris-musa/excel-mcp-server (GitHub)",
+  "source_url": "https://github.com/haris-musa/excel-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

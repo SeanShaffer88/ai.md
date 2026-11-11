@@ -1,0 +1,17 @@
+{
+  "id": "mcp-plane",
+  "name": "Plane MCP Server",
+  "kind": "mcp",
+  "summary": "Plane's official MCP server: manage projects, issues and cycles in Plane from your AI client.",
+  "source_name": "makeplane/plane-mcp-server (GitHub)",
+  "source_url": "https://github.com/makeplane/plane-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

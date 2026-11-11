@@ -1,0 +1,17 @@
+{
+  "id": "mcp-neon",
+  "name": "Neon MCP Server",
+  "kind": "mcp",
+  "summary": "MCP server for Neon serverless Postgres: manage projects and branches and query databases through the Neon API.",
+  "source_name": "neondatabase/mcp-server-neon (GitHub)",
+  "source_url": "https://github.com/neondatabase/mcp-server-neon",
+  "license": "MIT",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

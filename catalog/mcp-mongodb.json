@@ -1,0 +1,18 @@
+{
+  "id": "mcp-mongodb",
+  "name": "MongoDB MCP Server",
+  "kind": "mcp",
+  "summary": "Connect your AI client to MongoDB and Atlas: query collections, inspect schemas and manage clusters.",
+  "source_name": "mongodb-js/mongodb-mcp-server (GitHub)",
+  "source_url": "https://github.com/mongodb-js/mongodb-mcp-server",
+  "license": "Apache-2.0",
+  "clients": [
+    "Any MCP client"
+  ],
+  "risks": [
+    "network",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

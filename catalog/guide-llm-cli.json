@@ -1,0 +1,17 @@
+{
+  "id": "guide-llm-cli",
+  "name": "LLM CLI",
+  "kind": "guide",
+  "summary": "LLM by Simon Willison: a CLI and Python library for working with language models from the terminal, with plugins.",
+  "source_name": "Simon Willison (llm.datasette.io)",
+  "source_url": "https://llm.datasette.io/",
+  "license": "See site",
+  "clients": [
+    "Developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

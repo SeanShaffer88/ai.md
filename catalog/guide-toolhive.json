@@ -1,0 +1,17 @@
+{
+  "id": "guide-toolhive",
+  "name": "ToolHive",
+  "kind": "guide",
+  "summary": "ToolHive (Stacklok): run and manage MCP servers securely in containers, with a registry and policy controls.",
+  "source_name": "stacklok/toolhive (GitHub)",
+  "source_url": "https://github.com/stacklok/toolhive",
+  "license": "Apache-2.0",
+  "clients": [
+    "MCP developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "skill-google-skills",
+  "name": "Google Skills for AI Agents",
+  "kind": "skill",
+  "summary": "Google's official Agent Skills for Google products and technologies, ready to load into AI coding agents.",
+  "source_name": "google/skills (GitHub)",
+  "source_url": "https://github.com/google/skills",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI coding agents"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-10"
+}
