@@ -1298,6 +1298,7 @@ impl Editor {
         // Overlays are positioned from last frame's layout, so build them
         // before the caches are reset for this frame.
         let overlays = self.render_overlays(window, cx);
+        let ctx_menu = self.render_ctx_menu(cx);
         let lightbox = self.lightbox_el(window, cx);
         let toast = self.toast_el(window);
         let probes = std::mem::take(&mut *self.probes.borrow_mut());
@@ -1569,6 +1570,7 @@ impl Editor {
                     .size_full()
                     .cursor(CursorStyle::IBeam)
                     .on_mouse_down(MouseButton::Left, cx.listener(Self::on_mouse_down))
+                    .on_mouse_down(MouseButton::Right, cx.listener(Self::on_context_press))
                     .on_drag_move(cx.listener(Self::file_drag_move))
                     .on_drop(cx.listener(Self::drop_files))
                     .child(list(self.list.clone(), cx.processor(Self::render_item)).size_full()),
@@ -1577,6 +1579,7 @@ impl Editor {
             .children(file_line)
             .children(catalogue)
             .children(overlays)
+            .children(ctx_menu)
             .children(col_overlay)
             .children(table_overlay)
             .children(block_overlay)
