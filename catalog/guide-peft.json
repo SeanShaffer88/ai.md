@@ -1,0 +1,17 @@
+{
+  "id": "guide-peft",
+  "name": "peft",
+  "kind": "guide",
+  "summary": "Hugging Face library for parameter-efficient fine-tuning (LoRA, prefix tuning, adapters and more) that adapts large pre-trained models on modest hardware by training only a small set of added parameters.",
+  "source_name": "huggingface/peft (GitHub)",
+  "source_url": "https://github.com/huggingface/peft",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

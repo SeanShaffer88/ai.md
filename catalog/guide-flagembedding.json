@@ -1,0 +1,17 @@
+{
+  "id": "guide-flagembedding",
+  "name": "FlagEmbedding",
+  "kind": "guide",
+  "summary": "FlagEmbedding is BAAI's toolkit for its BGE text embedding and reranker models, covering training, fine-tuning and evaluation.",
+  "source_name": "FlagOpen/FlagEmbedding (GitHub)",
+  "source_url": "https://github.com/FlagOpen/FlagEmbedding",
+  "license": "MIT",
+  "clients": [
+    "ML developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

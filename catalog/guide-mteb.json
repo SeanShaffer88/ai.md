@@ -1,0 +1,17 @@
+{
+  "id": "guide-mteb",
+  "name": "mteb",
+  "kind": "guide",
+  "summary": "MTEB (Massive Text Embedding Benchmark) is a benchmark suite for evaluating text embedding models across retrieval, classification, clustering and other tasks.",
+  "source_name": "embeddings-benchmark/mteb (GitHub)",
+  "source_url": "https://github.com/embeddings-benchmark/mteb",
+  "license": "Apache-2.0",
+  "clients": [
+    "ML developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

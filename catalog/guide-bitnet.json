@@ -1,0 +1,17 @@
+{
+  "id": "guide-bitnet",
+  "name": "BitNet",
+  "kind": "guide",
+  "summary": "Microsoft's official inference framework for 1-bit large language models such as BitNet b1.58: bitnet.cpp runs ternary-weight models fast and losslessly on ordinary CPUs.",
+  "source_name": "microsoft/BitNet (GitHub)",
+  "source_url": "https://github.com/microsoft/BitNet",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

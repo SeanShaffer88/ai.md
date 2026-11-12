@@ -1,0 +1,17 @@
+{
+  "id": "guide-bitsandbytes",
+  "name": "bitsandbytes",
+  "kind": "guide",
+  "summary": "Library of 8-bit and 4-bit optimizers, quantization routines and GPU kernels that cut the memory needed to train and run large language models in PyTorch.",
+  "source_name": "bitsandbytes-foundation/bitsandbytes (GitHub)",
+  "source_url": "https://github.com/bitsandbytes-foundation/bitsandbytes",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

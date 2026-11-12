@@ -1,0 +1,17 @@
+{
+  "id": "guide-verl",
+  "name": "verl",
+  "kind": "guide",
+  "summary": "Flexible and production-ready reinforcement learning training library for large language models (PPO, GRPO and related algorithms), initiated by ByteDance's Seed team and built around the HybridFlow programming model.",
+  "source_name": "verl-project/verl (GitHub)",
+  "source_url": "https://github.com/verl-project/verl",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

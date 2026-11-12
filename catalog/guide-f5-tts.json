@@ -1,0 +1,17 @@
+{
+  "id": "guide-f5-tts",
+  "name": "F5-TTS",
+  "kind": "guide",
+  "summary": "F5-TTS is a text-to-speech system based on flow matching that clones a voice from a short reference audio clip and generates fluent, faithful speech.",
+  "source_name": "SWivid/F5-TTS (GitHub)",
+  "source_url": "https://github.com/SWivid/F5-TTS",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

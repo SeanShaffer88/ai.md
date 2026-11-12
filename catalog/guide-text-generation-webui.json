@@ -1,0 +1,17 @@
+{
+  "id": "guide-text-generation-webui",
+  "name": "text-generation-webui",
+  "kind": "guide",
+  "summary": "Desktop app for running large language models locally, with a chat interface, vision and tool-calling support, web search, and an OpenAI-compatible API; the project now develops under the name TextGen.",
+  "source_name": "oobabooga/textgen (GitHub)",
+  "source_url": "https://github.com/oobabooga/textgen",
+  "license": "AGPL-3.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-mergekit",
+  "name": "mergekit",
+  "kind": "guide",
+  "summary": "Toolkit for merging machine learning models, providing a library of parameter-space merging methods (linear, SLERP, TIES, DARE and others) driven by YAML configuration files.",
+  "source_name": "arcee-ai/mergekit (GitHub)",
+  "source_url": "https://github.com/arcee-ai/mergekit",
+  "license": "LGPL-3.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

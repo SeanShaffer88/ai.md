@@ -1,0 +1,17 @@
+{
+  "id": "guide-executorch",
+  "name": "ExecuTorch",
+  "kind": "guide",
+  "summary": "Documentation for ExecuTorch, PyTorch's solution for efficient on-device AI inference, exporting PyTorch models to run on mobile phones, wearables, embedded systems and microcontrollers.",
+  "source_name": "ExecuTorch documentation (PyTorch)",
+  "source_url": "https://docs.pytorch.org/executorch/stable/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

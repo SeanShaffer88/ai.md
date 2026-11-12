@@ -1,0 +1,17 @@
+{
+  "id": "guide-paddleocr",
+  "name": "PaddleOCR",
+  "kind": "guide",
+  "summary": "PaddleOCR is an open-source OCR toolkit that converts PDF documents and images into structured, LLM-ready data such as JSON and Markdown.",
+  "source_name": "PaddlePaddle/PaddleOCR (GitHub)",
+  "source_url": "https://github.com/PaddlePaddle/PaddleOCR",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

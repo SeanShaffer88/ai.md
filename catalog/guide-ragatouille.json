@@ -1,0 +1,17 @@
+{
+  "id": "guide-ragatouille",
+  "name": "RAGatouille",
+  "kind": "guide",
+  "summary": "RAGatouille is a Python library that makes it easy to use and fine-tune state-of-the-art retrieval models such as ColBERT inside RAG pipelines.",
+  "source_name": "AnswerDotAI/RAGatouille (GitHub)",
+  "source_url": "https://github.com/AnswerDotAI/RAGatouille",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

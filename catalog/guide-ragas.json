@@ -1,0 +1,17 @@
+{
+  "id": "guide-ragas",
+  "name": "ragas",
+  "kind": "guide",
+  "summary": "Ragas is an evaluation toolkit for LLM applications, especially retrieval-augmented generation, with data-driven metrics and test-data generation.",
+  "source_name": "vibrantlabsai/ragas (GitHub)",
+  "source_url": "https://github.com/vibrantlabsai/ragas",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

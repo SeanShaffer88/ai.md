@@ -1,0 +1,17 @@
+{
+  "id": "guide-chonkie",
+  "name": "Chonkie",
+  "kind": "guide",
+  "summary": "Chonkie is a lightweight text-chunking library for building fast, efficient ingestion pipelines for retrieval-augmented generation.",
+  "source_name": "feyninc/chonkie (GitHub)",
+  "source_url": "https://github.com/feyninc/chonkie",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

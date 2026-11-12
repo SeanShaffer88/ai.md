@@ -1,0 +1,17 @@
+{
+  "id": "guide-perplexity-api",
+  "name": "Perplexity API",
+  "kind": "guide",
+  "summary": "Official documentation for Perplexity's API platform, offering web-grounded answers with citations, web search, embeddings, and model access for products and agents.",
+  "source_name": "Official documentation",
+  "source_url": "https://docs.perplexity.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

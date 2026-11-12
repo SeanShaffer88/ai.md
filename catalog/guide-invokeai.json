@@ -1,0 +1,17 @@
+{
+  "id": "guide-invokeai",
+  "name": "InvokeAI",
+  "kind": "guide",
+  "summary": "Professional creative AI application for visual media: a locally run image generation and editing studio built on diffusion models, with a polished web interface and unified canvas editor.",
+  "source_name": "invoke-ai/InvokeAI (GitHub)",
+  "source_url": "https://github.com/invoke-ai/InvokeAI",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI creators"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

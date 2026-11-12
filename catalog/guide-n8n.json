@@ -1,0 +1,17 @@
+{
+  "id": "guide-n8n",
+  "name": "n8n",
+  "kind": "guide",
+  "summary": "Official documentation for n8n, a fair-code workflow automation tool that combines AI features with business process automation.",
+  "source_name": "Official documentation",
+  "source_url": "https://docs.n8n.io/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

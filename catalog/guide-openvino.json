@@ -1,0 +1,17 @@
+{
+  "id": "guide-openvino",
+  "name": "OpenVINO",
+  "kind": "guide",
+  "summary": "Documentation for Intel's OpenVINO toolkit, which converts, optimizes and deploys AI models for high-performance inference across Intel CPUs, GPUs and accelerators, from cloud servers to edge devices.",
+  "source_name": "OpenVINO documentation (Intel)",
+  "source_url": "https://docs.openvino.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

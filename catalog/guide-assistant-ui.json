@@ -1,0 +1,17 @@
+{
+  "id": "guide-assistant-ui",
+  "name": "assistant-ui",
+  "kind": "guide",
+  "summary": "Open-source TypeScript/React library of composable primitives for building production AI chat interfaces, with runtimes for the Vercel AI SDK, LangGraph, and custom backends.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/assistant-ui/assistant-ui",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

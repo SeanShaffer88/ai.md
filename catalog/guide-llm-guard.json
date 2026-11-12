@@ -1,0 +1,17 @@
+{
+  "id": "guide-llm-guard",
+  "name": "LLM Guard",
+  "kind": "guide",
+  "summary": "LLM Guard is a security toolkit of input and output scanners that sanitize, validate and redact LLM prompts and responses; the upstream repository has been archived.",
+  "source_name": "protectai/llm-guard (GitHub)",
+  "source_url": "https://github.com/protectai/llm-guard",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-usearch",
+  "name": "USearch",
+  "kind": "guide",
+  "summary": "USearch is a fast similarity-search library for building approximate nearest-neighbor indexes over dense and sparse vectors, with bindings for many languages.",
+  "source_name": "unum-cloud/USearch (GitHub)",
+  "source_url": "https://github.com/unum-cloud/USearch",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

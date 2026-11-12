@@ -1,0 +1,17 @@
+{
+  "id": "guide-bifrost",
+  "name": "Bifrost",
+  "kind": "guide",
+  "summary": "Open-source AI gateway from Maxim that unifies access to many model providers behind a single OpenAI-compatible API, with failover, load balancing, semantic caching, and MCP gateway features.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/maximhq/bifrost",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

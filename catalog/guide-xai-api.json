@@ -1,0 +1,17 @@
+{
+  "id": "guide-xai-api",
+  "name": "xAI API",
+  "kind": "guide",
+  "summary": "Official documentation for xAI's Grok API, covering text, code, voice, image, and video models through an OpenAI-compatible API.",
+  "source_name": "Official documentation",
+  "source_url": "https://docs.x.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

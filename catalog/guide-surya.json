@@ -1,0 +1,17 @@
+{
+  "id": "guide-surya",
+  "name": "Surya",
+  "kind": "guide",
+  "summary": "Surya is a compact open-source OCR model and toolkit for extracting text, layout and reading order from documents in many languages.",
+  "source_name": "datalab-to/surya (GitHub)",
+  "source_url": "https://github.com/datalab-to/surya",
+  "license": "Apache-2.0 (code); model weights OpenRAIL-M",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

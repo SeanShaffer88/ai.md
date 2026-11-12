@@ -1,0 +1,17 @@
+{
+  "id": "guide-baml",
+  "name": "BAML",
+  "kind": "guide",
+  "summary": "Documentation for BAML, Boundary's domain-specific language for building type-safe structured-output LLM functions that work with any model and any language, with generated clients and an editor playground.",
+  "source_name": "BAML documentation (Boundary)",
+  "source_url": "https://docs.boundaryml.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

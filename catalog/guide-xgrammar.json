@@ -1,0 +1,17 @@
+{
+  "id": "guide-xgrammar",
+  "name": "XGrammar",
+  "kind": "guide",
+  "summary": "Open-source library for flexible, portable and fast structured generation: constrains LLM decoding to general context-free grammars with near-zero overhead, co-designed with LLM inference engines.",
+  "source_name": "XGrammar project site (MLC)",
+  "source_url": "https://xgrammar.mlc.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

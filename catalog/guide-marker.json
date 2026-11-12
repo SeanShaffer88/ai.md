@@ -1,0 +1,17 @@
+{
+  "id": "guide-marker",
+  "name": "Marker",
+  "kind": "guide",
+  "summary": "Marker is an open-source tool that converts PDFs and other documents (images, Office files, HTML, EPUB) into Markdown, JSON and HTML for use in LLM pipelines.",
+  "source_name": "datalab-to/marker (GitHub)",
+  "source_url": "https://github.com/datalab-to/marker",
+  "license": "Apache-2.0 (code); model weights OpenRAIL-M",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

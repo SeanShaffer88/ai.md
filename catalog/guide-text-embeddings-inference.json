@@ -1,0 +1,17 @@
+{
+  "id": "guide-text-embeddings-inference",
+  "name": "Text Embeddings Inference",
+  "kind": "guide",
+  "summary": "Text Embeddings Inference is Hugging Face's fast inference server for serving text embedding models over an HTTP API.",
+  "source_name": "huggingface/text-embeddings-inference (GitHub)",
+  "source_url": "https://github.com/huggingface/text-embeddings-inference",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

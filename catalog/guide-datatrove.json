@@ -1,0 +1,17 @@
+{
+  "id": "guide-datatrove",
+  "name": "DataTrove",
+  "kind": "guide",
+  "summary": "DataTrove is Hugging Face's library for processing, filtering and deduplicating text data at very large scale, built for preparing LLM training corpora.",
+  "source_name": "huggingface/datatrove (GitHub)",
+  "source_url": "https://github.com/huggingface/datatrove",
+  "license": "Apache-2.0",
+  "clients": [
+    "ML developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

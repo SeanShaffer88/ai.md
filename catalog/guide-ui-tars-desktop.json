@@ -1,0 +1,18 @@
+{
+  "id": "guide-ui-tars-desktop",
+  "name": "UI-TARS Desktop",
+  "kind": "guide",
+  "summary": "ByteDance's desktop GUI agent application driven by the UI-TARS vision-language model, with local and remote computer and browser operators; the repository is now archived.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/bytedance/UI-TARS-desktop",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

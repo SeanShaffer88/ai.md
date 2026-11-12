@@ -1,0 +1,17 @@
+{
+  "id": "guide-mlc-llm",
+  "name": "MLC LLM",
+  "kind": "guide",
+  "summary": "Machine learning compiler project that compiles and deploys large language models natively across GPUs, CPUs, mobile phones and browsers, using Apache TVM-based compilation.",
+  "source_name": "mlc-ai/mlc-llm (GitHub)",
+  "source_url": "https://github.com/mlc-ai/mlc-llm",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}
