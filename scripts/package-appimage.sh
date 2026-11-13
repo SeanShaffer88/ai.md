@@ -27,6 +27,7 @@ convert assets/branding/app-icon.png -resize 512x512 "$stage/com.aimd.app.png"
 export APPIMAGE_EXTRACT_AND_RUN=1
 export OUTPUT="$out/ai-md-$version-x86_64.AppImage"
 export VERSION="$version"
+chmod +x packaging/linux/AppRun
 "$tool" --appdir "$appdir" --executable "${CARGO_TARGET_DIR:-target}/release/ai_md" \
   --desktop-file packaging/linux/com.aimd.app.desktop \
   --icon-file "$stage/com.aimd.app.png" --custom-apprun packaging/linux/AppRun --output appimage
