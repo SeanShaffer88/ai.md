@@ -1,7 +1,7 @@
 #![recursion_limit = "512"]
 #![cfg_attr(target_os = "windows", windows_subsystem = "windows")]
 
-pub(crate) const APP_ID: &str = "com.s1dashu.quietmd";
+pub(crate) const APP_ID: &str = "com.aimd.app";
 
 mod app;
 mod catalog;

@@ -49,7 +49,7 @@ ORDER  BY 1;</code></pre>
 }</code></pre>
 <pre lang="bash" caption="Back up your documents"><code># Create a dated archive of your documents.
 cd ~/Documents
-tar -czf "Quiet-$(date +%F).tar.gz" Quiet.md</code></pre>
+tar -czf "ai-md-$(date +%F).tar.gz" ai.md</code></pre>
 <h2>Names and wrapping</h2><p>Click the caption above a code block to give it a filename or a useful description. Long lines scroll horizontally by default. Enable wrapping in the block's controls when you would rather read them without scrolling.</p>
 <pre lang="plaintext" caption="Example error log" wrap="true"><code>2026-11-01 09:42:17.381 ERROR [save] No space left on device. The document remains unsaved; free some space and save again.</code></pre>
 <h2>Copy and fold</h2><ul><li>The copy button copies the complete code block without its line numbers.</li><li>Use the triangle on the left to fold a long block.</li><li>The document theme controls line numbers. Craft, Feishu and Obsidian show them; Notion does not.</li></ul>

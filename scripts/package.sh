@@ -1,23 +1,23 @@
 #!/bin/zsh
-# Build, sign, notarize and package Quiet.md as a .dmg for distribution.
+# Build, sign, notarize and package ai.md as a .dmg for distribution.
 #
 #   scripts/package.sh [version]
 #
 # Needs a "Developer ID Application" certificate in the keychain and a
 # notarytool keychain profile. Create the profile once:
 #
-#   xcrun notarytool store-credentials quiet-md \
+#   xcrun notarytool store-credentials ai-md \
 #     --apple-id <你的 Apple ID> --team-id <Team ID> --password <App 专用密码>
 #
 # Environment:
 #   CODESIGN_ID    证书名，默认自动取钥匙串里的第一个 "Developer ID Application"
-#   NOTARY_PROFILE notarytool 的 profile 名，默认 quiet-md
-#   BUNDLE_ID      bundle identifier，默认 app.quietmd.mac（发布前改成你自己的反向域名）
+#   NOTARY_PROFILE notarytool 的 profile 名，默认 ai-md
+#   BUNDLE_ID      bundle identifier，默认 app.aimd.mac（发布前改成你自己的反向域名）
 set -e
 cd "$(dirname "$0")/.."
 version=${1:-$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)}
-bundle_id=${BUNDLE_ID:-app.quietmd.mac}
-profile=${NOTARY_PROFILE:-quiet-md}
+bundle_id=${BUNDLE_ID:-app.aimd.mac}
+profile=${NOTARY_PROFILE:-ai-md}
 sign_id=${CODESIGN_ID:-$(security find-identity -v -p codesigning | sed -n 's/.*"\(Developer ID Application:.*\)"/\1/p' | head -1)}
 [ -n "$sign_id" ] || {
   echo "package.sh: 钥匙串里没有 Developer ID Application 证书。" >&2
@@ -26,8 +26,8 @@ sign_id=${CODESIGN_ID:-$(security find-identity -v -p codesigning | sed -n 's/.*
 }
 
 out=dist
-app="$out/quiet.md.app"
-dmg="$out/quiet.md-$version.dmg"
+app="$out/ai.md.app"
+dmg="$out/ai.md-$version.dmg"
 
 echo "== 编译 $version"
 cargo build --release --locked
@@ -35,7 +35,7 @@ cargo build --release --locked
 echo "== 组装 $app"
 rm -rf "$out"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
-cp target/release/quiet_md "$app/Contents/MacOS/quiet_md"
+cp target/release/ai_md "$app/Contents/MacOS/ai_md"
 # .icns：Finder 和 Dock 用图标文件，不是裸 PNG。
 iconset=$(mktemp -d)/icon.iconset
 mkdir -p "$iconset"
@@ -48,17 +48,17 @@ cat > "$app/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
-  <key>CFBundleName</key><string>Quiet.md</string>
-  <key>CFBundleDisplayName</key><string>Quiet.md</string>
+  <key>CFBundleName</key><string>ai.md</string>
+  <key>CFBundleDisplayName</key><string>ai.md</string>
   <key>CFBundleIdentifier</key><string>$bundle_id</string>
-  <key>CFBundleExecutable</key><string>quiet_md</string>
+  <key>CFBundleExecutable</key><string>ai_md</string>
   <key>CFBundleIconFile</key><string>app-icon</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>$version</string>
   <key>CFBundleVersion</key><string>$version</string>
   <key>NSHighResolutionCapable</key><true/>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
-  <key>NSDocumentsFolderUsageDescription</key><string>Quiet.md 把文档库放在「文稿」里的 Quiet.md 文件夹。</string>
+  <key>NSDocumentsFolderUsageDescription</key><string>ai.md 把文档库放在「文稿」里的 ai.md 文件夹。</string>
   <key>CFBundleDocumentTypes</key><array><dict>
     <key>CFBundleTypeName</key><string>Markdown</string>
     <key>CFBundleTypeRole</key><string>Editor</string>
@@ -78,7 +78,7 @@ rm -rf "$out/dmg-root"
 mkdir -p "$out/dmg-root"
 cp -R "$app" "$out/dmg-root/"
 ln -s /Applications "$out/dmg-root/Applications"
-hdiutil create -quiet -volname "Quiet.md" -srcfolder "$out/dmg-root" -ov -format UDZO "$dmg"
+hdiutil create -quiet -volname "ai.md" -srcfolder "$out/dmg-root" -ov -format UDZO "$dmg"
 rm -rf "$out/dmg-root"
 codesign --force --timestamp --sign "$sign_id" "$dmg"
 

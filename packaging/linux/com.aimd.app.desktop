@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=ai.md
+Comment=Local notes
+Exec=ai_md %F
+Icon=com.aimd.app
+Terminal=false
+Categories=Office;TextEditor;
+MimeType=text/markdown;text/x-markdown;
+StartupWMClass=com.aimd.app

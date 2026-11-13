@@ -789,8 +789,8 @@ fn base_named(kind: &str, name: &str, feishu: bool) -> Option<Hsla> {
 #[cfg(test)]
 fn base_css(feishu: bool, name: &str, name_en: &str, description: &str) -> String {
     let st = Style::plain(feishu);
-    let mut out = format!("/*\n * quiet.md 文档主题：{name}\n *\n * 每个属性都写着当前的值。改完保存，应用里立即生效。\n * 选择器与属性的说明见 docs/THEMES.md。\n */\n\n:root {{\n");
-    out += &format!("  --theme-name: \"{name}\";\n  --theme-name-en: \"{name_en}\";\n  --theme-author: \"quiet.md\";\n  --theme-description: \"{description}\";\n  /* 块的画法：craft 或 feishu */\n  --theme-base: {};\n", if feishu { "feishu" } else { "craft" });
+    let mut out = format!("/*\n * ai.md 文档主题：{name}\n *\n * 每个属性都写着当前的值。改完保存，应用里立即生效。\n * 选择器与属性的说明见 docs/THEMES.md。\n */\n\n:root {{\n");
+    out += &format!("  --theme-name: \"{name}\";\n  --theme-name-en: \"{name_en}\";\n  --theme-author: \"ai.md\";\n  --theme-description: \"{description}\";\n  /* 块的画法：craft 或 feishu */\n  --theme-base: {};\n", if feishu { "feishu" } else { "craft" });
     for (kind, title) in [("color", "文字颜色"), ("highlight", "文字高亮"), ("background", "块背景"), ("callout", "高亮块底色"), ("border", "高亮块边框")] {
         out += &format!("\n  /* {title} */\n");
         for n in palette_names(kind) {
