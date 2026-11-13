@@ -65,15 +65,15 @@ jobs:
       - name: Test Intel update validation under Rosetta
         run: |
           sudo softwareupdate --install-rosetta --agree-to-license
-          cargo test --release --locked --target x86_64-apple-darwin --bin quiet_md update::tests
+          cargo test --release --locked --target x86_64-apple-darwin --bin ai_md update::tests
 
       - name: Upload macOS validation packages
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: macos-validation-packages
           path: |
-            dist-release.*/quiet-md-*-macos-*-unsigned.zip
-            dist-release.*/quiet-md-*-macos-*-unsigned.zip.sha256
+            dist-release.*/ai-md-*-macos-*-unsigned.zip
+            dist-release.*/ai-md-*-macos-*-unsigned.zip.sha256
           if-no-files-found: error
           retention-days: 7
 
@@ -113,8 +113,8 @@ jobs:
         with:
           name: windows-x64-package
           path: |
-            dist/windows/unsigned/quiet-md-*-windows-x64-setup.exe
-            dist/windows/unsigned/quiet-md-*-windows-x64-setup.exe.sha256
+            dist/windows/unsigned/ai-md-*-windows-x64-setup.exe
+            dist/windows/unsigned/ai-md-*-windows-x64-setup.exe.sha256
           if-no-files-found: error
           retention-days: 14
 
