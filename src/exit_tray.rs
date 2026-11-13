@@ -55,8 +55,8 @@ pub fn window_hwnd(window: &Window) -> Option<isize> {
     #[cfg(target_os = "windows")]
     {
         use raw_window_handle::HasWindowHandle;
-        let handle = window.window_handle().ok()?;
-        match handle.as_raw() {
+        let raw_handle = raw_window_handle::HasWindowHandle::window_handle(window).ok()?;
+        match raw_handle.as_raw() {
             raw_window_handle::RawWindowHandle::Win32(w) => {
                 let v = w.hwnd.get() as isize;
                 win::MAIN.store(v, std::sync::atomic::Ordering::Relaxed);
@@ -208,7 +208,7 @@ mod win {
     use super::{QUIT, RESTORE};
     use std::sync::atomic::{AtomicBool, AtomicIsize, Ordering};
     use windows::core::{w, PCWSTR};
-    use windows::Win32::Foundation::{HWND, LPARAM, LRESULT, POINT, WPARAM};
+    use windows::Win32::Foundation::{HINSTANCE, HWND, LPARAM, LRESULT, POINT, WPARAM};
     use windows::Win32::System::LibraryLoader::GetModuleHandleW;
     use windows::Win32::UI::Shell::{Shell_NotifyIconW, NIF_ICON, NIF_MESSAGE, NIF_TIP, NIM_ADD, NIM_DELETE, NOTIFYICONDATAW};
     use windows::Win32::UI::WindowsAndMessaging::*;
@@ -251,7 +251,8 @@ mod win {
 
     fn run(_main: isize) {
         unsafe {
-            let Ok(hinst) = GetModuleHandleW(None) else { return };
+            let Ok(hmod) = GetModuleHandleW(None) else { return };
+            let hinst: HINSTANCE = hmod.into();
             let class = w!("AiMdTrayWindow");
             let wc = WNDCLASSW { hInstance: hinst, lpszClassName: class, lpfnWndProc: Some(proc), ..Default::default() };
             RegisterClassW(&wc);
@@ -298,7 +299,9 @@ mod win {
     }
 
     unsafe extern "system" fn proc(hwnd: HWND, msg: u32, wp: WPARAM, lp: LPARAM) -> LRESULT {
-        match msg {
+        // Rust 2024: calls to unsafe fns need an explicit unsafe block
+        // even inside an unsafe fn.
+        unsafe { match msg {
             CALLBACK => {
                 let event = lp.0 as u32;
                 if event == WM_LBUTTONDBLCLK {
@@ -328,10 +331,11 @@ mod win {
                 LRESULT(0)
             }
             _ => DefWindowProcW(hwnd, msg, wp, lp),
-        }
+        } }
     }
 
     unsafe fn menu(hwnd: HWND) {
+      unsafe {
         let Ok(menu) = CreatePopupMenu() else { return };
         let en = crate::settings::english();
         let open = wide(if en { "Open ai.md" } else { "打开 ai.md" });
@@ -341,7 +345,8 @@ mod win {
         let mut pt = POINT::default();
         let _ = GetCursorPos(&mut pt);
         let _ = SetForegroundWindow(hwnd);
-        let _ = TrackPopupMenu(menu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hwnd, None);
+        let _ = TrackPopupMenu(menu, TPM_RIGHTBUTTON, pt.x, pt.y, Some(0), hwnd, None);
         let _ = DestroyMenu(menu);
+      }
     }
 }
