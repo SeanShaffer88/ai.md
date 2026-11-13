@@ -90,9 +90,14 @@ jobs:
           rustup target add x86_64-pc-windows-msvc
           if ($LASTEXITCODE -ne 0) { throw 'rustup target add failed' }
           $env:RUSTFLAGS = '-C target-feature=+crt-static'
-          & cargo build --release --target x86_64-pc-windows-msvc --manifest-path .seanpak/Cargo.toml
+          # Build SeanPak outside this repo's tree: inside it, cargo
+          # mistakes SeanPak's manifest for a member of ai.md's own
+          # workspace and refuses to build it.
+          $sp = Join-Path $env:RUNNER_TEMP 'seanpak'
+          Move-Item '.seanpak' $sp
+          & cargo build --release --target x86_64-pc-windows-msvc --manifest-path (Join-Path $sp 'Cargo.toml')
           if ($LASTEXITCODE -ne 0) { throw 'SeanPak build failed' }
-          $seanpak = '.seanpak/target/x86_64-pc-windows-msvc/release/seanpak.exe'
+          $seanpak = Join-Path $sp 'target/x86_64-pc-windows-msvc/release/seanpak.exe'
           & $seanpak validate seanpak.json
           if ($LASTEXITCODE -ne 0) { throw 'SeanPak manifest validation failed' }
           $stage = 'dist/files'
