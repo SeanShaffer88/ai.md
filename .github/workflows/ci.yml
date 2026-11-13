@@ -47,20 +47,20 @@ jobs:
         run: cargo build --release --locked
 
       - name: Tests, bundled guides and clippy
-        run: scripts/check.sh
+        run: bash scripts/check.sh
 
       # Both packages share this ARM runner; do not allocate a second Mac job.
       # Ad-hoc CI packages are for validation, not public distribution.
       - name: Package Apple Silicon
         env:
           SIGNING_IDENTITY: '-'
-        run: scripts/release.sh
+        run: bash scripts/release.sh
 
       - name: Cross-compile and package Intel
         env:
           SIGNING_IDENTITY: '-'
           MACOS_TARGET: x86_64-apple-darwin
-        run: scripts/release.sh
+        run: bash scripts/release.sh
 
       - name: Test Intel update validation under Rosetta
         run: |
@@ -144,10 +144,10 @@ jobs:
         run: python3 scripts/check.py
 
       - name: Verify Linux package
-        run: scripts/package-linux.sh
+        run: bash scripts/package-linux.sh
 
       - name: Build and inspect AppImage
-        run: scripts/package-appimage.sh
+        run: bash scripts/package-appimage.sh
 
       - name: Upload Linux packages
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
