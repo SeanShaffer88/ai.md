@@ -1,0 +1,17 @@
+{
+  "id": "guide-kokoro",
+  "name": "Kokoro TTS",
+  "kind": "guide",
+  "summary": "Kokoro is an inference library for Kokoro-82M, a compact open-weight text-to-speech model with Apache-licensed weights.",
+  "source_name": "hexgrad/kokoro (GitHub)",
+  "source_url": "https://github.com/hexgrad/kokoro",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

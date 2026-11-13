@@ -1,0 +1,18 @@
+{
+  "id": "guide-memobase",
+  "name": "Memobase",
+  "kind": "guide",
+  "summary": "User profile-based long-term memory system that builds structured user profiles and event timelines from chats for LLM applications.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/memodb-io/memobase",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

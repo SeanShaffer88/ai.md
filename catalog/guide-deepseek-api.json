@@ -1,0 +1,17 @@
+{
+  "id": "guide-deepseek-api",
+  "name": "DeepSeek API",
+  "kind": "guide",
+  "summary": "Official documentation for the DeepSeek API, an OpenAI- and Anthropic-compatible API for DeepSeek chat and reasoning models.",
+  "source_name": "Official documentation",
+  "source_url": "https://api-docs.deepseek.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "guide-supermemory",
+  "name": "supermemory",
+  "kind": "guide",
+  "summary": "Memory and context engine and API that extracts facts and user profiles from conversations so AI apps and agents can recall the right context across sessions.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/supermemoryai/supermemory",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-safetensors",
+  "name": "Safetensors",
+  "kind": "guide",
+  "summary": "Documentation for Safetensors, a simple, safe and fast file format for storing and loading model tensors with zero-copy loading, designed as a secure alternative to pickle-based checkpoints.",
+  "source_name": "Safetensors documentation (Hugging Face)",
+  "source_url": "https://huggingface.co/docs/safetensors",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

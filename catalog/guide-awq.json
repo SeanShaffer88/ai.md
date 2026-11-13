@@ -1,0 +1,17 @@
+{
+  "id": "guide-awq",
+  "name": "AWQ",
+  "kind": "guide",
+  "summary": "Activation-aware weight quantization: an efficient and accurate low-bit (INT3/INT4) weight-only quantization method and toolkit for compressing and accelerating large language models, including multi-modal models.",
+  "source_name": "mit-han-lab/llm-awq (GitHub)",
+  "source_url": "https://github.com/mit-han-lab/llm-awq",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

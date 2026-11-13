@@ -1,0 +1,18 @@
+{
+  "id": "guide-reloaderoo",
+  "name": "Reloaderoo",
+  "kind": "guide",
+  "summary": "MCP development tool that inspects and tests MCP servers from the CLI and proxies them with hot-reload, so AI client sessions survive server restarts.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/cameroncooke/reloaderoo",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

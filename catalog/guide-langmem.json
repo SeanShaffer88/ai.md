@@ -1,0 +1,18 @@
+{
+  "id": "guide-langmem",
+  "name": "LangMem",
+  "kind": "guide",
+  "summary": "LangChain library that helps LangGraph agents learn from their interactions, with memory management tools and a background manager that maintains long-term memory.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/langchain-ai/langmem",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

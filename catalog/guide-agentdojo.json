@@ -1,0 +1,17 @@
+{
+  "id": "guide-agentdojo",
+  "name": "AgentDojo",
+  "kind": "guide",
+  "summary": "ETH Zurich benchmark environment for evaluating prompt injection attacks and defenses for LLM agents across dynamic, tool-using task suites.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/ethz-spylab/agentdojo",
+  "license": "MIT",
+  "clients": [
+    "AI researchers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

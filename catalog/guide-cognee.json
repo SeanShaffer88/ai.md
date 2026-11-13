@@ -1,0 +1,18 @@
+{
+  "id": "guide-cognee",
+  "name": "Cognee",
+  "kind": "guide",
+  "summary": "Open-source AI memory platform that turns documents, code, and conversations into a self-hosted knowledge graph, giving agents persistent long-term memory.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/topoteretes/cognee",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mcp-fhir",
+  "name": "FHIR MCP Server",
+  "kind": "mcp",
+  "summary": "WSO2 MCP server that exposes any FHIR server or API to MCP clients, with search, read, create, update, and delete tools and SMART-on-FHIR authentication.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/wso2/fhir-mcp-server",
+  "license": "Apache-2.0",
+  "clients": [
+    "Healthcare developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11",
+  "install": "uvx fhir-mcp-server",
+  "config": "{\n  \"mcpServers\": {\n    \"fhir\": {\n      \"command\": \"uv\",\n      \"args\": [\"--directory\", \"/path/to/fhir-mcp-server\", \"run\", \"fhir-mcp-server\", \"--transport\", \"stdio\"],\n      \"env\": {\n        \"FHIR_SERVER_ACCESS_TOKEN\": \"Your FHIR Access Token\"\n      }\n    }\n  }\n}"
+}

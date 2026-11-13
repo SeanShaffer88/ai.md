@@ -1,0 +1,17 @@
+{
+  "id": "guide-segment-anything",
+  "name": "Segment Anything",
+  "kind": "guide",
+  "summary": "Meta AI's Segment Anything Model (SAM): a promptable image segmentation foundation model, with its training and evaluation code, that zero-shot segments objects from point, box or mask prompts.",
+  "source_name": "facebookresearch/segment-anything (GitHub)",
+  "source_url": "https://github.com/facebookresearch/segment-anything",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

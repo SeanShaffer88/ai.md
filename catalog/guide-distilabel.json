@@ -1,0 +1,17 @@
+{
+  "id": "guide-distilabel",
+  "name": "Distilabel",
+  "kind": "guide",
+  "summary": "Distilabel is a framework for building data-generation pipelines that use LLMs to synthesize and judge datasets for training and evaluation.",
+  "source_name": "Distilabel documentation",
+  "source_url": "https://distilabel.argilla.io/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

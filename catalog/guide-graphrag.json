@@ -1,0 +1,18 @@
+{
+  "id": "guide-graphrag",
+  "name": "GraphRAG",
+  "kind": "guide",
+  "summary": "Microsoft's graph-based retrieval-augmented generation system that builds a knowledge graph and community summaries from your documents to answer global, corpus-wide questions that plain vector RAG handles poorly.",
+  "source_name": "microsoft/graphrag (GitHub)",
+  "source_url": "https://github.com/microsoft/graphrag",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

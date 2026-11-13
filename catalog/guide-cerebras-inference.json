@@ -1,0 +1,17 @@
+{
+  "id": "guide-cerebras-inference",
+  "name": "Cerebras Inference",
+  "kind": "guide",
+  "summary": "Official documentation for Cerebras Inference, a fast hosted inference API for open models with an OpenAI-compatible chat completions API.",
+  "source_name": "Official documentation",
+  "source_url": "https://inference-docs.cerebras.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

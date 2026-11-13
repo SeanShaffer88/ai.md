@@ -1,0 +1,17 @@
+{
+  "id": "guide-voyage-ai",
+  "name": "Voyage AI",
+  "kind": "guide",
+  "summary": "Official documentation for Voyage AI's embedding models and rerankers, APIs used for semantic search and retrieval-augmented generation.",
+  "source_name": "Official documentation",
+  "source_url": "https://docs.voyageai.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

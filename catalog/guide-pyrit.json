@@ -1,0 +1,17 @@
+{
+  "id": "guide-pyrit",
+  "name": "PyRIT",
+  "kind": "guide",
+  "summary": "PyRIT (Python Risk Identification Tool) is Microsoft's open-source toolkit for red-teaming generative AI systems through automated scans and adaptive multi-turn attacks.",
+  "source_name": "microsoft/PyRIT (GitHub)",
+  "source_url": "https://github.com/microsoft/PyRIT",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

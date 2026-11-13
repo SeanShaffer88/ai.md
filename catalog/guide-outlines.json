@@ -1,0 +1,17 @@
+{
+  "id": "guide-outlines",
+  "name": "Outlines",
+  "kind": "guide",
+  "summary": "Documentation for Outlines, the .txt library that guarantees structured LLM outputs during generation — always-valid JSON Schema, regex or grammar-constrained results from local models and hosted APIs alike.",
+  "source_name": "Outlines documentation (.txt)",
+  "source_url": "https://dottxt-ai.github.io/outlines/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

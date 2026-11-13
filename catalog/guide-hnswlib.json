@@ -1,0 +1,17 @@
+{
+  "id": "guide-hnswlib",
+  "name": "hnswlib",
+  "kind": "guide",
+  "summary": "hnswlib is a header-only C++ library with Python bindings that implements fast approximate nearest-neighbor search using HNSW graphs.",
+  "source_name": "nmslib/hnswlib (GitHub)",
+  "source_url": "https://github.com/nmslib/hnswlib",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

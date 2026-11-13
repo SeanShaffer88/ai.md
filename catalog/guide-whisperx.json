@@ -1,0 +1,17 @@
+{
+  "id": "guide-whisperx",
+  "name": "WhisperX",
+  "kind": "guide",
+  "summary": "WhisperX adds fast word-level timestamps, speaker diarization and batched inference on top of OpenAI's Whisper speech-recognition model.",
+  "source_name": "m-bain/whisperX (GitHub)",
+  "source_url": "https://github.com/m-bain/whisperX",
+  "license": "BSD-2-Clause",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

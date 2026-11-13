@@ -1,0 +1,17 @@
+{
+  "id": "guide-argilla",
+  "name": "Argilla",
+  "kind": "guide",
+  "summary": "Argilla is an open-source data curation platform for collecting human and model feedback to build datasets for LLM training and evaluation.",
+  "source_name": "Argilla documentation",
+  "source_url": "https://docs.argilla.io/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

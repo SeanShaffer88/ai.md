@@ -1,0 +1,21 @@
+{
+  "id": "mcp-octocode",
+  "name": "Octocode",
+  "kind": "mcp",
+  "summary": "MCP server and CLI for evidence-first code research, searching and reading local code and GitHub repositories, pull requests, and packages with ripgrep, AST, and LSP tools.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/bgauryy/octocode",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "files",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11",
+  "install": "npx octocode install",
+  "config": "{\n  \"octocode\": {\n    \"command\": \"npx\",\n    \"type\": \"stdio\",\n    \"args\": [\"octocode-mcp@latest\"]\n  }\n}"
+}

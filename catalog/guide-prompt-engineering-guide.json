@@ -1,0 +1,17 @@
+{
+  "id": "guide-prompt-engineering-guide",
+  "name": "Prompt Engineering Guide",
+  "kind": "guide",
+  "summary": "DAIR.AI's guide collecting lessons, papers, notebooks, and resources on prompt engineering, context engineering, RAG, and AI agents.",
+  "source_name": "GitHub repository",
+  "source_url": "https://github.com/dair-ai/Prompt-Engineering-Guide",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}

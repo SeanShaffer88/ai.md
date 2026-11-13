@@ -1,0 +1,17 @@
+{
+  "id": "guide-webllm",
+  "name": "WebLLM",
+  "kind": "guide",
+  "summary": "High-performance in-browser language model inference engine: runs LLMs entirely inside the browser tab with WebGPU acceleration and an OpenAI-compatible API, with no server-side processing.",
+  "source_name": "WebLLM project site (MLC)",
+  "source_url": "https://webllm.mlc.ai/",
+  "license": "See site",
+  "clients": [
+    "Web developers"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-11"
+}
