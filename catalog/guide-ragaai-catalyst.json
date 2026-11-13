@@ -1,0 +1,18 @@
+{
+  "id": "guide-ragaai-catalyst",
+  "name": "RagaAI Catalyst",
+  "kind": "guide",
+  "summary": "RagaAI Catalyst is a Python SDK for LLM and agent observability and evaluation, covering agent, LLM and tool tracing, dataset and prompt management, evaluation metrics, guardrails and red-teaming, with a self-hosted dashboard.",
+  "source_name": "raga-ai-hub/RagaAI-Catalyst (GitHub)",
+  "source_url": "https://github.com/raga-ai-hub/RagaAI-Catalyst",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

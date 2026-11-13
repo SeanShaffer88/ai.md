@@ -1,0 +1,17 @@
+{
+  "id": "guide-system-prompts-ai-tools",
+  "name": "System Prompts and Models of AI Tools",
+  "kind": "guide",
+  "summary": "A reference collection of system prompts, internal tool definitions and model information for many AI tools, including Augment Code, Claude Code, Cursor, Devin, Lovable, Perplexity, Replit and Windsurf.",
+  "source_name": "x1xhlol/system-prompts-and-models-of-ai-tools (GitHub)",
+  "source_url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools",
+  "license": "GPL-3.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "read-only"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

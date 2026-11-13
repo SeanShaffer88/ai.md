@@ -1,0 +1,17 @@
+{
+  "id": "guide-jina-reader",
+  "name": "Jina Reader",
+  "kind": "guide",
+  "summary": "Jina Reader is a hosted service from Jina AI that fetches a web page or PDF and returns clean, LLM-friendly Markdown when the URL is prefixed with r.jina.ai, with a companion search endpoint at s.jina.ai.",
+  "source_name": "Jina AI (jina.ai)",
+  "source_url": "https://jina.ai/reader",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

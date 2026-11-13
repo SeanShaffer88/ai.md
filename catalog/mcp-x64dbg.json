@@ -1,0 +1,20 @@
+{
+  "id": "mcp-x64dbg",
+  "name": "x64dbg MCP Server",
+  "kind": "mcp",
+  "summary": "A native x64dbg plugin, written in Zig, that exposes the debugger's full functionality over HTTP as an MCP server: an AI assistant can load binaries, set breakpoints, step execution, read and patch memory, and inspect registers, modules and call stacks. Access requires a bearer token the plugin generates.",
+  "source_name": "duty1g/x64dbg-mcp-server (GitHub)",
+  "source_url": "https://github.com/duty1g/x64dbg-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "most MCP clients"
+  ],
+  "risks": [
+    "commands",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "config": "{\n  \"mcpServers\": {\n    \"x64dbg\": {\n      \"type\": \"http\",\n      \"url\": \"http://localhost:9094/\",\n      \"headers\": {\n        \"Authorization\": \"Bearer <your-token>\"\n      }\n    }\n  }\n}"
+}

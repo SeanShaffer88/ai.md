@@ -1,0 +1,19 @@
+{
+  "id": "guide-langchain-chatchat",
+  "name": "Langchain-Chatchat",
+  "kind": "guide",
+  "summary": "Langchain-Chatchat (formerly Langchain-ChatGLM) is an open-source, offline-deployable RAG and agent application built on LangChain and open models such as ChatGLM, Qwen, and Llama, answering questions over a local knowledge base via a FastAPI service or Streamlit WebUI.",
+  "source_name": "chatchat-space/Langchain-Chatchat (GitHub)",
+  "source_url": "https://github.com/chatchat-space/Langchain-Chatchat",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "files",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

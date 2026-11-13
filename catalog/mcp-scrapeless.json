@@ -1,0 +1,22 @@
+{
+  "id": "mcp-scrapeless",
+  "name": "Scrapeless MCP Server",
+  "kind": "mcp",
+  "summary": "The official Scrapeless MCP server connects AI clients to the Scrapeless web service: Google Search and Trends, cloud browser automation, and scraping or crawling pages into HTML, Markdown or screenshots, using a Scrapeless API key.",
+  "source_name": "scrapeless-ai/scrapeless-mcp-server (GitHub)",
+  "source_url": "https://github.com/scrapeless-ai/scrapeless-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "Windsurf"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "install": "npx -y scrapeless-mcp-server",
+  "config": "{\n  \"mcpServers\": {\n    \"Scrapeless MCP Server\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"scrapeless-mcp-server\"],\n      \"env\": {\n        \"SCRAPELESS_API_KEY\": \"YOUR_SCRAPELESS_KEY\"\n      }\n    }\n  }\n}"
+}

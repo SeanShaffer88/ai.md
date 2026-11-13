@@ -110,7 +110,7 @@ A 120 Hz display gives each frame 8.3 ms. Even at P95 on a million-character doc
 ## Screenshots
 
 <p align="center">
-  <img src="docs/images/editor.png" width="100%" alt="The editor, showing the built-in Welcome guide in dark mode.">
+  <img src="docs/images/editor.png" width="100%" alt="The editor in dark mode, with the Today rail and the What's New card in the sidebar.">
 </p>
 
 <p align="center">
@@ -123,7 +123,7 @@ A 120 Hz display gives each frame 8.3 ms. Even at P95 on a million-character doc
 </p>
 
 <p align="center">
-  <img src="docs/images/about.png" width="49%" alt="The About page: ai.md, version 0.2.2.">
+  <img src="docs/images/about.png" width="49%" alt="The About page.">
 </p>
 
 ## Contributors

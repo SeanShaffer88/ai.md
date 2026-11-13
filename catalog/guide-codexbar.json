@@ -1,0 +1,18 @@
+{
+  "id": "guide-codexbar",
+  "name": "CodexBar",
+  "kind": "guide",
+  "summary": "A menu-bar and desktop app by Peter Steinberger (steipete) that shows usage limits, credits and reset times for Codex, Claude Code and many other AI coding providers, reusing existing provider sessions.",
+  "source_name": "steipete/CodexBar (GitHub)",
+  "source_url": "https://github.com/steipete/CodexBar",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

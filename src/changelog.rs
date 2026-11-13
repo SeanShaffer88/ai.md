@@ -15,6 +15,12 @@ const RADIUS: f32 = 12.;
 /// Each version's notes: (version, [(中文, English)]). Only the running
 /// version's are shown; a version without notes shows nothing.
 const NOTES: &[(&str, &[(&str, &str)])] = &[
+    ("0.7.1", &[
+        ("目录新增 54 条（共 335 条）：更多 MCP 服务器、技能与指南，含 ai.md 自己的助手桥条目", "54 new catalog entries (335 in all): more MCP servers, skills and guides, including ai.md's own agent bridge"),
+        ("助手桥现在支持 MCP：ai_md_mcp 适配器随程序附带，支持 MCP 的 AI 工具可直接接入你的文档库", "The agent bridge now speaks MCP: the ai_md_mcp adapter ships beside the app, so MCP-capable AI tools can connect to your library directly"),
+        ("导入菜单新增「备份文档库」：整个文档库打包成一个压缩文件；「从备份恢复」只补回缺失的文件，从不覆盖现有内容", "Back up the whole library to one zip file from the Import menu; restoring brings back missing files and never overwrites what you have"),
+        ("关于页的标语在 Windows 上改为「在你的电脑上」", "The About tagline now says 'on your computer' on Windows"),
+    ]),
     ("0.7.0", &[
         ("统一命令面板：输入 mcp:、skill:、prompt:、note: 或 > 按类型查找，选中条目有预览卡", "One command palette for documents, catalog entries and actions, with typed queries (mcp:, skill:, prompt:, note:, >) and preview cards"),
         ("侧栏新增「今天」栏和文档空间，文档可以按空间分组查看", "A Today rail and Library Spaces in the sidebar"),

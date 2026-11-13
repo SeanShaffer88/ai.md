@@ -1,0 +1,23 @@
+{
+  "id": "mcp-vibe-check",
+  "name": "Vibe Check MCP",
+  "kind": "mcp",
+  "summary": "Vibe Check is an MCP server that acts as a mentor for AI agents: a second model reviews the agent's goal and plan at checkpoints and interrupts over-engineering, tunnel vision and reasoning lock-in on long or risky tasks.",
+  "source_name": "PV-Bhat/vibe-check-mcp-server (GitHub)",
+  "source_url": "https://github.com/PV-Bhat/vibe-check-mcp-server",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "Windsurf",
+    "VS Code"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "install": "npx -y @pv-bhat/vibe-check-mcp start --stdio",
+  "config": "{\n  \"mcpServers\": {\n    \"vibe-check-mcp\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@pv-bhat/vibe-check-mcp\", \"start\", \"--stdio\"]\n    }\n  }\n}"
+}

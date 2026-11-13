@@ -1,0 +1,21 @@
+{
+  "id": "mcp-armor-crypto",
+  "name": "Armor Crypto MCP",
+  "kind": "mcp",
+  "summary": "Armor's MCP server connects AI agents to crypto wallets and trading - wallet management, swaps, DCA and limit orders, staking and token search - starting with Solana. It is in alpha and requires an Armor API key.",
+  "source_name": "armorwallet/armor-crypto-mcp (GitHub)",
+  "source_url": "https://github.com/armorwallet/armor-crypto-mcp",
+  "license": "GPL-3.0",
+  "clients": [
+    "Claude",
+    "Cline",
+    "n8n"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "config": "{\n  \"mcpServers\": {\n    \"armor-crypto-mcp\": {\n      \"command\": \"uvx\",\n      \"args\": [\"armor-crypto-mcp@latest\", \"--version\"],\n      \"env\": {\n        \"ARMOR_API_KEY\": \"<PUT-YOUR-KEY-HERE>\"\n      }\n    }\n  }\n}"
+}

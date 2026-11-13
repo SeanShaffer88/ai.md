@@ -1,0 +1,17 @@
+{
+  "id": "guide-stanford-cs336",
+  "name": "Stanford CS336: Language Modeling from Scratch",
+  "kind": "guide",
+  "summary": "Stanford's CS336 is an implementation-heavy course that builds language modeling from first principles, covering tokenizers, Transformer architecture, training systems, scaling laws, data curation, and alignment through five from-scratch assignments.",
+  "source_name": "Stanford University (cs336.stanford.edu)",
+  "source_url": "https://cs336.stanford.edu/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

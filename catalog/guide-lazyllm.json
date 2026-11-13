@@ -1,0 +1,19 @@
+{
+  "id": "guide-lazyllm",
+  "name": "LazyLLM",
+  "kind": "guide",
+  "summary": "LazyLLM is a low-code development tool for building multi-agent LLM applications, assembling chatbots, RAG pipelines, and multi-agent workflows from standard modules with one-click deployment and built-in fine-tuning support.",
+  "source_name": "LazyAGI/LazyLLM (GitHub)",
+  "source_url": "https://github.com/LazyAGI/LazyLLM",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "files",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "guide-litgpt",
+  "name": "LitGPT",
+  "kind": "guide",
+  "summary": "LitGPT provides more than 20 high-performance LLMs implemented from scratch by Lightning AI, with proven recipes to pretrain, fine-tune, evaluate, and deploy them at scale from a single CLI and Python API.",
+  "source_name": "Lightning-AI/litgpt (GitHub)",
+  "source_url": "https://github.com/Lightning-AI/litgpt",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "files",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

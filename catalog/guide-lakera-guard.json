@@ -1,0 +1,17 @@
+{
+  "id": "guide-lakera-guard",
+  "name": "Lakera Guard",
+  "kind": "guide",
+  "summary": "Lakera Guard, now part of Check Point AI Security, is a hosted runtime defense platform that assesses, monitors, and protects AI applications and agents against prompt injection, data leakage, and related attacks through its API and guardrails.",
+  "source_name": "Check Point AI Security documentation",
+  "source_url": "https://docs.lakera.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

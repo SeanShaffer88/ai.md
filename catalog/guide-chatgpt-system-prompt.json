@@ -1,0 +1,17 @@
+{
+  "id": "guide-chatgpt-system-prompt",
+  "name": "ChatGPT System Prompt Collection",
+  "kind": "guide",
+  "summary": "A reference collection of system prompts for ChatGPT and custom GPTs, together with material on prompt injection and leaking, published for learning how system prompts are written and how to protect them.",
+  "source_name": "LouisShark/chatgpt_system_prompt (GitHub)",
+  "source_url": "https://github.com/LouisShark/chatgpt_system_prompt",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "read-only"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

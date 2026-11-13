@@ -41,3 +41,26 @@ ai.md 可以给**这台电脑上**的其它工具（例如本地的 AI 助手）
 | `create_doc` | `title`、`body`（纯文本，一行一段） | 新文档的 `id` |
 
 桥只能读和新建，不能改、不能删。删除和编辑请在 ai.md 里进行。
+
+## 通过 MCP 使用（Using it through MCP）
+
+ai.md 附带了一个小的 MCP 适配器 `ai_md_mcp.exe`，和 `ai_md.exe` 放在一起（安装版在安装文件夹里，便携版在解压后的文件夹里）。它把标准的 Model Context Protocol 工具调用转发给上面的桥，所以支持 MCP 的客户端（Claude、Cursor、VS Code 等）不用懂桥的私有协议就能接入。
+
+用法：
+
+1. 在 ai.md 里打开 设置 › 通用 › 本地助手桥，并保持 ai.md 运行。
+2. 把适配器加进你的 MCP 客户端配置，例如：
+
+```json
+{
+  "mcpServers": {
+    "ai.md": {
+      "command": "C:\\Program Files\\ai.md\\ai_md_mcp.exe"
+    }
+  }
+}
+```
+
+（便携版把路径换成你解压的位置。）
+
+适配器提供五个工具：`list_documents`、`read_document`、`search_documents`、`search_catalog`、`create_document`，和桥的方法一一对应。桥没打开时，工具会直接说明去哪里打开——适配器自己不保存任何状态，每次调用都会重新读取 `agent-bridge.json`，所以重启 ai.md 不会让它失效。

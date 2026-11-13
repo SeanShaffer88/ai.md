@@ -1,0 +1,19 @@
+{
+  "id": "skill-claude-seo",
+  "name": "Claude SEO",
+  "kind": "skill",
+  "summary": "A Claude Code skill suite for SEO, with 26 sub-skills and 19 sub-agents covering technical SEO, content quality and E-E-A-T, schema, AI search readiness, local and e-commerce SEO, plus optional extensions for live SEO data.",
+  "source_name": "AgriciDaniel/claude-seo (GitHub)",
+  "source_url": "https://github.com/AgriciDaniel/claude-seo",
+  "license": "MIT",
+  "clients": [
+    "Claude Code"
+  ],
+  "risks": [
+    "network",
+    "commands",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

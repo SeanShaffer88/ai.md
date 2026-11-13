@@ -1,0 +1,18 @@
+{
+  "id": "guide-ludwig",
+  "name": "Ludwig",
+  "kind": "guide",
+  "summary": "Ludwig is a declarative, low-code deep learning framework hosted by the Linux Foundation AI & Data: describe a model in a YAML config to train, fine-tune and serve LLMs, multimodal and tabular models built on PyTorch.",
+  "source_name": "ludwig-ai/ludwig (GitHub)",
+  "source_url": "https://github.com/ludwig-ai/ludwig",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

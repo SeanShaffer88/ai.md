@@ -1,0 +1,18 @@
+{
+  "id": "guide-openllm",
+  "name": "OpenLLM",
+  "kind": "guide",
+  "summary": "OpenLLM, built on BentoML, runs open-source LLMs such as DeepSeek, Llama, and Qwen as OpenAI-compatible API endpoints with a single command, with a built-in chat UI and Docker and Kubernetes deployment workflows.",
+  "source_name": "bentoml/OpenLLM (GitHub)",
+  "source_url": "https://github.com/bentoml/OpenLLM",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

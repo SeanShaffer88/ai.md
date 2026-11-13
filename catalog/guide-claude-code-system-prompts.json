@@ -1,0 +1,17 @@
+{
+  "id": "guide-claude-code-system-prompts",
+  "name": "Claude Code System Prompts",
+  "kind": "guide",
+  "summary": "A reference collection of all parts of Claude Code's system prompt, its built-in tool descriptions, and its sub-agent and utility prompts, extracted from the compiled source and updated for each Claude Code version.",
+  "source_name": "Piebald-AI/claude-code-system-prompts (GitHub)",
+  "source_url": "https://github.com/Piebald-AI/claude-code-system-prompts",
+  "license": "MIT",
+  "clients": [
+    "Claude Code"
+  ],
+  "risks": [
+    "read-only"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

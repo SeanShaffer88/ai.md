@@ -1,0 +1,19 @@
+{
+  "id": "guide-autorag",
+  "name": "AutoRAG",
+  "kind": "guide",
+  "summary": "AutoRAG, from Marker Inc., began as a RAG AutoML tool for automatically finding an optimal RAG pipeline for your data; the repository now also hosts AutoRAG 2.0, a local-first personal librarian agent that searches and organizes files on your own computer, with the original tool maintained under its legacy directory.",
+  "source_name": "Marker-Inc-Korea/AutoRAG (GitHub)",
+  "source_url": "https://github.com/Marker-Inc-Korea/AutoRAG",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "files",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "guide-agentmemory",
+  "name": "AgentMemory",
+  "kind": "guide",
+  "summary": "AgentMemory gives AI coding agents one shared persistent memory: it captures coding sessions through native hooks and plugins, stores decisions and fixes in a local store outside the repository, and serves recall to Claude Code, Cursor, Codex, Copilot and other agents over MCP or REST.",
+  "source_name": "rohitg00/agentmemory (GitHub)",
+  "source_url": "https://github.com/rohitg00/agentmemory",
+  "license": "Apache-2.0",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "Codex",
+    "GitHub Copilot"
+  ],
+  "risks": [
+    "files",
+    "commands",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

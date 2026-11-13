@@ -254,7 +254,7 @@ impl CatalogState {
 }
 
 /// Today's date as "2026-11-13" in local civil time.
-fn today_str() -> String {
+pub(crate) fn today_str() -> String {
     let (y, m, d, _, _) = fdl_core::time::civil(fdl_core::time::now());
     format!("{y:04}-{m:02}-{d:02}")
 }

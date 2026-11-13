@@ -1,0 +1,22 @@
+{
+  "id": "mcp-consult7",
+  "name": "Consult7",
+  "kind": "mcp",
+  "summary": "Consult7 is an MCP server that sends large sets of files - whole codebases or document collections - to large-context models through OpenRouter, so an agent can ask questions over far more material than its own context window fits.",
+  "source_name": "szeider/consult7 (GitHub)",
+  "source_url": "https://github.com/szeider/consult7",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "most MCP clients"
+  ],
+  "risks": [
+    "files",
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "install": "claude mcp add -s user consult7 uvx -- consult7 your-openrouter-api-key",
+  "config": "{\n  \"mcpServers\": {\n    \"consult7\": {\n      \"type\": \"stdio\",\n      \"command\": \"uvx\",\n      \"args\": [\"consult7\", \"your-openrouter-api-key\"]\n    }\n  }\n}"
+}

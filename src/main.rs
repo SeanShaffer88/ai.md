@@ -4,6 +4,7 @@
 pub(crate) const APP_ID: &str = "com.aimd.app";
 
 mod app;
+mod backup;
 mod catalog;
 mod catalog_data;
 mod shared_store;

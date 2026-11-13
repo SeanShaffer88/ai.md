@@ -1,0 +1,20 @@
+{
+  "id": "guide-hive",
+  "name": "Hive (Aden)",
+  "kind": "guide",
+  "summary": "Hive is Aden's open-source runtime for colonies of AI agents: a long-lived queen agent takes a task, works out the method, then fans the rest out to parallel worker agents whose results land in a shared on-disk tracker you can query, audit and resume.",
+  "source_name": "aden-hive/hive (GitHub)",
+  "source_url": "https://github.com/aden-hive/hive",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "commands",
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

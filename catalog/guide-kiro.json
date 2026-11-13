@@ -1,0 +1,18 @@
+{
+  "id": "guide-kiro",
+  "name": "Kiro",
+  "kind": "guide",
+  "summary": "Kiro is AWS's agentic development environment, spanning IDE, CLI, web, and mobile surfaces on one agent harness, with spec-driven development (requirements, design, and tasks before code), steering files, hooks, and MCP support.",
+  "source_name": "Kiro documentation",
+  "source_url": "https://kiro.dev/docs/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}
