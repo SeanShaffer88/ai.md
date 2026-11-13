@@ -145,7 +145,7 @@ jobs:
       - name: Publish the release
         shell: pwsh
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           $ErrorActionPreference = 'Stop'
           gh release view $env:TAG 2>$null | Out-Null
