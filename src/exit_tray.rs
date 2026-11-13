@@ -54,11 +54,10 @@ fn restore_main(cx: &mut App) {
 pub fn window_hwnd(window: &Window) -> Option<isize> {
     #[cfg(target_os = "windows")]
     {
-        use raw_window_handle::HasWindowHandle;
         let raw_handle = raw_window_handle::HasWindowHandle::window_handle(window).ok()?;
         match raw_handle.as_raw() {
             raw_window_handle::RawWindowHandle::Win32(w) => {
-                let v = w.hwnd.get() as isize;
+                let v = w.hwnd.get();
                 win::MAIN.store(v, std::sync::atomic::Ordering::Relaxed);
                 Some(v)
             }
@@ -272,7 +271,7 @@ mod win {
             ) else {
                 return;
             };
-            let icon = LoadIconW(Some(hinst), PCWSTR(1 as *const u16))
+            let icon = LoadIconW(Some(hinst), PCWSTR::from_raw(std::ptr::without_provenance(1)))
                 .or_else(|_| LoadIconW(None, IDI_APPLICATION))
                 .unwrap_or_default();
             let mut data = NOTIFYICONDATAW {

@@ -343,7 +343,7 @@ mod win_hotkey {
             loop {
                 cx.background_executor().timer(std::time::Duration::from_millis(200)).await;
                 if PRESSED.swap(false, Ordering::SeqCst) {
-                    let _ = cx.update(|cx| super::open(cx));
+                    let _ = cx.update(super::open);
                 }
             }
         })
