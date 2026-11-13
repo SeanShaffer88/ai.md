@@ -1,0 +1,11 @@
+{
+  "appName": "ai.md",
+  "version": "0.6.0",
+  "publisher": "ai.md",
+  "primaryExe": "ai_md.exe",
+  "startMenuFolder": "ai.md",
+  "desktopShortcut": false,
+  "startMenuShortcut": true,
+  "fileAssociations": [],
+  "pathEntry": false
+}
