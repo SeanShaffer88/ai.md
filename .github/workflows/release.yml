@@ -4,8 +4,10 @@ name: Release
 # GitHub release with exactly three assets:
 #   ai.md-v<version>-x64-Setup.exe, ai.md-v<version>-x64-Portable.zip,
 #   SHA256SUMS.txt
-# Run it from the Actions tab (workflow_dispatch, giving the tag to
-# create), or push a v* tag yourself; both paths end in the same place.
+# The assets are packaged by SeanPak (see seanpak.json); Inno Setup is
+# retired. Run it from the Actions tab (workflow_dispatch, giving the
+# tag to create), or push a v* tag yourself; both paths end in the
+# same place.
 
 on:
   push:
@@ -41,6 +43,8 @@ jobs:
           $version = $tag.Substring(1)
           $cargo = (Select-String -Path Cargo.toml -Pattern '^version = "(.+)"').Matches[0].Groups[1].Value
           if ($cargo -ne $version) { throw "Cargo.toml version is $cargo but the tag says $tag" }
+          $manifest = Get-Content seanpak.json -Raw | ConvertFrom-Json
+          if ($manifest.version -ne $version) { throw "seanpak.json version is $($manifest.version) but the tag says $tag" }
           "TAG=$tag" >> $env:GITHUB_ENV
           "VERSION=$version" >> $env:GITHUB_ENV
           "SETUP_NAME=ai.md-v$version-x64-Setup.exe" >> $env:GITHUB_ENV
@@ -53,7 +57,7 @@ jobs:
       - name: Install toolchain
         run: rustup component add clippy
 
-      - name: Build, check and package with Windows SDK
+      - name: Build and check with Windows SDK
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
@@ -66,20 +70,56 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Windows build failed' }
           & python scripts/check.py
           if ($LASTEXITCODE -ne 0) { throw 'Windows checks failed' }
-          & scripts/package-windows.ps1 -Iscc "${env:ProgramFiles(x86)}/Inno Setup 6/ISCC.exe"
-          if ($LASTEXITCODE -ne 0) { throw 'Windows packaging failed' }
+
+      - name: Check out SeanPak
+        uses: actions/checkout@v4
+        with:
+          repository: SeanShaffer88/SeanPak
+          ref: main
+          path: .seanpak
+
+      - name: Package with SeanPak
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
+          $vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          if (!$vs) { throw 'Visual Studio C++ tools were not found' }
+          Import-Module "$vs/Common7/Tools/Microsoft.VisualStudio.DevShell.dll"
+          Enter-VsDevShell -VsInstallPath $vs -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -host_arch=x64'
+          rustup target add x86_64-pc-windows-msvc
+          if ($LASTEXITCODE -ne 0) { throw 'rustup target add failed' }
+          $env:RUSTFLAGS = '-C target-feature=+crt-static'
+          & cargo build --release --target x86_64-pc-windows-msvc --manifest-path .seanpak/Cargo.toml
+          if ($LASTEXITCODE -ne 0) { throw 'SeanPak build failed' }
+          $seanpak = '.seanpak/target/x86_64-pc-windows-msvc/release/seanpak.exe'
+          & $seanpak validate seanpak.json
+          if ($LASTEXITCODE -ne 0) { throw 'SeanPak manifest validation failed' }
+          $stage = 'dist/files'
+          New-Item -ItemType Directory -Force $stage | Out-Null
+          Copy-Item 'target/release/ai_md.exe' "$stage/ai_md.exe"
+          if (!$env:VCToolsRedistDir) { throw 'VCToolsRedistDir is not set in the developer shell' }
+          $runtime = Get-ChildItem (Join-Path $env:VCToolsRedistDir 'x64/Microsoft.VC*.CRT/vcruntime140.dll') | Select-Object -First 1
+          if (!$runtime) { throw 'The redistributable x64 vcruntime140.dll was not found' }
+          Copy-Item $runtime.FullName $stage
+          Copy-Item 'LICENSE' $stage
+          Copy-Item 'THIRD_PARTY.md' $stage
+          & $seanpak pack seanpak.json $stage --out-dir dist-seanpak --json
+          if ($LASTEXITCODE -ne 0) { throw 'SeanPak pack failed' }
+          & $seanpak verify "dist-seanpak/$env:SETUP_NAME" --sandbox
+          if ($LASTEXITCODE -ne 0) { throw 'SeanPak sandbox verify failed' }
 
       - name: Assemble release assets
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $built = Get-ChildItem 'dist/windows/unsigned/ai-md-*-windows-x64-setup.exe' | Select-Object -First 1
-          if (!$built) { throw 'Packaged setup exe not found' }
-          Copy-Item $built.FullName $env:SETUP_NAME
+          Copy-Item "dist-seanpak/$env:SETUP_NAME" $env:SETUP_NAME
+          # SeanPak packs one file set for both assets; ai.md tells a
+          # portable build by the portable.txt marker beside the exe, so
+          # the marker goes into the portable zip only, never the install.
           $stage = 'portable-stage'
           New-Item -ItemType Directory -Force $stage | Out-Null
-          Copy-Item 'target/release/ai_md.exe' "$stage/ai_md.exe"
-          Copy-Item 'LICENSE' $stage
+          Expand-Archive -Path "dist-seanpak/$env:ZIP_NAME" -DestinationPath $stage
           Set-Content -Path "$stage/portable.txt" -Value 'Portable build marker: ai_md.exe keeps its library in the data folder beside this file.'
           Compress-Archive -Path "$stage/*" -DestinationPath $env:ZIP_NAME
           $lines = foreach ($f in @($env:SETUP_NAME, $env:ZIP_NAME)) {
@@ -91,7 +131,7 @@ jobs:
 
           A Catalog of AI prompts, MCP servers, skills and guides (one file per entry under catalog/), prompt variables with a Run prompt fill-in sheet, an Insert prompt palette, catalog results in the quick switcher, and a consent-gated Run for install commands. Every feature of the original app is unchanged, and existing libraries open as before. The application executable is ai_md.exe.
 
-          Windows: **$env:SETUP_NAME** (installs for the current user; uninstalling never deletes your notes) or **$env:ZIP_NAME** (portable, no install; keeps its library in a data folder beside ai_md.exe). The builds are unsigned — if SmartScreen appears on first launch, click **More info → Run anyway**.
+          Windows: **$env:SETUP_NAME** (installs for the current user with SeanPak, no admin rights needed; uninstalling never deletes your notes) or **$env:ZIP_NAME** (portable, no install; keeps its library in a data folder beside ai_md.exe). The builds are unsigned — if SmartScreen appears on first launch, click **More info → Run anyway**.
           "@ | Set-Content 'release-notes.md'
 
       - name: Publish the release
