@@ -73,12 +73,12 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $built = Get-ChildItem 'dist/windows/unsigned/quiet-md-*-windows-x64-setup.exe' | Select-Object -First 1
+          $built = Get-ChildItem 'dist/windows/unsigned/ai-md-*-windows-x64-setup.exe' | Select-Object -First 1
           if (!$built) { throw 'Packaged setup exe not found' }
           Copy-Item $built.FullName $env:SETUP_NAME
           $stage = 'portable-stage'
           New-Item -ItemType Directory -Force $stage | Out-Null
-          Copy-Item 'target/release/quiet_md.exe' "$stage/ai_md.exe"
+          Copy-Item 'target/release/ai_md.exe' "$stage/ai_md.exe"
           Copy-Item 'LICENSE' $stage
           Set-Content -Path "$stage/portable.txt" -Value 'Portable build marker: ai_md.exe keeps its library in the data folder beside this file.'
           Compress-Archive -Path "$stage/*" -DestinationPath $env:ZIP_NAME
@@ -89,7 +89,7 @@ jobs:
           @"
           ai.md $env:TAG.
 
-          A Catalog of AI prompts, MCP servers, skills and guides (one file per entry under catalog/), prompt variables with a Run prompt fill-in sheet, an Insert prompt palette, catalog results in the quick switcher, and a consent-gated Run for install commands. Every Quiet.md feature is unchanged, and existing libraries open as before. The application executable is ai_md.exe.
+          A Catalog of AI prompts, MCP servers, skills and guides (one file per entry under catalog/), prompt variables with a Run prompt fill-in sheet, an Insert prompt palette, catalog results in the quick switcher, and a consent-gated Run for install commands. Every feature of the original app is unchanged, and existing libraries open as before. The application executable is ai_md.exe.
 
           Windows: **$env:SETUP_NAME** (installs for the current user; uninstalling never deletes your notes) or **$env:ZIP_NAME** (portable, no install; keeps its library in a data folder beside ai_md.exe). The builds are unsigned — if SmartScreen appears on first launch, click **More info → Run anyway**.
           "@ | Set-Content 'release-notes.md'
