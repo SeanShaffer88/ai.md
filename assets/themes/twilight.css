@@ -1,0 +1,388 @@
+/*
+ * ai.md 文档主题：Twilight
+ *
+ * 灵感来自 Notepad++ 内置的 Twilight 主题。近黑的纸面、柔和的米白正文，关键字是暗金色，字符串是苔绿色——Notepad++ 里最耐看的深色主题之一。
+ * 块的排版沿用内置主题的同一套尺寸，只是换了配色。
+ *
+ * 每个属性都写着当前的值。改完保存，应用里立即生效；说明见 docs/THEMES.md。
+ */
+
+:root {
+  --theme-name: "Twilight";
+  --theme-name-en: "Twilight";
+  --theme-author: "ai.md";
+  --theme-description: "近黑的纸面、柔和的米白正文，关键字是暗金色，字符串是苔绿色——Notepad++ 里最耐看的深色主题之一。";
+  /* 块的画法：craft 或 feishu */
+  --theme-base: craft;
+
+  /* 本主题的基础色，下面的规则用 var() 引用 */
+  --ink-text: #F7F7F7;
+  --ink-secondary: #A7A7A7;
+  --ink-faint: rgba(247, 247, 247, 0.35);
+  --ink-accent: #DAD085;
+  --ink-divider: rgba(247, 247, 247, 0.16);
+  --ink-surface: #1D1D1D;
+
+  /* 文字颜色 */
+  --color-gray: #A7A7A7;
+  --color-red: #D06C5F;
+  --color-orange: #CF8A4C;
+  --color-yellow: #CDA869;
+  --color-green: #8F9D6A;
+  --color-blue: #7587A6;
+  --color-purple: #9B859D;
+
+  /* 文字高亮 */
+  --highlight-light-gray: #2c2c2c;
+  --highlight-medium-gray: #434343;
+  --highlight-gray: #434343;
+  --highlight-light-red: #322220;
+  --highlight-red: #50302c;
+  --highlight-light-orange: #32271d;
+  --highlight-orange: #503a26;
+  --highlight-light-yellow: #322c22;
+  --highlight-yellow: #4f432f;
+  --highlight-light-green: #282a22;
+  --highlight-green: #3b4030;
+  --highlight-light-blue: #24262b;
+  --highlight-blue: #333943;
+  --highlight-light-purple: #2a262a;
+  --highlight-purple: #3f3840;
+
+  /* 块背景 */
+  --background-light-gray: #2c2c2c;
+  --background-medium-gray: #434343;
+  --background-gray: #434343;
+  --background-light-red: #322220;
+  --background-medium-red: #50302c;
+  --background-light-orange: #32271d;
+  --background-medium-orange: #503a26;
+  --background-light-yellow: #322c22;
+  --background-medium-yellow: #4f432f;
+  --background-light-green: #282a22;
+  --background-medium-green: #3b4030;
+  --background-light-blue: #24262b;
+  --background-medium-blue: #333943;
+  --background-light-purple: #2a262a;
+  --background-medium-purple: #3f3840;
+
+  /* 高亮块底色 */
+  --callout-light-gray: #2c2c2c;
+  --callout-medium-gray: #434343;
+  --callout-gray: #434343;
+  --callout-light-red: #322220;
+  --callout-medium-red: #50302c;
+  --callout-light-orange: #32271d;
+  --callout-medium-orange: #503a26;
+  --callout-light-yellow: #322c22;
+  --callout-medium-yellow: #4f432f;
+  --callout-light-green: #282a22;
+  --callout-medium-green: #3b4030;
+  --callout-light-blue: #24262b;
+  --callout-medium-blue: #333943;
+  --callout-light-purple: #2a262a;
+  --callout-medium-purple: #3f3840;
+
+  /* 高亮块边框 */
+  --border-gray: #2c2c2c;
+  --border-red: #322220;
+  --border-orange: #32271d;
+  --border-yellow: #322c22;
+  --border-green: #282a22;
+  --border-blue: #24262b;
+  --border-purple: #2a262a;
+  /* 其它界面细节（文档内的选中、悬停、表格工具等） */
+  --token-text-caption: var(--ink-secondary);
+  --token-text-placeholder: var(--ink-faint);
+  --token-block-placeholder: var(--ink-faint);
+  --token-text-disabled: rgba(247, 247, 247, 0.3);
+  --token-text-code: #F7F7F7;
+  --token-primary-500: var(--ink-accent);
+  --token-primary-fill-1: #343226;
+  --token-bg-overlay: var(--ink-surface);
+  --token-line-divider: rgba(247, 247, 247, 0.06);
+  --token-line-border: rgba(247, 247, 247, 0.08);
+  --token-fill-hover: rgba(247, 247, 247, 0.045);
+  --token-fill-hover-strong: rgba(247, 247, 247, 0.07);
+  --token-fill-pressed: rgba(247, 247, 247, 0.1);
+  --token-fill-turninto-active: #343226;
+  --token-block-hover: rgba(247, 247, 247, 0.04);
+  --token-block-selected: rgba(218, 208, 133, 0.16);
+  --token-handle-active: rgba(247, 247, 247, 0.06);
+  --token-size-cell: var(--ink-surface);
+  --token-size-cell-border: var(--ink-divider);
+  --token-size-cell-active: #535038;
+  --token-size-cell-disabled: #343226;
+  --token-swatch-border: rgba(247, 247, 247, 0.08);
+  --token-block-bg-area: rgba(247, 247, 247, 0.03);
+  --token-scrollbar-thumb: rgba(247, 247, 247, 0.22);
+  --token-shadow: rgba(0, 0, 0, 0.25);
+  --token-code-hover-ring: rgba(218, 208, 133, 0.35);
+  --token-pinned: var(--ink-accent);
+  --token-table-bar-hover: rgba(247, 247, 247, 0.08);
+  --token-table-bar-selected: #535038;
+  --token-danger-bar: #ff6467;
+  --token-danger-cell: #322220;
+  --token-danger: #ff6b68;
+  --token-sidebar-text: rgba(247, 247, 247, 0.85);
+  --token-sidebar-hover: rgba(247, 247, 247, 0.045);
+  --token-sidebar-selected: rgba(247, 247, 247, 0.07);
+  --token-sidebar-section: var(--ink-secondary);
+  --token-button-border: rgba(247, 247, 247, 0.075);
+  --token-code-gutter-line: var(--ink-divider);
+  --token-caption: var(--ink-secondary);
+  --token-menu-highlight: var(--ink-accent);
+  --token-popover-bg: var(--ink-surface);
+}
+
+.page {
+  background-color: #141414;
+  color: var(--ink-text);
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 708px;
+  caret-color: var(--ink-text);
+}
+
+::selection {
+  background-color: #323232;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: var(--ink-text);
+}
+
+h1 {
+  font-family: system-ui;
+  font-size: 30px;
+  line-height: 39px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 32px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-family: system-ui;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-family: system-ui;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h6 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h7 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h8 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h9 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(247, 247, 247, 0.35);
+}
+
+a:hover {
+  color: var(--ink-accent);
+}
+
+code {
+  color: #CDA869;
+  background-color: rgba(247, 247, 247, 0.08);
+  border-color: transparent;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+pre {
+  font-family: ui-monospace;
+  font-size: 13.6px;
+  line-height: 20.4px;
+  color: var(--ink-text);
+  background-color: var(--ink-surface);
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.line-numbers {
+  display: none;
+  color: var(--ink-secondary);
+  background-color: var(--ink-surface);
+}
+
+blockquote {
+  border-left-width: 3px;
+  border-left-color: #CDA869;
+  padding-left: 17px;
+  color: inherit;
+  font-style: normal;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li::marker {
+  color: inherit;
+}
+
+ol li::marker {
+  color: inherit;
+}
+
+.task {
+  width: 16px;
+  border-radius: 3px;
+  border-color: var(--ink-text);
+}
+
+.task:checked {
+  background-color: var(--ink-accent);
+  color: #ffffff;
+}
+
+.task-done {
+  color: rgba(247, 247, 247, 0.38);
+  text-decoration: line-through;
+}
+
+hr {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: var(--ink-divider);
+}
+
+table {
+  font-size: 14px;
+  line-height: 20px;
+  border-color: #464646;
+  border-radius: 0px;
+}
+
+th {
+  background-color: var(--ink-surface);
+}
+
+.callout {
+  border-radius: 4px;
+  border-width: 0px;
+  padding-top: 16px;
+  padding-left: 12px;
+}
+
+/* 代码高亮：Twilight 的配色 */
+.token.comment {
+  color: #5F5A60;
+}
+
+.token.keyword {
+  color: #CDA869;
+}
+
+.token.tag {
+  color: #CDA869;
+}
+
+.token.string {
+  color: #8F9D6A;
+}
+
+.token.number {
+  color: #CF6A4C;
+}
+
+.token.boolean {
+  color: #CF6A4C;
+}
+
+.token.class-name {
+  color: #9B703F;
+}
+
+.token.attr-name {
+  color: #8F9D6A;
+}
+
+.token.function {
+  color: #DAD085;
+}

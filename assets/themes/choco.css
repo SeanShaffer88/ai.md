@@ -1,0 +1,388 @@
+/*
+ * ai.md 文档主题：Choco
+ *
+ * 灵感来自 Notepad++ 内置的 Choco 主题。巧克力色的深棕纸面、金色关键字，暖调深色里的稳重一派。
+ * 块的排版沿用内置主题的同一套尺寸，只是换了配色。
+ *
+ * 每个属性都写着当前的值。改完保存，应用里立即生效；说明见 docs/THEMES.md。
+ */
+
+:root {
+  --theme-name: "Choco";
+  --theme-name-en: "Choco";
+  --theme-author: "ai.md";
+  --theme-description: "巧克力色的深棕纸面、金色关键字，暖调深色里的稳重一派。";
+  /* 块的画法：craft 或 feishu */
+  --theme-base: craft;
+
+  /* 本主题的基础色，下面的规则用 var() 引用 */
+  --ink-text: #E8DCC8;
+  --ink-secondary: #9C8B74;
+  --ink-faint: rgba(232, 220, 200, 0.35);
+  --ink-accent: #D9A441;
+  --ink-divider: rgba(232, 220, 200, 0.16);
+  --ink-surface: #292420;
+
+  /* 文字颜色 */
+  --color-gray: #9C8B74;
+  --color-red: #D97848;
+  --color-orange: #D97848;
+  --color-yellow: #D9A441;
+  --color-green: #A8B56B;
+  --color-blue: #7FA3B8;
+  --color-purple: #B48CA8;
+
+  /* 文字高亮 */
+  --highlight-light-gray: #352f28;
+  --highlight-medium-gray: #484036;
+  --highlight-gray: #484036;
+  --highlight-light-red: #3e2c21;
+  --highlight-red: #5c3a28;
+  --highlight-light-orange: #3e2c21;
+  --highlight-orange: #5c3a28;
+  --highlight-light-yellow: #3e331f;
+  --highlight-yellow: #5c4826;
+  --highlight-light-green: #373526;
+  --highlight-green: #4c4e33;
+  --highlight-light-blue: #303232;
+  --highlight-blue: #3f484c;
+  --highlight-light-purple: #392f30;
+  --highlight-purple: #504147;
+
+  /* 块背景 */
+  --background-light-gray: #352f28;
+  --background-medium-gray: #484036;
+  --background-gray: #484036;
+  --background-light-red: #3e2c21;
+  --background-medium-red: #5c3a28;
+  --background-light-orange: #3e2c21;
+  --background-medium-orange: #5c3a28;
+  --background-light-yellow: #3e331f;
+  --background-medium-yellow: #5c4826;
+  --background-light-green: #373526;
+  --background-medium-green: #4c4e33;
+  --background-light-blue: #303232;
+  --background-medium-blue: #3f484c;
+  --background-light-purple: #392f30;
+  --background-medium-purple: #504147;
+
+  /* 高亮块底色 */
+  --callout-light-gray: #352f28;
+  --callout-medium-gray: #484036;
+  --callout-gray: #484036;
+  --callout-light-red: #3e2c21;
+  --callout-medium-red: #5c3a28;
+  --callout-light-orange: #3e2c21;
+  --callout-medium-orange: #5c3a28;
+  --callout-light-yellow: #3e331f;
+  --callout-medium-yellow: #5c4826;
+  --callout-light-green: #373526;
+  --callout-medium-green: #4c4e33;
+  --callout-light-blue: #303232;
+  --callout-medium-blue: #3f484c;
+  --callout-light-purple: #392f30;
+  --callout-medium-purple: #504147;
+
+  /* 高亮块边框 */
+  --border-gray: #352f28;
+  --border-red: #3e2c21;
+  --border-orange: #3e2c21;
+  --border-yellow: #3e331f;
+  --border-green: #373526;
+  --border-blue: #303232;
+  --border-purple: #392f30;
+  /* 其它界面细节（文档内的选中、悬停、表格工具等） */
+  --token-text-caption: var(--ink-secondary);
+  --token-text-placeholder: var(--ink-faint);
+  --token-block-placeholder: var(--ink-faint);
+  --token-text-disabled: rgba(232, 220, 200, 0.3);
+  --token-text-code: #E8DCC8;
+  --token-primary-500: var(--ink-accent);
+  --token-primary-fill-1: #3e331f;
+  --token-bg-overlay: var(--ink-surface);
+  --token-line-divider: rgba(232, 220, 200, 0.06);
+  --token-line-border: rgba(232, 220, 200, 0.08);
+  --token-fill-hover: rgba(232, 220, 200, 0.045);
+  --token-fill-hover-strong: rgba(232, 220, 200, 0.07);
+  --token-fill-pressed: rgba(232, 220, 200, 0.1);
+  --token-fill-turninto-active: #3e331f;
+  --token-block-hover: rgba(232, 220, 200, 0.04);
+  --token-block-selected: rgba(217, 164, 65, 0.16);
+  --token-handle-active: rgba(232, 220, 200, 0.06);
+  --token-size-cell: var(--ink-surface);
+  --token-size-cell-border: var(--ink-divider);
+  --token-size-cell-active: #5c4826;
+  --token-size-cell-disabled: #3e331f;
+  --token-swatch-border: rgba(232, 220, 200, 0.08);
+  --token-block-bg-area: rgba(232, 220, 200, 0.03);
+  --token-scrollbar-thumb: rgba(232, 220, 200, 0.22);
+  --token-shadow: rgba(0, 0, 0, 0.25);
+  --token-code-hover-ring: rgba(217, 164, 65, 0.35);
+  --token-pinned: var(--ink-accent);
+  --token-table-bar-hover: rgba(232, 220, 200, 0.08);
+  --token-table-bar-selected: #5c4826;
+  --token-danger-bar: #ff6467;
+  --token-danger-cell: #3e2c21;
+  --token-danger: #ff6b68;
+  --token-sidebar-text: rgba(232, 220, 200, 0.85);
+  --token-sidebar-hover: rgba(232, 220, 200, 0.045);
+  --token-sidebar-selected: rgba(232, 220, 200, 0.07);
+  --token-sidebar-section: var(--ink-secondary);
+  --token-button-border: rgba(232, 220, 200, 0.075);
+  --token-code-gutter-line: var(--ink-divider);
+  --token-caption: var(--ink-secondary);
+  --token-menu-highlight: var(--ink-accent);
+  --token-popover-bg: var(--ink-surface);
+}
+
+.page {
+  background-color: #211D19;
+  color: var(--ink-text);
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 708px;
+  caret-color: var(--ink-text);
+}
+
+::selection {
+  background-color: #3A332A;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: var(--ink-text);
+}
+
+h1 {
+  font-family: system-ui;
+  font-size: 30px;
+  line-height: 39px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 32px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-family: system-ui;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-family: system-ui;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h6 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h7 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h8 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h9 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(232, 220, 200, 0.35);
+}
+
+a:hover {
+  color: var(--ink-accent);
+}
+
+code {
+  color: #D9A441;
+  background-color: rgba(232, 220, 200, 0.08);
+  border-color: transparent;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+pre {
+  font-family: ui-monospace;
+  font-size: 13.6px;
+  line-height: 20.4px;
+  color: var(--ink-text);
+  background-color: var(--ink-surface);
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.line-numbers {
+  display: none;
+  color: var(--ink-secondary);
+  background-color: var(--ink-surface);
+}
+
+blockquote {
+  border-left-width: 3px;
+  border-left-color: #9C8B74;
+  padding-left: 17px;
+  color: inherit;
+  font-style: normal;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li::marker {
+  color: inherit;
+}
+
+ol li::marker {
+  color: inherit;
+}
+
+.task {
+  width: 16px;
+  border-radius: 3px;
+  border-color: var(--ink-text);
+}
+
+.task:checked {
+  background-color: var(--ink-accent);
+  color: #ffffff;
+}
+
+.task-done {
+  color: rgba(232, 220, 200, 0.38);
+  text-decoration: line-through;
+}
+
+hr {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: var(--ink-divider);
+}
+
+table {
+  font-size: 14px;
+  line-height: 20px;
+  border-color: #4d4740;
+  border-radius: 0px;
+}
+
+th {
+  background-color: var(--ink-surface);
+}
+
+.callout {
+  border-radius: 4px;
+  border-width: 0px;
+  padding-top: 16px;
+  padding-left: 12px;
+}
+
+/* 代码高亮：Choco 的配色 */
+.token.comment {
+  color: #7A6A55;
+}
+
+.token.keyword {
+  color: #D9A441;
+}
+
+.token.tag {
+  color: #D9A441;
+}
+
+.token.string {
+  color: #A8B56B;
+}
+
+.token.number {
+  color: #D97848;
+}
+
+.token.boolean {
+  color: #D9A441;
+}
+
+.token.class-name {
+  color: #C97B4A;
+}
+
+.token.attr-name {
+  color: #A8B56B;
+}
+
+.token.function {
+  color: #E8C87E;
+}

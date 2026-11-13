@@ -291,6 +291,38 @@ impl Workspace {
     /// The confirmation dialog: a modal (white, radius 16), a 15pt
     /// semibold title, one line of 13pt body, 取消 and the action button on
     /// the right.
+    /// Run the open confirmation dialog's primary action — the OK
+    /// button and the Enter key both land here.
+    pub(crate) fn confirm_ok(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+        let Some(c) = self.confirm.take() else { return };
+        match c {
+            Confirm::Delete { ids, batch, no_ask } => {
+                if no_ask {
+                    let mut s = self.store.settings();
+                    s.delete_no_ask = true;
+                    let _ = self.store.save_settings(&s);
+                }
+                if batch {
+                    self.batch = None;
+                }
+                self.delete_docs(&ids, window, cx);
+            }
+            Confirm::Restore(id) => self.restore_doc(&id, cx),
+            Confirm::Purge(id) => self.purge_doc(&id, cx),
+            Confirm::EmptyTrash => self.empty_trash(cx),
+            Confirm::Refs { show, no_ask } => {
+                if no_ask {
+                    let mut s = self.store.settings();
+                    s.refs_hide_no_ask = true;
+                    let _ = self.store.save_settings(&s);
+                }
+                self.set_refs_hidden(!show, cx);
+            }
+            Confirm::SaveFailed => self.resolve_save_failed(true, window, cx),
+        }
+        cx.notify();
+    }
+
     pub(crate) fn render_confirm(&self, cx: &mut Context<Self>) -> Option<AnyElement> {
         let c = self.confirm.as_ref()?;
         let title_of = |id: &str| {
@@ -302,7 +334,7 @@ impl Workspace {
                 .unwrap_or_default()
         };
         let (title, body, action, danger) = match c {
-            Confirm::Delete { ids, batch } => (
+            Confirm::Delete { ids, batch, .. } => (
                 if *batch || ids.len() > 1 { crate::localized_format!("是否删除所选的 {} 项？", "Delete the {} selected items?", ids.len()) } else { crate::localized_format!("是否删除： {}？", "Delete {}?", title_of(&ids[0])) },
                 crate::settings::text("删除的内容将进入回收站，30 天后自动彻底删除").to_string(),
                 crate::settings::text("删除"),
@@ -332,6 +364,7 @@ impl Workspace {
         };
         let no_ask = match c {
             Confirm::Refs { show: false, no_ask } => Some(*no_ask),
+            Confirm::Delete { no_ask, .. } => Some(*no_ask),
             _ => None,
         };
         let ok = primary_button("confirm-ok", action);
@@ -359,8 +392,10 @@ impl Workspace {
                             .cursor_pointer()
                             .text_size(px(13.))
                             .on_click(cx.listener(|w, _, _, cx| {
-                                if let Some(Confirm::Refs { no_ask, .. }) = &mut w.confirm {
-                                    *no_ask = !*no_ask;
+                                match &mut w.confirm {
+                                    Some(Confirm::Refs { no_ask, .. }) => *no_ask = !*no_ask,
+                                    Some(Confirm::Delete { no_ask, .. }) => *no_ask = !*no_ask,
+                                    _ => {}
                                 }
                                 cx.notify();
                             }))
@@ -381,30 +416,7 @@ impl Workspace {
                             w.resolve_save_failed(false, window, cx);
                         })))
                     })
-                    .child(ok.on_click(cx.listener(|w, _, window, cx| {
-                        let Some(c) = w.confirm.take() else { return };
-                        match c {
-                            Confirm::Delete { ids, batch } => {
-                                if batch {
-                                    w.batch = None;
-                                }
-                                w.delete_docs(&ids, window, cx);
-                            }
-                            Confirm::Restore(id) => w.restore_doc(&id, cx),
-                            Confirm::Purge(id) => w.purge_doc(&id, cx),
-                            Confirm::EmptyTrash => w.empty_trash(cx),
-                            Confirm::Refs { show, no_ask } => {
-                                if no_ask {
-                                    let mut s = w.store.settings();
-                                    s.refs_hide_no_ask = true;
-                                    let _ = w.store.save_settings(&s);
-                                }
-                                w.set_refs_hidden(!show, cx);
-                            }
-                            Confirm::SaveFailed => w.resolve_save_failed(true, window, cx),
-                        }
-                        cx.notify();
-                    }))),
+                    .child(ok.on_click(cx.listener(|w, _, window, cx| w.confirm_ok(window, cx)))),
             );
         Some(
             deferred(

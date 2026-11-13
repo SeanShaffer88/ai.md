@@ -210,7 +210,15 @@ fn faded(shadows: Vec<BoxShadow>, a: f32) -> Vec<BoxShadow> {
 
 impl Workspace {
     fn drag_rows(&self) -> Vec<Row> {
+        // Under a Space (#11) the tree scopes to the shelf: member
+        // documents, plus any folder holding a member below it.
+        let space_docs: Option<Vec<String>> = self.active_space_def().map(|sp| sp.docs.clone());
         crate::tree::Tree::new(&self.entries).rows(|id| self.expanded.contains(id)).into_iter()
+            .filter(|(e, _)| space_docs.as_ref().is_none_or(|docs| {
+                docs.iter().any(|d| d == &e.id)
+                    || (e.meta.folder.is_some()
+                        && crate::tree::Tree::new(&self.entries).subtree(&e.id).into_iter().any(|id| docs.contains(&id)))
+            }))
             .filter(|(e, _)| self.folder_drag.active.as_ref().is_none_or(|d| !d.started || !d.excluded.contains(&e.id)))
             .map(|(e, depth)| Row { entry: e.clone(), depth }).collect()
     }

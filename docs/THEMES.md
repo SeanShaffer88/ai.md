@@ -4,7 +4,7 @@ ai.md 的每个文档主题就是一份 CSS 文件。选中一个主题，就是
 
 首次启动默认使用飞书（Feishu）主题，已有的主题选择会保留。下拉菜单按飞书、Craft、Notion、Obsidian 排列，只显示选项；选择后更新下方的页面预览。
 
-- 内置主题（飞书、Craft、Notion、Obsidian）在 `assets/themes/`，每份都**写满了全部属性的当前值**，可以直接当参考。
+- 内置主题在 `assets/themes/`：飞书、Craft、Notion、Obsidian 四份版式主题，外加十份灵感来自 Notepad++ 内置主题的配色主题（Twilight、Zenburn、Solarized Dark、Solarized Light、Ruby Blue、Blackboard、Bespin、Vibrant Ink、Navajo、Choco）。每份都**写满了全部属性的当前值**，可以直接当参考。
 - 编辑内置主题时，应用先把它完整复制到文档库的 `themes/<id>.css`，这份副本从此代替内置版本（菜单中显示「已修改」，「恢复默认」删除副本）。
 - 「复制为新主题」生成 `themes/<id>-copy.css`，改名后就是你自己的主题。也可以直接把别人写的 `.css` 放进 `themes/` 文件夹，应用会自动读到。
 - 写错的值、不认识的选择器或属性不会让主题失效：它们被跳过，并在设置里列为「未生效」。

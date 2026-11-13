@@ -10,6 +10,7 @@
 <h1>Your first five minutes</h1>
 <p>Work through this list. Click a checkbox to mark an item complete, or place the cursor on it and press <code>⌘ Enter</code>.</p>
 <checkbox done="true">Open this guide</checkbox>
+<checkbox done="false">Open the <b>Catalog</b> in the sidebar and star a prompt you like</checkbox>
 <checkbox done="false">Press <code>⌘ N</code> to create a document and give it a title</checkbox>
 <checkbox done="false">Type <code>/</code> on an empty line and insert a task</checkbox>
 <checkbox done="false">Select a few words and use the floating toolbar to make them bold</checkbox>
@@ -17,6 +18,11 @@
 <checkbox done="false">Press <code>⌘ J</code>, search for “Tables”, and open <cite type="doc" doc-id="7012a014-8f62-5ad2-a811-6a75ddbfce29" file-type="docx">Tables and columns</cite></checkbox>
 <checkbox done="false">Right-click a document in the sidebar and pin it</checkbox>
 <p>Your changes save automatically after a short pause. If a save fails, the header shows an error so you can deal with it before leaving the document.</p>
+<h1>Start from the Catalog</h1>
+<p>The fastest way to get value from ai.md is not a blank page — it is the <b>Catalog</b> in the sidebar: a built-in, offline collection of AI prompts, MCP servers, skills and guides, each one checked at its source with its licence and risks shown up front.</p>
+<ol><li><b>Browse or search.</b> Entries marked as starters are good first picks. Star the ones you like and they stay at the top.</li><li><b>Save a prompt to your library.</b> It becomes one of your own documents, ready to edit.</li><li><b>Run it instead of copying it.</b> Prompts written with fill-in blanks open a sheet: type your answers, watch the preview, then copy the finished prompt. Save your answers as a named <b>profile</b> — one for local work, one for production — and switch between them in one click.</li></ol>
+<p>Pressing <code>⌘ J</code> searches your documents and the Catalog together. Start a search with <code>mcp:</code> or <code>prompt:</code> to look in one kind only, and hover a Catalog result to preview it before opening.</p>
+<callout emoji="💡" background-color="light-blue" border-color="blue"><p>Everything in the Catalog works offline. An entry only touches the network when you choose to run its install command, and ai.md always asks first.</p></callout>
 <h1>Three ways to write</h1>
 <grid><column width-ratio="0.3333"><h3>Slash commands</h3><p>Type <code>/</code> on an empty line to insert a block. Keep typing to filter: try <code>/table</code> or <code>/code</code>.</p></column><column width-ratio="0.3333"><h3>Markdown</h3><p>Type <code># </code> for a heading or <code>- </code> for a list. Wrapping words in <code>**bold**</code> applies <b>bold</b> as you finish typing.</p></column><column width-ratio="0.3334"><h3>Keyboard shortcuts</h3><p>Use <code>⌘ B</code> for bold and <code>⌘ ⌥ 1</code> for a heading. Press <code>⌘ /</code> to see the available shortcuts.</p></column></grid>
 <h1>Explore the guides</h1>

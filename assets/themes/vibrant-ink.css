@@ -1,0 +1,388 @@
+/*
+ * ai.md 文档主题：Vibrant Ink
+ *
+ * 灵感来自 Notepad++ 内置的 Vibrant Ink 主题。纯黑纸面、荧光色代码，饱和度拉满的一套，夜里最醒目。
+ * 块的排版沿用内置主题的同一套尺寸，只是换了配色。
+ *
+ * 每个属性都写着当前的值。改完保存，应用里立即生效；说明见 docs/THEMES.md。
+ */
+
+:root {
+  --theme-name: "Vibrant Ink";
+  --theme-name-en: "Vibrant Ink";
+  --theme-author: "ai.md";
+  --theme-description: "纯黑纸面、荧光色代码，饱和度拉满的一套，夜里最醒目。";
+  /* 块的画法：craft 或 feishu */
+  --theme-base: craft;
+
+  /* 本主题的基础色，下面的规则用 var() 引用 */
+  --ink-text: #FFFFFF;
+  --ink-secondary: #A3A3A3;
+  --ink-faint: rgba(255, 255, 255, 0.35);
+  --ink-accent: #66FF00;
+  --ink-divider: rgba(255, 255, 255, 0.16);
+  --ink-surface: #0A0A0A;
+
+  /* 文字颜色 */
+  --color-gray: #A3A3A3;
+  --color-red: #FF5E5E;
+  --color-orange: #FF6600;
+  --color-yellow: #FFCC00;
+  --color-green: #66FF00;
+  --color-blue: #66CCFF;
+  --color-purple: #9933CC;
+
+  /* 文字高亮 */
+  --highlight-light-gray: #1a1a1a;
+  --highlight-medium-gray: #343434;
+  --highlight-gray: #343434;
+  --highlight-light-red: #290f0f;
+  --highlight-red: #521e1e;
+  --highlight-light-orange: #291000;
+  --highlight-orange: #522100;
+  --highlight-light-yellow: #292100;
+  --highlight-yellow: #524100;
+  --highlight-light-green: #102900;
+  --highlight-green: #215200;
+  --highlight-light-blue: #102129;
+  --highlight-blue: #214152;
+  --highlight-light-purple: #180821;
+  --highlight-purple: #311041;
+
+  /* 块背景 */
+  --background-light-gray: #1a1a1a;
+  --background-medium-gray: #343434;
+  --background-gray: #343434;
+  --background-light-red: #290f0f;
+  --background-medium-red: #521e1e;
+  --background-light-orange: #291000;
+  --background-medium-orange: #522100;
+  --background-light-yellow: #292100;
+  --background-medium-yellow: #524100;
+  --background-light-green: #102900;
+  --background-medium-green: #215200;
+  --background-light-blue: #102129;
+  --background-medium-blue: #214152;
+  --background-light-purple: #180821;
+  --background-medium-purple: #311041;
+
+  /* 高亮块底色 */
+  --callout-light-gray: #1a1a1a;
+  --callout-medium-gray: #343434;
+  --callout-gray: #343434;
+  --callout-light-red: #290f0f;
+  --callout-medium-red: #521e1e;
+  --callout-light-orange: #291000;
+  --callout-medium-orange: #522100;
+  --callout-light-yellow: #292100;
+  --callout-medium-yellow: #524100;
+  --callout-light-green: #102900;
+  --callout-medium-green: #215200;
+  --callout-light-blue: #102129;
+  --callout-medium-blue: #214152;
+  --callout-light-purple: #180821;
+  --callout-medium-purple: #311041;
+
+  /* 高亮块边框 */
+  --border-gray: #1a1a1a;
+  --border-red: #290f0f;
+  --border-orange: #291000;
+  --border-yellow: #292100;
+  --border-green: #102900;
+  --border-blue: #102129;
+  --border-purple: #180821;
+  /* 其它界面细节（文档内的选中、悬停、表格工具等） */
+  --token-text-caption: var(--ink-secondary);
+  --token-text-placeholder: var(--ink-faint);
+  --token-block-placeholder: var(--ink-faint);
+  --token-text-disabled: rgba(255, 255, 255, 0.3);
+  --token-text-code: #FFFFFF;
+  --token-primary-500: var(--ink-accent);
+  --token-primary-fill-1: #102900;
+  --token-bg-overlay: var(--ink-surface);
+  --token-line-divider: rgba(255, 255, 255, 0.06);
+  --token-line-border: rgba(255, 255, 255, 0.08);
+  --token-fill-hover: rgba(255, 255, 255, 0.045);
+  --token-fill-hover-strong: rgba(255, 255, 255, 0.07);
+  --token-fill-pressed: rgba(255, 255, 255, 0.1);
+  --token-fill-turninto-active: #102900;
+  --token-block-hover: rgba(255, 255, 255, 0.04);
+  --token-block-selected: rgba(102, 255, 0, 0.16);
+  --token-handle-active: rgba(255, 255, 255, 0.06);
+  --token-size-cell: var(--ink-surface);
+  --token-size-cell-border: var(--ink-divider);
+  --token-size-cell-active: #215200;
+  --token-size-cell-disabled: #102900;
+  --token-swatch-border: rgba(255, 255, 255, 0.08);
+  --token-block-bg-area: rgba(255, 255, 255, 0.03);
+  --token-scrollbar-thumb: rgba(255, 255, 255, 0.22);
+  --token-shadow: rgba(0, 0, 0, 0.25);
+  --token-code-hover-ring: rgba(102, 255, 0, 0.35);
+  --token-pinned: var(--ink-accent);
+  --token-table-bar-hover: rgba(255, 255, 255, 0.08);
+  --token-table-bar-selected: #215200;
+  --token-danger-bar: #ff6467;
+  --token-danger-cell: #290f0f;
+  --token-danger: #ff6b68;
+  --token-sidebar-text: rgba(255, 255, 255, 0.85);
+  --token-sidebar-hover: rgba(255, 255, 255, 0.045);
+  --token-sidebar-selected: rgba(255, 255, 255, 0.07);
+  --token-sidebar-section: var(--ink-secondary);
+  --token-button-border: rgba(255, 255, 255, 0.075);
+  --token-code-gutter-line: var(--ink-divider);
+  --token-caption: var(--ink-secondary);
+  --token-menu-highlight: var(--ink-accent);
+  --token-popover-bg: var(--ink-surface);
+}
+
+.page {
+  background-color: #000000;
+  color: var(--ink-text);
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 708px;
+  caret-color: var(--ink-text);
+}
+
+::selection {
+  background-color: #333333;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: var(--ink-text);
+}
+
+h1 {
+  font-family: system-ui;
+  font-size: 30px;
+  line-height: 39px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 32px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-family: system-ui;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-family: system-ui;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h6 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h7 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h8 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h9 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+}
+
+a:hover {
+  color: var(--ink-accent);
+}
+
+code {
+  color: #FFCC00;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: transparent;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+pre {
+  font-family: ui-monospace;
+  font-size: 13.6px;
+  line-height: 20.4px;
+  color: var(--ink-text);
+  background-color: var(--ink-surface);
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.line-numbers {
+  display: none;
+  color: var(--ink-secondary);
+  background-color: var(--ink-surface);
+}
+
+blockquote {
+  border-left-width: 3px;
+  border-left-color: #9933CC;
+  padding-left: 17px;
+  color: inherit;
+  font-style: normal;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li::marker {
+  color: inherit;
+}
+
+ol li::marker {
+  color: inherit;
+}
+
+.task {
+  width: 16px;
+  border-radius: 3px;
+  border-color: var(--ink-text);
+}
+
+.task:checked {
+  background-color: var(--ink-accent);
+  color: #ffffff;
+}
+
+.task-done {
+  color: rgba(255, 255, 255, 0.38);
+  text-decoration: line-through;
+}
+
+hr {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: var(--ink-divider);
+}
+
+table {
+  font-size: 14px;
+  line-height: 20px;
+  border-color: #383838;
+  border-radius: 0px;
+}
+
+th {
+  background-color: var(--ink-surface);
+}
+
+.callout {
+  border-radius: 4px;
+  border-width: 0px;
+  padding-top: 16px;
+  padding-left: 12px;
+}
+
+/* 代码高亮：Vibrant Ink 的配色 */
+.token.comment {
+  color: #9933CC;
+}
+
+.token.keyword {
+  color: #FF6600;
+}
+
+.token.tag {
+  color: #FF6600;
+}
+
+.token.string {
+  color: #66FF00;
+}
+
+.token.number {
+  color: #CCFF33;
+}
+
+.token.boolean {
+  color: #FF6600;
+}
+
+.token.class-name {
+  color: #FFCC00;
+}
+
+.token.attr-name {
+  color: #66FF00;
+}
+
+.token.function {
+  color: #FFCC00;
+}

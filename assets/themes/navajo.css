@@ -1,0 +1,388 @@
+/*
+ * ai.md 文档主题：Navajo
+ *
+ * 灵感来自 Notepad++ 内置的 Navajo 主题。纳瓦霍白的暖黄纸面、深棕文字，浅色主题里最有阳光感的一套。
+ * 块的排版沿用内置主题的同一套尺寸，只是换了配色。
+ *
+ * 每个属性都写着当前的值。改完保存，应用里立即生效；说明见 docs/THEMES.md。
+ */
+
+:root {
+  --theme-name: "Navajo";
+  --theme-name-en: "Navajo";
+  --theme-author: "ai.md";
+  --theme-description: "纳瓦霍白的暖黄纸面、深棕文字，浅色主题里最有阳光感的一套。";
+  /* 块的画法：craft 或 feishu */
+  --theme-base: craft;
+
+  /* 本主题的基础色，下面的规则用 var() 引用 */
+  --ink-text: #3B2F1E;
+  --ink-secondary: #8A7A5B;
+  --ink-faint: rgba(59, 47, 30, 0.35);
+  --ink-accent: #20518F;
+  --ink-divider: rgba(59, 47, 30, 0.16);
+  --ink-surface: #FBEFC3;
+
+  /* 文字颜色 */
+  --color-gray: #8A7A5B;
+  --color-red: #B03A2E;
+  --color-orange: #B3541E;
+  --color-yellow: #9A7B0A;
+  --color-green: #4E7A3A;
+  --color-blue: #20518F;
+  --color-purple: #7A4E9E;
+
+  /* 文字高亮 */
+  --highlight-light-gray: #efe5c6;
+  --highlight-medium-gray: #e1d6b8;
+  --highlight-gray: #e1d6b8;
+  --highlight-light-red: #f4dcc0;
+  --highlight-red: #eac5ac;
+  --highlight-light-orange: #f4dfbe;
+  --highlight-orange: #ebcca8;
+  --highlight-light-yellow: #f1e5bb;
+  --highlight-yellow: #e5d6a2;
+  --highlight-light-green: #e6e5c2;
+  --highlight-green: #d1d6af;
+  --highlight-light-blue: #e0dfce;
+  --highlight-blue: #c5cbc5;
+  --highlight-light-purple: #ecded0;
+  --highlight-purple: #dccac9;
+
+  /* 块背景 */
+  --background-light-gray: #efe5c6;
+  --background-medium-gray: #e1d6b8;
+  --background-gray: #e1d6b8;
+  --background-light-red: #f4dcc0;
+  --background-medium-red: #eac5ac;
+  --background-light-orange: #f4dfbe;
+  --background-medium-orange: #ebcca8;
+  --background-light-yellow: #f1e5bb;
+  --background-medium-yellow: #e5d6a2;
+  --background-light-green: #e6e5c2;
+  --background-medium-green: #d1d6af;
+  --background-light-blue: #e0dfce;
+  --background-medium-blue: #c5cbc5;
+  --background-light-purple: #ecded0;
+  --background-medium-purple: #dccac9;
+
+  /* 高亮块底色 */
+  --callout-light-gray: #efe5c6;
+  --callout-medium-gray: #e1d6b8;
+  --callout-gray: #e1d6b8;
+  --callout-light-red: #f4dcc0;
+  --callout-medium-red: #eac5ac;
+  --callout-light-orange: #f4dfbe;
+  --callout-medium-orange: #ebcca8;
+  --callout-light-yellow: #f1e5bb;
+  --callout-medium-yellow: #e5d6a2;
+  --callout-light-green: #e6e5c2;
+  --callout-medium-green: #d1d6af;
+  --callout-light-blue: #e0dfce;
+  --callout-medium-blue: #c5cbc5;
+  --callout-light-purple: #ecded0;
+  --callout-medium-purple: #dccac9;
+
+  /* 高亮块边框 */
+  --border-gray: #efe5c6;
+  --border-red: #f4dcc0;
+  --border-orange: #f4dfbe;
+  --border-yellow: #f1e5bb;
+  --border-green: #e6e5c2;
+  --border-blue: #e0dfce;
+  --border-purple: #ecded0;
+  /* 其它界面细节（文档内的选中、悬停、表格工具等） */
+  --token-text-caption: var(--ink-secondary);
+  --token-text-placeholder: var(--ink-faint);
+  --token-block-placeholder: var(--ink-faint);
+  --token-text-disabled: rgba(59, 47, 30, 0.3);
+  --token-text-code: #3B2F1E;
+  --token-primary-500: var(--ink-accent);
+  --token-primary-fill-1: #e0dfce;
+  --token-bg-overlay: var(--ink-surface);
+  --token-line-divider: rgba(59, 47, 30, 0.06);
+  --token-line-border: rgba(59, 47, 30, 0.08);
+  --token-fill-hover: rgba(59, 47, 30, 0.045);
+  --token-fill-hover-strong: rgba(59, 47, 30, 0.07);
+  --token-fill-pressed: rgba(59, 47, 30, 0.1);
+  --token-fill-turninto-active: #e0dfce;
+  --token-block-hover: rgba(59, 47, 30, 0.04);
+  --token-block-selected: rgba(32, 81, 143, 0.16);
+  --token-handle-active: rgba(59, 47, 30, 0.06);
+  --token-size-cell: var(--ink-surface);
+  --token-size-cell-border: var(--ink-divider);
+  --token-size-cell-active: #c5cbc5;
+  --token-size-cell-disabled: #e0dfce;
+  --token-swatch-border: rgba(59, 47, 30, 0.08);
+  --token-block-bg-area: rgba(59, 47, 30, 0.03);
+  --token-scrollbar-thumb: rgba(59, 47, 30, 0.22);
+  --token-shadow: rgba(0, 0, 0, 0.08);
+  --token-code-hover-ring: rgba(32, 81, 143, 0.35);
+  --token-pinned: var(--ink-accent);
+  --token-table-bar-hover: rgba(59, 47, 30, 0.08);
+  --token-table-bar-selected: #c5cbc5;
+  --token-danger-bar: #ff6467;
+  --token-danger-cell: #f4dcc0;
+  --token-danger: #d92d20;
+  --token-sidebar-text: rgba(59, 47, 30, 0.85);
+  --token-sidebar-hover: rgba(59, 47, 30, 0.045);
+  --token-sidebar-selected: rgba(59, 47, 30, 0.07);
+  --token-sidebar-section: var(--ink-secondary);
+  --token-button-border: rgba(59, 47, 30, 0.075);
+  --token-code-gutter-line: var(--ink-divider);
+  --token-caption: var(--ink-secondary);
+  --token-menu-highlight: var(--ink-accent);
+  --token-popover-bg: var(--ink-surface);
+}
+
+.page {
+  background-color: #FFF6D8;
+  color: var(--ink-text);
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 708px;
+  caret-color: var(--ink-text);
+}
+
+::selection {
+  background-color: #F5DEB3;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: var(--ink-text);
+}
+
+h1 {
+  font-family: system-ui;
+  font-size: 30px;
+  line-height: 39px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 32px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-family: system-ui;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-family: system-ui;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h6 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h7 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h8 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h9 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(59, 47, 30, 0.35);
+}
+
+a:hover {
+  color: var(--ink-accent);
+}
+
+code {
+  color: #B3541E;
+  background-color: rgba(59, 47, 30, 0.08);
+  border-color: transparent;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+pre {
+  font-family: ui-monospace;
+  font-size: 13.6px;
+  line-height: 20.4px;
+  color: var(--ink-text);
+  background-color: var(--ink-surface);
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.line-numbers {
+  display: none;
+  color: var(--ink-secondary);
+  background-color: var(--ink-surface);
+}
+
+blockquote {
+  border-left-width: 3px;
+  border-left-color: #B3541E;
+  padding-left: 17px;
+  color: inherit;
+  font-style: normal;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li::marker {
+  color: inherit;
+}
+
+ol li::marker {
+  color: inherit;
+}
+
+.task {
+  width: 16px;
+  border-radius: 3px;
+  border-color: var(--ink-text);
+}
+
+.task:checked {
+  background-color: var(--ink-accent);
+  color: #ffffff;
+}
+
+.task-done {
+  color: rgba(59, 47, 30, 0.38);
+  text-decoration: line-through;
+}
+
+hr {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: var(--ink-divider);
+}
+
+table {
+  font-size: 14px;
+  line-height: 20px;
+  border-color: #e2d8bc;
+  border-radius: 0px;
+}
+
+th {
+  background-color: var(--ink-surface);
+}
+
+.callout {
+  border-radius: 4px;
+  border-width: 0px;
+  padding-top: 16px;
+  padding-left: 12px;
+}
+
+/* 代码高亮：Navajo 的配色 */
+.token.comment {
+  color: #A08B62;
+}
+
+.token.keyword {
+  color: #B3541E;
+}
+
+.token.tag {
+  color: #B3541E;
+}
+
+.token.string {
+  color: #4E7A3A;
+}
+
+.token.number {
+  color: #A03D63;
+}
+
+.token.boolean {
+  color: #B3541E;
+}
+
+.token.class-name {
+  color: #7A4E9E;
+}
+
+.token.attr-name {
+  color: #4E7A3A;
+}
+
+.token.function {
+  color: #20518F;
+}

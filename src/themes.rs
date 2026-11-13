@@ -291,11 +291,23 @@ impl Theme {
     pub fn customized(&self) -> bool { self.edited }
 }
 
-pub const BUNDLED: [(&str, &str); 4] = [
+pub const BUNDLED: [(&str, &str); 14] = [
     ("craft", include_str!("../assets/themes/craft.css")),
     ("feishu", include_str!("../assets/themes/feishu.css")),
     ("notion", include_str!("../assets/themes/notion.css")),
     ("obsidian", include_str!("../assets/themes/obsidian.css")),
+    // Inspired by the themes Notepad++ ships (slice 11): the same
+    // document layout as the set above, in those palettes.
+    ("twilight", include_str!("../assets/themes/twilight.css")),
+    ("zenburn", include_str!("../assets/themes/zenburn.css")),
+    ("solarized-dark", include_str!("../assets/themes/solarized-dark.css")),
+    ("solarized-light", include_str!("../assets/themes/solarized-light.css")),
+    ("ruby-blue", include_str!("../assets/themes/ruby-blue.css")),
+    ("blackboard", include_str!("../assets/themes/blackboard.css")),
+    ("bespin", include_str!("../assets/themes/bespin.css")),
+    ("vibrant-ink", include_str!("../assets/themes/vibrant-ink.css")),
+    ("navajo", include_str!("../assets/themes/navajo.css")),
+    ("choco", include_str!("../assets/themes/choco.css")),
 ];
 
 static THEMES: RwLock<Vec<Theme>> = RwLock::new(Vec::new());

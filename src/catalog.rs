@@ -100,11 +100,21 @@ pub struct CatalogState {
     /// The "can touch" filter; remembered in `settings.json`.
     pub risk: Option<&'static str>,
     pub risk_open: bool,
+    /// The license filter (#10); remembered in `settings.json`.
+    pub license: Option<String>,
+    pub license_open: bool,
+    /// Link health from the last user-run check (#4): entry id ->
+    /// (alive, check date). Dead entries get a marker in the lists.
+    pub health: std::collections::BTreeMap<String, (bool, String)>,
+    /// A health check is running: (checked, total).
+    pub health_checking: Option<(usize, usize)>,
+    /// The duplicate-tidy sheet (#15) is open.
+    pub tidy_open: bool,
     /// Show starter picks only.
     pub starters_only: bool,
     /// The last browse results and the inputs that produced them, so
     /// a repaint does not re-filter and re-sort the whole catalog.
-    pub results_cache: Option<(String, Option<&'static str>, Option<&'static str>, bool, CatalogSort, Vec<String>, Vec<CatalogEntry>)>,
+    pub results_cache: Option<(String, Option<&'static str>, Option<&'static str>, Option<String>, bool, CatalogSort, Vec<String>, Vec<CatalogEntry>)>,
     /// The quick switcher's catalog hits for the last query it asked
     /// about (it asks several times per frame while open).
     pub switcher_cache: std::cell::RefCell<Option<(String, Vec<CatalogEntry>)>>,
@@ -115,6 +125,9 @@ pub struct CatalogState {
     /// they float to the top of the browse page.
     pub favorites: Vec<String>,
     pub selected: Option<String>,
+    /// Keyboard selection in the browse list: an index into the current
+    /// results, moved with ↑ ↓ from the search field, Enter opens.
+    pub sel: Option<usize>,
     pub scroll: ScrollHandle,
     pub detail_scroll: ScrollHandle,
     /// The Run prompt sheet: (entry id or document id, source text, fields).
@@ -145,6 +158,13 @@ pub struct RunSheet {
     pub title: String,
     pub fields: Vec<RunField>,
     pub scroll: ScrollHandle,
+    /// Named value sets for this prompt (#6): (name, values). Applying
+    /// one fills every field at once; the active one's name is kept so
+    /// it can be updated or deleted.
+    pub profiles: Vec<(String, Vec<(String, String)>)>,
+    pub active_profile: Option<String>,
+    /// The save-as name box beside the profile chips.
+    pub profile_name: Entity<TextField>,
     _subs: Vec<Subscription>,
 }
 
@@ -163,8 +183,23 @@ impl CatalogState {
             f
         });
         let subs = vec![
-            cx.subscribe(&search, |_, _, ev: &TextFieldEvent, cx| {
-                if matches!(ev, TextFieldEvent::Changed) { cx.notify(); }
+            cx.subscribe_in(&search, window, |w, _, ev: &TextFieldEvent, _, cx| {
+                match ev {
+                    TextFieldEvent::Changed => { w.catalog.sel = Some(0); }
+                    TextFieldEvent::Up => w.move_catalog_sel(-1, cx),
+                    TextFieldEvent::Down => w.move_catalog_sel(1, cx),
+                    TextFieldEvent::Submit => {
+                        if let Some(ix) = w.catalog.sel {
+                            let results = w.catalog_results(cx);
+                            if let Some(e) = results.get(ix) {
+                                w.catalog.selected = Some(e.id.clone());
+                                w.catalog.detail_scroll.set_offset(point(px(0.), px(0.)));
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+                cx.notify();
             }),
             cx.subscribe_in(&insert_search, window, |w, _, ev: &TextFieldEvent, window, cx| {
                 match ev {
@@ -186,6 +221,11 @@ impl CatalogState {
             kind: None,
             risk: None,
             risk_open: false,
+            license: None,
+            license_open: false,
+            health: std::collections::BTreeMap::new(),
+            health_checking: None,
+            tidy_open: false,
             starters_only: false,
             results_cache: None,
             switcher_cache: std::cell::RefCell::new(None),
@@ -194,6 +234,7 @@ impl CatalogState {
             sort_open: false,
             favorites: Vec::new(),
             selected: None,
+            sel: None,
             scroll: ScrollHandle::new(),
             detail_scroll: ScrollHandle::new(),
             run: None,
@@ -212,12 +253,35 @@ impl CatalogState {
     }
 }
 
+/// Today's date as "2026-11-13" in local civil time.
+fn today_str() -> String {
+    let (y, m, d, _, _) = fdl_core::time::civil(fdl_core::time::now());
+    format!("{y:04}-{m:02}-{d:02}")
+}
+
+/// One link check (#4): a HEAD request through the system curl (the
+/// same tool the updater uses — no new dependency, https/http only).
+/// Gated and method-blocked answers still prove the host is alive.
+fn link_alive(url: &str) -> bool {
+    fn code(url: &str, head: bool) -> Option<u32> {
+        let mut cmd = std::process::Command::new("curl");
+        cmd.args(["-s", "-w", "%{http_code}", "--max-time", "10", "--proto", "=https,http"]);
+        if head { cmd.arg("-I"); } else { cmd.args(["-r", "0-0"]); }
+        let out = cmd.arg(url).output().ok()?;
+        String::from_utf8_lossy(&out.stdout).trim().parse().ok()
+    }
+    match code(url, true).or_else(|| code(url, false)) {
+        Some(c) => (200..400).contains(&c) || matches!(c, 401 | 403 | 405 | 429),
+        None => false,
+    }
+}
+
 fn chip(label: &str) -> Div {
     div().flex_none().px(px(8.)).py(px(3.)).rounded(px(999.)).bg(Theme::fill_hover_strong())
         .text_size(px(12.)).line_height(px(16.)).text_color(Theme::text_caption()).child(label.to_string())
 }
 
-fn pill_button(id: &'static str, label: &str, primary: bool) -> Stateful<Div> {
+pub(crate) fn pill_button(id: &'static str, label: &str, primary: bool) -> Stateful<Div> {
     div().id(id).flex_none().h(px(32.)).px(px(14.)).flex().items_center().rounded(px(9.))
         .text_size(px(13.5)).line_height(px(20.)).cursor_pointer()
         .when(primary, |d| d.bg(Theme::text()).text_color(Theme::bg_body()).hover(|s| s.opacity(0.85)))
@@ -228,16 +292,154 @@ fn pill_button(id: &'static str, label: &str, primary: bool) -> Stateful<Div> {
 impl Workspace {
     fn catalog_results(&mut self, cx: &App) -> Vec<CatalogEntry> {
         let q = self.catalog.search.read(cx).text.clone();
-        let key = (q, self.catalog.kind, self.catalog.risk, self.catalog.starters_only, self.catalog.sort, self.catalog.favorites.clone());
-        if let Some((q0, k0, r0, s0, so0, f0, cached)) = &self.catalog.results_cache
-            && *q0 == key.0 && *k0 == key.1 && *r0 == key.2 && *s0 == key.3 && *so0 == key.4 && *f0 == key.5
+        let key = (q, self.catalog.kind, self.catalog.risk, self.catalog.license.clone(), self.catalog.starters_only, self.catalog.sort, self.catalog.favorites.clone());
+        if let Some((q0, k0, r0, l0, s0, so0, f0, cached)) = &self.catalog.results_cache
+            && *q0 == key.0 && *k0 == key.1 && *r0 == key.2 && *l0 == key.3 && *s0 == key.4 && *so0 == key.5 && *f0 == key.6
         {
             return cached.clone();
         }
-        let mut results = self.catalog.data.browse(&key.0, key.1, key.2, key.3);
-        fdl_core::catalog::arrange(&mut results, key.4.key(), &key.5);
-        self.catalog.results_cache = Some((key.0, key.1, key.2, key.3, key.4, key.5, results.clone()));
+        let mut results = self.catalog.data.browse(&key.0, key.1, key.2, key.4);
+        if let Some(lic) = &key.3 {
+            results.retain(|e| &e.license == lic);
+        }
+        fdl_core::catalog::arrange(&mut results, key.5.key(), &key.6);
+        self.catalog.results_cache = Some((key.0, key.1, key.2, key.3, key.4, key.5, key.6, results.clone()));
         results
+    }
+
+    /// Every license in the catalog, sorted, for the filter menu (#10).
+    fn catalog_licenses(&self) -> Vec<String> {
+        let mut out: Vec<String> = Vec::new();
+        for e in &self.catalog.data.entries {
+            if !out.contains(&e.license) { out.push(e.license.clone()); }
+        }
+        out.sort();
+        out
+    }
+
+    /// Run the link health check (#4): every entry's source URL, six
+    /// at a time, only when the user asks — the catalog otherwise
+    /// never touches the network. Results land in settings.
+    pub(crate) fn start_health_check(&mut self, cx: &mut Context<Self>) {
+        if self.catalog.health_checking.is_some() { return; }
+        let urls: Vec<(String, String)> = self.catalog.data.entries.iter().map(|e| (e.id.clone(), e.source_url.clone())).collect();
+        let total = urls.len();
+        self.catalog.health_checking = Some((0, total));
+        cx.notify();
+        let progress = Arc::new(Mutex::new((0usize, Vec::<(String, bool)>::new())));
+        {
+            let queue = Arc::new(Mutex::new(urls.into_iter()));
+            for _ in 0..6 {
+                let queue = queue.clone();
+                let progress = progress.clone();
+                std::thread::spawn(move || loop {
+                    let item = queue.lock().unwrap().next();
+                    let Some((id, url)) = item else { break };
+                    let ok = link_alive(&url);
+                    let mut g = progress.lock().unwrap();
+                    g.0 += 1;
+                    g.1.push((id, ok));
+                });
+            }
+        }
+        cx.spawn(async move |this, cx| {
+            loop {
+                cx.background_executor().timer(std::time::Duration::from_millis(400)).await;
+                let (done, results) = { let g = progress.lock().unwrap(); (g.0, g.1.clone()) };
+                let finished = done >= total;
+                let _ = this.update(cx, |w, cx| {
+                    if finished {
+                        let date = today_str();
+                        for (id, ok) in &results {
+                            w.catalog.health.insert(id.clone(), (*ok, date.clone()));
+                        }
+                        w.catalog.health_checking = None;
+                        w.save_catalog_prefs();
+                        let dead = results.iter().filter(|(_, ok)| !ok).count();
+                        let n = results.len();
+                        let msg = if crate::settings::english() {
+                            format!("Link check done: {dead} of {n} did not open")
+                        } else {
+                            format!("链接检查完成：{n} 条里 {dead} 条打不开")
+                        };
+                        w.show_toast(&msg, cx);
+                    } else {
+                        w.catalog.health_checking = Some((done, total));
+                    }
+                    cx.notify();
+                });
+                if finished { break; }
+            }
+        }).detach();
+    }
+
+    /// Groups of the user's own documents that share a title (#15):
+    /// the same prompt saved twice, an import that landed two copies.
+    /// Each group is sorted oldest first — the first is the keeper.
+    pub(crate) fn duplicate_groups(&self) -> Vec<Vec<crate::store::Entry>> {
+        let mut by_title: std::collections::BTreeMap<String, Vec<crate::store::Entry>> = std::collections::BTreeMap::new();
+        for e in &self.entries {
+            if e.meta.folder.is_some() || e.meta.local() { continue; }
+            let key = e.title.trim().to_lowercase();
+            if key.is_empty() { continue; }
+            by_title.entry(key).or_default().push(e.clone());
+        }
+        let mut groups: Vec<Vec<crate::store::Entry>> = by_title.into_values().filter(|g| g.len() > 1).collect();
+        for g in &mut groups {
+            g.sort_by_key(|e| e.meta.created);
+        }
+        groups.sort_by(|a, b| a[0].title.cmp(&b[0].title));
+        groups
+    }
+
+    /// The duplicate-tidy sheet (#15): review groups of same-title
+    /// documents and send the extra copies to the trash (restorable).
+    pub(crate) fn render_tidy_sheet(&mut self, _window: &mut Window, cx: &mut Context<Self>) -> Option<AnyElement> {
+        if !self.catalog.tidy_open { return None; }
+        let groups = self.duplicate_groups();
+        let mut body = div().flex().flex_col();
+        if groups.is_empty() {
+            body = body.child(div().mt(px(18.)).text_size(px(13.5)).line_height(px(20.)).text_color(Theme::text_caption())
+                .child(crate::settings::tr("没有发现同名文档 — 你的文档库很整齐。", "No documents share a title — your library is tidy.")));
+        }
+        for (gi, g) in groups.iter().enumerate() {
+            let mut group_box = div().mt(px(16.)).flex().flex_col()
+                .child(div().text_size(px(14.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::text()).child(g[0].title.clone()));
+            for (i, e) in g.iter().enumerate() {
+                let (y, m, d, _, _) = fdl_core::time::civil(e.meta.modified);
+                let when = format!("{y:04}-{m:02}-{d:02}");
+                let id = e.id.clone();
+                group_box = group_box.child(div().mt(px(6.)).flex().items_center().gap(px(10.))
+                    .child(div().flex_1().min_w_0().text_size(px(12.5)).text_color(Theme::text_caption())
+                        .child(format!("{} · {}", crate::settings::tr("修改于", "Modified"), when)))
+                    .when(i == 0, |d| d.child(div().flex_none().text_size(px(12.)).text_color(Theme::text_caption())
+                        .child(crate::settings::tr("最早的一份 · 保留", "Earliest copy · kept"))))
+                    .when(i > 0, |d| d.child(div().id(SharedString::from(format!("tidy-trash-{gi}-{i}")))
+                        .flex_none().h(px(28.)).px(px(12.)).flex().items_center().rounded(px(999.)).cursor_pointer()
+                        .border_1().border_color(Theme::line_border()).text_size(px(12.5)).text_color(Theme::text())
+                        .hover(|s| s.bg(Theme::fill_hover()))
+                        .child(crate::settings::tr("移到回收站", "Move to trash"))
+                        .on_click(cx.listener(move |w, _, window, cx| {
+                            w.delete_docs(std::slice::from_ref(&id), window, cx);
+                            cx.notify();
+                        })))));
+            }
+            body = body.child(group_box);
+        }
+        let sheet = div().id("tidy-sheet").absolute().inset_0().flex().justify_center()
+            .bg(gpui::hsla(0., 0., 0., 0.28))
+            .on_click(cx.listener(|w, _, _, cx| { w.catalog.tidy_open = false; cx.notify(); }))
+            .child(div().id("tidy-card").mt(px(72.)).w(px(620.)).max_h(px(620.)).p(px(24.)).flex().flex_col().rounded(px(18.)).bg(Theme::bg_body()).shadow(theme::shadow_dialog())
+                .on_click(cx.listener(|_, _, _, cx| cx.stop_propagation()))
+                .child(div().text_size(px(18.)).font_weight(FontWeight::BOLD).text_color(Theme::text()).child(crate::settings::tr("整理重复文档", "Tidy duplicates")))
+                .child(div().mt(px(3.)).text_size(px(13.)).text_color(Theme::text_disabled())
+                    .child(crate::settings::tr("同名的文档多半是同一篇存了两遍。最早的一份保留，其余的移入回收站 — 30 天内可以恢复。", "Documents with the same title are usually one saved twice. The earliest stays; the rest go to the trash, restorable for 30 days.")))
+                .child(div().id("tidy-body").flex_1().min_h_0().overflow_y_scroll().child(body))
+                .child(div().mt(px(16.)).flex().items_center()
+                    .child(div().flex_1())
+                    .child(pill_button("tidy-close", crate::settings::tr("关闭", "Close"), true)
+                        .on_click(cx.listener(|w, _, _, cx| { w.catalog.tidy_open = false; cx.notify(); })))));
+        Some(sheet.into_any_element())
     }
 
     /// The user's own entries: `catalog-custom.json` in the library
@@ -261,6 +463,11 @@ impl Workspace {
         self.catalog.sort = s.catalog_sort.as_deref().map(CatalogSort::of).unwrap_or(CatalogSort::NameAsc);
         self.catalog.favorites = s.catalog_favorites.clone();
         self.catalog.risk = s.catalog_risk.as_deref().and_then(|r| RISKS.iter().find(|x| **x == r).copied());
+        self.catalog.license = s.catalog_license.clone();
+        self.catalog.health = s.catalog_health.iter().filter_map(|(id, v)| {
+            let (word, date) = v.split_once(' ')?;
+            Some((id.clone(), (word == "ok", date.to_string())))
+        }).collect();
     }
 
     fn save_catalog_prefs(&mut self) {
@@ -269,7 +476,25 @@ impl Workspace {
         s.catalog_sort = Some(self.catalog.sort.key().to_string());
         s.catalog_favorites = self.catalog.favorites.clone();
         s.catalog_risk = self.catalog.risk.map(|r| r.to_string());
+        s.catalog_license = self.catalog.license.clone();
+        s.catalog_health = self.catalog.health.iter()
+            .map(|(id, (ok, date))| (id.clone(), format!("{} {}", if *ok { "ok" } else { "dead" }, date)))
+            .collect();
         if let Err(e) = self.store.save_settings(&s) { eprintln!("无法保存目录视图：{e}"); }
+    }
+
+    /// Move the browse list's keyboard selection, wrapping at the ends.
+    pub(crate) fn move_catalog_sel(&mut self, delta: isize, cx: &mut Context<Self>) {
+        let n = self.catalog_results(cx).len();
+        if n == 0 { self.catalog.sel = None; return; }
+        let next = match self.catalog.sel {
+            Some(i) => (i as isize + delta).rem_euclid(n as isize) as usize,
+            None if delta > 0 => 0,
+            None => n - 1,
+        };
+        self.catalog.sel = Some(next);
+        self.catalog.scroll.scroll_to_item(next);
+        cx.notify();
     }
 
     pub(crate) fn toggle_favorite(&mut self, id: &str, cx: &mut Context<Self>) {
@@ -351,6 +576,35 @@ impl Workspace {
         tabs = tabs.child(div().flex_1())
             .child(div().mr(px(10.)).text_size(px(12.5)).text_color(Theme::text_disabled())
                 .child({ let n = results.len(); crate::localized_format!("{n} / {total} 个条目", "{n} of {total} entries") }))
+            .child(div().id("catalog-export-btn").mr(px(8.)).h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
+                .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
+                .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
+                .hover(|s| s.bg(Theme::fill_hover()))
+                .child(crate::settings::tr("导出包", "Export pack"))
+                .on_click(cx.listener(|w, _, window, cx| w.open_export_pack(window, cx))))
+            .child(div().id("catalog-health-btn").mr(px(8.)).h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
+                .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
+                .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
+                .hover(|s| s.bg(Theme::fill_hover()))
+                .child(match self.catalog.health_checking {
+                    Some((done, total)) => crate::localized_format!("检查中 {done}/{total}", "Checking {done}/{total}"),
+                    None => crate::settings::tr("检查链接", "Check links").to_string(),
+                })
+                .on_click(cx.listener(|w, _, _, cx| w.start_health_check(cx))))
+            .child(div().id("catalog-tidy-btn").mr(px(8.)).h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
+                .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
+                .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
+                .hover(|s| s.bg(Theme::fill_hover()))
+                .child(crate::settings::tr("整理重复", "Tidy duplicates"))
+                .on_click(cx.listener(|w, _, _, cx| { w.catalog.tidy_open = true; cx.notify(); })))
+            .child(div().id("catalog-license-btn").mr(px(8.)).h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
+                .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
+                .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
+                .when(self.catalog.license_open, |d| d.bg(Theme::fill_hover_strong()))
+                .when(!self.catalog.license_open, |d| d.hover(|s| s.bg(Theme::fill_hover())))
+                .child(format!("{}: {}", crate::settings::tr("许可证", "License"), self.catalog.license.as_deref().unwrap_or(crate::settings::tr("全部", "All"))))
+                .child(icon("chevron-down", 12., Theme::text_caption()))
+                .on_click(cx.listener(|w, _, _, cx| { w.catalog.license_open = !w.catalog.license_open; w.catalog.sort_open = false; w.catalog.risk_open = false; cx.notify(); })))
             .child(div().id("catalog-risk-btn").h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
                 .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
                 .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
@@ -358,7 +612,7 @@ impl Workspace {
                 .when(!risk_open, |d| d.hover(|s| s.bg(Theme::fill_hover())))
                 .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_label_text))
                 .child(icon("chevron-down", 12., Theme::text_caption()))
-                .on_click(cx.listener(|w, _, _, cx| { w.catalog.risk_open = !w.catalog.risk_open; w.catalog.sort_open = false; cx.notify(); })))
+                .on_click(cx.listener(|w, _, _, cx| { w.catalog.risk_open = !w.catalog.risk_open; w.catalog.sort_open = false; w.catalog.license_open = false; cx.notify(); })))
             .child(div().id("catalog-sort-btn").h(px(28.)).px(px(10.)).flex().items_center().gap(px(6.)).rounded(px(9.)).cursor_pointer()
                 .border_1().border_color(Theme::line_border()).bg(Theme::bg_body())
                 .text_size(px(13.)).line_height(px(20.)).text_color(Theme::text())
@@ -367,11 +621,11 @@ impl Workspace {
                 .child(icon("sort-down", 14., Theme::text_caption()))
                 .child(sort_label)
                 .child(icon("chevron-down", 12., Theme::text_caption()))
-                .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = !w.catalog.sort_open; w.catalog.risk_open = false; cx.notify(); })))
+                .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = !w.catalog.sort_open; w.catalog.risk_open = false; w.catalog.license_open = false; cx.notify(); })))
             .child(div().ml(px(10.)).flex().items_center().gap(px(2.)).p(px(2.)).rounded(px(9.)).bg(Theme::fill_hover_strong())
                 .child(self.view_toggle_btn("catalog-view-grid", "view-grid", CatalogLayout::Grid, cx))
                 .child(self.view_toggle_btn("catalog-view-list", "view-list", CatalogLayout::List, cx)));
-        let filtered = !self.catalog.search.read(cx).text.trim().is_empty() || self.catalog.kind.is_some() || self.catalog.risk.is_some() || self.catalog.starters_only;
+        let filtered = !self.catalog.search.read(cx).text.trim().is_empty() || self.catalog.kind.is_some() || self.catalog.risk.is_some() || self.catalog.license.is_some() || self.catalog.starters_only;
         let body: AnyElement = if results.is_empty() {
             let mut wrap = div().relative().flex_1().min_h_0()
                 .child(crate::trash::empty_state("illus/empty-list.svg", crate::settings::tr("没有匹配的条目", "No entries match")));
@@ -383,6 +637,7 @@ impl Workspace {
                             f.update(cx, |f, cx| f.set_text("", cx));
                             w.catalog.kind = None;
                             w.catalog.risk = None;
+                            w.catalog.license = None;
                             w.catalog.starters_only = false;
                             w.save_catalog_prefs();
                             cx.notify();
@@ -402,16 +657,43 @@ impl Workspace {
             }
             div().id("catalog-grid").flex_1().min_h_0().overflow_y_scroll().track_scroll(&self.catalog.scroll).child(grid).into_any_element()
         };
-        let page = div().flex_1().min_w_0().h_full().flex().flex_col().child(header).child(tabs).child(body);
+        let hint = div().flex_none().h(px(28.)).px(px(24.)).flex().items_center()
+            .text_size(px(12.)).text_color(Theme::text_disabled())
+            .child(crate::settings::tr("↑↓ 选择 · Enter 打开 · 打开条目后按 C 复制 / R 运行 / S 保存 / F 收藏", "↑↓ select · Enter open · in an entry: C copy / R run / S save / F favorite"));
+        let page = div().flex_1().min_w_0().h_full().flex().flex_col().child(header).child(tabs).child(body).child(hint);
         let mut root = div().relative().flex_1().min_w_0().h_full().flex().child(page);
-        if self.catalog.sort_open || self.catalog.risk_open {
+        if self.catalog.sort_open || self.catalog.risk_open || self.catalog.license_open {
             root = root
                 .child(div().id("catalog-sort-catcher").absolute().inset_0()
-                    .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = false; w.catalog.risk_open = false; cx.notify(); })));
+                    .on_click(cx.listener(|w, _, _, cx| { w.catalog.sort_open = false; w.catalog.risk_open = false; w.catalog.license_open = false; cx.notify(); })));
             if self.catalog.sort_open { root = root.child(self.catalog_sort_menu(cx)); }
             if self.catalog.risk_open { root = root.child(self.catalog_risk_menu(cx)); }
+            if self.catalog.license_open { root = root.child(self.catalog_license_menu(cx)); }
         }
         root.into_any_element()
+    }
+
+    fn catalog_license_menu(&self, cx: &mut Context<Self>) -> AnyElement {
+        let mut menu = div().flex().flex_col().py(px(6.));
+        let add = |menu: Div, ix: usize, license: Option<String>, label: String| {
+            let on = self.catalog.license == license;
+            menu.child(
+                div().id(("catalog-license", ix)).mx(px(6.)).px(px(10.)).h(px(30.)).flex().items_center().gap(px(8.)).rounded(px(8.)).cursor_pointer()
+                    .text_size(px(13.)).line_height(px(20.))
+                    .when(on, |d| d.text_color(Theme::text()).font_weight(FontWeight::SEMIBOLD))
+                    .when(!on, |d| d.text_color(Theme::text_caption()))
+                    .hover(|s| s.bg(Theme::fill_hover()))
+                    .child(div().w(px(14.)).flex_none().flex().items_center().when(on, |d| d.child(icon("check", 13., Theme::primary()))))
+                    .child(label)
+                    .on_click(cx.listener(move |w, _, _, cx| { w.catalog.license = license.clone(); w.catalog.license_open = false; w.save_catalog_prefs(); cx.notify(); })),
+            )
+        };
+        menu = add(menu, 0, None, crate::settings::tr("全部", "All").to_string());
+        for (i, lic) in self.catalog_licenses().into_iter().enumerate() {
+            menu = add(menu, i + 1, Some(lic.clone()), lic);
+        }
+        div().id("catalog-license-menu").absolute().top(px(112.)).right(px(268.)).w(px(230.)).max_h(px(420.)).overflow_y_scroll().rounded(px(12.)).border_1().border_color(Theme::line_border())
+            .bg(Theme::bg_body()).shadow(theme::shadow_dialog()).child(menu).into_any_element()
     }
 
     fn view_toggle_btn(&self, id: &'static str, ic: &'static str, layout: CatalogLayout, cx: &mut Context<Self>) -> Stateful<Div> {
@@ -475,19 +757,24 @@ impl Workspace {
         let risk_text = risks.iter().map(|r| risk_label(r)).collect::<Vec<_>>().join(" · ");
         div().id(("catalog-row", ix)).w_full().px(px(16.)).py(px(11.)).flex().items_center().gap(px(14.))
             .rounded(px(10.)).border_1().border_color(Theme::line_border()).bg(Theme::bg_body()).shadow(theme::shadow_card())
+            .when(self.catalog.sel == Some(ix), |d| d.border_color(Theme::primary()))
             .cursor_pointer().hover(|s| s.bg(Theme::fill_hover()))
             .child(div().flex_1().min_w_0().flex().flex_col()
                 .child(div().flex().items_center().gap(px(8.))
+                    .when(self.catalog.health.get(&e.id).is_some_and(|(ok, _)| !ok), |d| d.child(div().flex_none().size(px(8.)).rounded(px(4.)).bg(Theme::danger())))
                     .child(div().text_size(px(15.)).line_height(px(20.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::primary()).child(e.name.clone()))
                     .child(chip(kind_label(&e.kind)))
                     .when(e.starter, |d| d.child(div().text_size(px(12.)).text_color(Theme::primary()).child(crate::settings::tr("★ 入门推荐", "★ Starter pick")))))
                 .child(div().mt(px(2.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::text_caption())
                     .overflow_hidden().whitespace_nowrap().text_ellipsis().child(e.summary.clone())))
-            .child(div().flex_none().text_size(px(12.)).text_color(Theme::text_disabled())
-                .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_text)))
+            .child(div().flex_none().flex().flex_col().items_end().gap(px(2.))
+                .child(div().text_size(px(12.)).text_color(Theme::text_disabled())
+                    .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_text)))
+                .child(div().text_size(px(12.)).text_color(Theme::text_disabled())
+                    .child(format!("{}: {}", crate::settings::tr("许可证", "License"), e.license))))
             .when(e.install.is_some(), |d| d.child(self.copy_install_btn(ix, e, cx)))
             .child(self.fav_button(ix, e, cx))
-            .on_click(cx.listener(move |w, _, _, cx| { w.catalog.selected = Some(id.clone()); w.catalog.detail_scroll.set_offset(point(px(0.), px(0.))); cx.notify(); }))
+            .on_click(cx.listener(move |w, _, _, cx| { w.catalog.sel = Some(ix); w.catalog.selected = Some(id.clone()); w.catalog.detail_scroll.set_offset(point(px(0.), px(0.))); cx.notify(); }))
             .into_any_element()
     }
 
@@ -497,19 +784,21 @@ impl Workspace {
         let risk_text = risks.iter().map(|r| risk_label(r)).collect::<Vec<_>>().join(" · ");
         div().id(("catalog-card", ix)).w(px(300.)).min_h(px(196.)).p(px(18.)).flex().flex_col()
             .rounded(px(10.)).border_1().border_color(Theme::line_border()).bg(Theme::bg_body()).shadow(theme::shadow_card())
+            .when(self.catalog.sel == Some(ix), |d| d.border_color(Theme::primary()))
             .cursor_pointer().hover(|s| s.bg(Theme::fill_hover()))
             .child(div().flex().items_start().gap(px(8.))
+                .when(self.catalog.health.get(&e.id).is_some_and(|(ok, _)| !ok), |d| d.child(div().flex_none().mt(px(7.)).size(px(8.)).rounded(px(4.)).bg(Theme::danger())))
                 .child(div().flex_1().min_w_0().text_size(px(16.)).line_height(px(22.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::primary()).child(e.name.clone()))
                 .child(self.fav_button(ix, e, cx)))
             .child(div().mt(px(6.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::text_caption()).child(e.summary.clone()))
             .child(div().flex_1())
-            .child(div().mt(px(12.)).flex().items_center().gap(px(8.)).child(chip(kind_label(&e.kind)))
+            .child(div().mt(px(12.)).flex().items_center().gap(px(8.)).child(chip(kind_label(&e.kind))).child(chip(&e.license))
                 .when(e.starter, |d| d.child(div().text_size(px(12.)).text_color(Theme::primary()).child(crate::settings::tr("★ 入门推荐", "★ Starter pick")))))
             .child(div().mt(px(8.)).flex().items_center()
                 .child(div().flex_1().text_size(px(12.)).text_color(Theme::text_disabled())
                     .child(format!("{}: {}", crate::settings::tr("能访问", "Can touch"), risk_text)))
                 .when(e.install.is_some(), |d| d.child(self.copy_install_btn(ix, e, cx))))
-            .on_click(cx.listener(move |w, _, _, cx| { w.catalog.selected = Some(id.clone()); w.catalog.detail_scroll.set_offset(point(px(0.), px(0.))); cx.notify(); }))
+            .on_click(cx.listener(move |w, _, _, cx| { w.catalog.sel = Some(ix); w.catalog.selected = Some(id.clone()); w.catalog.detail_scroll.set_offset(point(px(0.), px(0.))); cx.notify(); }))
             .into_any_element()
     }
 
@@ -536,6 +825,12 @@ impl Workspace {
             .when(stale, |d| d
                 .child(div().mt(px(8.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::text_caption())
                     .child(crate::settings::tr("这条已经很久没有复核了 — 安装前请先到来源处确认。", "Not re-checked in over six months — verify it at the source before installing."))))
+            .when(self.catalog.health.get(&e.id).is_some_and(|(ok, _)| !ok), |d| d
+                .child(div().mt(px(8.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::danger())
+                    .child(crate::settings::tr("上次检查时这个链接打不开 — 来源可能已经下线。", "This link did not open at the last check — the source may be gone."))))
+            .when(self.catalog.health.get(&e.id).is_some_and(|(ok, _)| *ok), |d| d
+                .child(div().mt(px(8.)).text_size(px(12.5)).line_height(px(18.)).text_color(Theme::text_caption())
+                    .child(format!("{} · {}", crate::settings::tr("链接正常", "Link OK"), self.catalog.health.get(&e.id).map(|(_, date)| date.clone()).unwrap_or_default()))))
             .child(div().mt(px(16.)).text_size(px(14.5)).line_height(px(23.)).text_color(Theme::text()).child(e.summary.clone()))
             .child(div().mt(px(22.)).text_size(px(12.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::text_disabled())
                 .child(crate::settings::tr("能访问什么", "WHAT IT CAN TOUCH")))
@@ -790,8 +1085,94 @@ impl Workspace {
         if let Some(first) = fields.first() {
             window.focus(&first.field.focus_handle(cx));
         }
-        self.catalog.run = Some(RunSheet { template, title, fields, scroll: ScrollHandle::new(), _subs: subs });
+        let profiles: Vec<(String, Vec<(String, String)>)> = self.store.settings().run_profiles.get(&title)
+            .map(|by_name| by_name.iter().map(|(n, v)| (n.clone(), v.clone())).collect())
+            .unwrap_or_default();
+        let profile_name = cx.new(|cx| {
+            let mut f = TextField::new(crate::settings::tr("方案名，如 本地 / 正式", "Profile name, e.g. Local / Production"), cx);
+            f.placeholder_color = Theme::text_disabled();
+            f
+        });
+        self.catalog.run = Some(RunSheet { template, title, fields, scroll: ScrollHandle::new(), profiles, active_profile: None, profile_name, _subs: subs });
         cx.notify();
+    }
+
+    /// Fill the sheet from one saved profile (#6).
+    fn apply_run_profile(&mut self, name: &str, cx: &mut Context<Self>) {
+        let Some(run) = &self.catalog.run else { return };
+        let Some((_, values)) = run.profiles.iter().find(|(n, _)| n == name).cloned() else { return };
+        for f in &run.fields {
+            let v = values.iter().find(|(n, _)| *n == f.name).map(|(_, v)| v.clone()).unwrap_or_default();
+            f.field.update(cx, |fld, cx| fld.set_text(&v, cx));
+        }
+        if let Some(run) = &mut self.catalog.run { run.active_profile = Some(name.to_string()); }
+        cx.notify();
+    }
+
+    /// Save the sheet's current answers under the typed profile name
+    /// (or the active profile's name when the box is empty).
+    fn save_run_profile(&mut self, cx: &mut Context<Self>) {
+        let Some(run) = &self.catalog.run else { return };
+        let typed = run.profile_name.read(cx).text.trim().to_string();
+        let name = if !typed.is_empty() { typed } else if let Some(a) = &run.active_profile { a.clone() } else { return };
+        let title = run.title.clone();
+        let values: Vec<(String, String)> = run.fields.iter()
+            .map(|f| (f.name.clone(), f.field.read(cx).text.clone()))
+            .filter(|(_, v)| !v.trim().is_empty()).collect();
+        if values.is_empty() { return; }
+        let mut s = self.store.settings();
+        s.run_profiles.entry(title).or_default().insert(name.clone(), values.clone());
+        if let Err(e) = self.store.save_settings(&s) { crate::logging::write(&format!("run profiles: {e}")); }
+        if let Some(run) = &mut self.catalog.run {
+            match run.profiles.iter_mut().find(|(n, _)| *n == name) {
+                Some(slot) => slot.1 = values,
+                None => { run.profiles.push((name.clone(), values)); run.profiles.sort_by(|a, b| a.0.cmp(&b.0)); }
+            }
+            run.active_profile = Some(name);
+        }
+        self.show_toast(crate::settings::tr("方案已保存", "Profile saved"), cx);
+        cx.notify();
+    }
+
+    /// Delete the active profile (#6).
+    fn delete_run_profile(&mut self, cx: &mut Context<Self>) {
+        let Some(run) = &self.catalog.run else { return };
+        let Some(name) = run.active_profile.clone() else { return };
+        let title = run.title.clone();
+        let mut s = self.store.settings();
+        if let Some(by_name) = s.run_profiles.get_mut(&title) { by_name.remove(&name); }
+        if let Err(e) = self.store.save_settings(&s) { crate::logging::write(&format!("run profiles: {e}")); }
+        if let Some(run) = &mut self.catalog.run {
+            run.profiles.retain(|(n, _)| *n != name);
+            run.active_profile = None;
+        }
+        self.show_toast(crate::settings::tr("方案已删除", "Profile deleted"), cx);
+        cx.notify();
+    }
+
+    /// The profiles row of the Run sheet (#6): one chip per saved
+    /// profile (click fills the sheet), a name box, save and delete.
+    fn run_profiles_row(&self, cx: &mut Context<Self>) -> Div {
+        let Some(run) = &self.catalog.run else { return div() };
+        let mut row = div().mt(px(12.)).flex().items_center().gap(px(6.))
+            .child(div().flex_none().text_size(px(12.5)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::text())
+                .child(crate::settings::tr("方案", "Profiles")));
+        for (i, (name, _)) in run.profiles.iter().enumerate() {
+            let active = run.active_profile.as_deref() == Some(name.as_str());
+            let name2 = name.clone();
+            row = row.child(div().id(("run-profile", i)).flex_none().px(px(10.)).py(px(4.)).rounded(px(999.)).cursor_pointer()
+                .border_1().border_color(if active { Theme::primary() } else { Theme::line_border() })
+                .when(active, |d| d.bg(Theme::fill_hover()))
+                .text_size(px(12.)).text_color(Theme::text())
+                .on_click(cx.listener(move |w, _, _, cx| w.apply_run_profile(&name2, cx)))
+                .child(name.clone()));
+        }
+        row.child(div().flex_none().w(px(180.)).h(px(30.)).px(px(9.)).flex().items_center().rounded(px(8.)).border_1().border_color(Theme::line_border())
+                .child(div().flex_1().min_w_0().flex().child(run.profile_name.clone())))
+            .child(pill_button("run-profile-save", crate::settings::tr("存为方案", "Save as profile"), false)
+                .on_click(cx.listener(|w, _, _, cx| w.save_run_profile(cx))))
+            .when(run.active_profile.is_some(), |d| d.child(pill_button("run-profile-delete", crate::settings::tr("删除方案", "Delete profile"), false)
+                .on_click(cx.listener(|w, _, _, cx| w.delete_run_profile(cx)))))
     }
 
     /// The Run prompt sheet overlay, rendered while a sheet is open.
@@ -821,6 +1202,7 @@ impl Workspace {
                 .child(div().text_size(px(18.)).font_weight(FontWeight::BOLD).text_color(Theme::text()).child(crate::settings::tr("运行提示词", "Run prompt")))
                 .child(div().mt(px(3.)).text_size(px(13.)).text_color(Theme::text_disabled())
                     .child(format!("{} — {}", run.title, crate::settings::tr("填好空格，然后复制成品提示词。", "fill in the blanks, then copy the finished prompt."))))
+                .child(self.run_profiles_row(cx))
                 .child(div().id("run-fields").flex_1().min_h_0().overflow_y_scroll().track_scroll(&run.scroll)
                     .child(fields_col)
                     .child(div().mt(px(16.)).text_size(px(12.5)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::text()).child(crate::settings::tr("预览", "Preview")))

@@ -1,0 +1,388 @@
+/*
+ * ai.md 文档主题：Solarized Dark
+ *
+ * 灵感来自 Notepad++ 内置的 Solarized Dark 主题。深青纸面配一套精确校准过的十六色，代码圈的经典深色方案。
+ * 块的排版沿用内置主题的同一套尺寸，只是换了配色。
+ *
+ * 每个属性都写着当前的值。改完保存，应用里立即生效；说明见 docs/THEMES.md。
+ */
+
+:root {
+  --theme-name: "Solarized Dark";
+  --theme-name-en: "Solarized Dark";
+  --theme-author: "ai.md";
+  --theme-description: "深青纸面配一套精确校准过的十六色，代码圈的经典深色方案。";
+  /* 块的画法：craft 或 feishu */
+  --theme-base: craft;
+
+  /* 本主题的基础色，下面的规则用 var() 引用 */
+  --ink-text: #839496;
+  --ink-secondary: #586E75;
+  --ink-faint: rgba(131, 148, 150, 0.35);
+  --ink-accent: #268BD2;
+  --ink-divider: rgba(131, 148, 150, 0.16);
+  --ink-surface: #073642;
+
+  /* 文字颜色 */
+  --color-gray: #586E75;
+  --color-red: #DC322F;
+  --color-orange: #CB4B16;
+  --color-yellow: #B58900;
+  --color-green: #859900;
+  --color-blue: #268BD2;
+  --color-purple: #6C71C4;
+
+  /* 文字高亮 */
+  --highlight-light-gray: #0e3640;
+  --highlight-medium-gray: #1c404a;
+  --highlight-gray: #1c404a;
+  --highlight-light-red: #232c35;
+  --highlight-red: #462d34;
+  --highlight-light-orange: #203031;
+  --highlight-orange: #41352c;
+  --highlight-light-yellow: #1d3a2d;
+  --highlight-yellow: #3a4925;
+  --highlight-light-green: #153d2d;
+  --highlight-green: #2b4e25;
+  --highlight-light-blue: #063a4f;
+  --highlight-blue: #0c4a68;
+  --highlight-light-purple: #11364d;
+  --highlight-purple: #234163;
+
+  /* 块背景 */
+  --background-light-gray: #0e3640;
+  --background-medium-gray: #1c404a;
+  --background-gray: #1c404a;
+  --background-light-red: #232c35;
+  --background-medium-red: #462d34;
+  --background-light-orange: #203031;
+  --background-medium-orange: #41352c;
+  --background-light-yellow: #1d3a2d;
+  --background-medium-yellow: #3a4925;
+  --background-light-green: #153d2d;
+  --background-medium-green: #2b4e25;
+  --background-light-blue: #063a4f;
+  --background-medium-blue: #0c4a68;
+  --background-light-purple: #11364d;
+  --background-medium-purple: #234163;
+
+  /* 高亮块底色 */
+  --callout-light-gray: #0e3640;
+  --callout-medium-gray: #1c404a;
+  --callout-gray: #1c404a;
+  --callout-light-red: #232c35;
+  --callout-medium-red: #462d34;
+  --callout-light-orange: #203031;
+  --callout-medium-orange: #41352c;
+  --callout-light-yellow: #1d3a2d;
+  --callout-medium-yellow: #3a4925;
+  --callout-light-green: #153d2d;
+  --callout-medium-green: #2b4e25;
+  --callout-light-blue: #063a4f;
+  --callout-medium-blue: #0c4a68;
+  --callout-light-purple: #11364d;
+  --callout-medium-purple: #234163;
+
+  /* 高亮块边框 */
+  --border-gray: #0e3640;
+  --border-red: #232c35;
+  --border-orange: #203031;
+  --border-yellow: #1d3a2d;
+  --border-green: #153d2d;
+  --border-blue: #063a4f;
+  --border-purple: #11364d;
+  /* 其它界面细节（文档内的选中、悬停、表格工具等） */
+  --token-text-caption: var(--ink-secondary);
+  --token-text-placeholder: var(--ink-faint);
+  --token-block-placeholder: var(--ink-faint);
+  --token-text-disabled: rgba(131, 148, 150, 0.3);
+  --token-text-code: #839496;
+  --token-primary-500: var(--ink-accent);
+  --token-primary-fill-1: #063a4f;
+  --token-bg-overlay: var(--ink-surface);
+  --token-line-divider: rgba(131, 148, 150, 0.06);
+  --token-line-border: rgba(131, 148, 150, 0.08);
+  --token-fill-hover: rgba(131, 148, 150, 0.045);
+  --token-fill-hover-strong: rgba(131, 148, 150, 0.07);
+  --token-fill-pressed: rgba(131, 148, 150, 0.1);
+  --token-fill-turninto-active: #063a4f;
+  --token-block-hover: rgba(131, 148, 150, 0.04);
+  --token-block-selected: rgba(38, 139, 210, 0.16);
+  --token-handle-active: rgba(131, 148, 150, 0.06);
+  --token-size-cell: var(--ink-surface);
+  --token-size-cell-border: var(--ink-divider);
+  --token-size-cell-active: #0c4a68;
+  --token-size-cell-disabled: #063a4f;
+  --token-swatch-border: rgba(131, 148, 150, 0.08);
+  --token-block-bg-area: rgba(131, 148, 150, 0.03);
+  --token-scrollbar-thumb: rgba(131, 148, 150, 0.22);
+  --token-shadow: rgba(0, 0, 0, 0.25);
+  --token-code-hover-ring: rgba(38, 139, 210, 0.35);
+  --token-pinned: var(--ink-accent);
+  --token-table-bar-hover: rgba(131, 148, 150, 0.08);
+  --token-table-bar-selected: #0c4a68;
+  --token-danger-bar: #ff6467;
+  --token-danger-cell: #232c35;
+  --token-danger: #ff6b68;
+  --token-sidebar-text: rgba(131, 148, 150, 0.85);
+  --token-sidebar-hover: rgba(131, 148, 150, 0.045);
+  --token-sidebar-selected: rgba(131, 148, 150, 0.07);
+  --token-sidebar-section: var(--ink-secondary);
+  --token-button-border: rgba(131, 148, 150, 0.075);
+  --token-code-gutter-line: var(--ink-divider);
+  --token-caption: var(--ink-secondary);
+  --token-menu-highlight: var(--ink-accent);
+  --token-popover-bg: var(--ink-surface);
+}
+
+.page {
+  background-color: #002B36;
+  color: var(--ink-text);
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 708px;
+  caret-color: var(--ink-text);
+}
+
+::selection {
+  background-color: #073642;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: var(--ink-text);
+}
+
+h1 {
+  font-family: system-ui;
+  font-size: 30px;
+  line-height: 39px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 32px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-family: system-ui;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-family: system-ui;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h6 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h7 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h8 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h9 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(131, 148, 150, 0.35);
+}
+
+a:hover {
+  color: var(--ink-accent);
+}
+
+code {
+  color: #2AA198;
+  background-color: rgba(131, 148, 150, 0.08);
+  border-color: transparent;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+pre {
+  font-family: ui-monospace;
+  font-size: 13.6px;
+  line-height: 20.4px;
+  color: var(--ink-text);
+  background-color: var(--ink-surface);
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.line-numbers {
+  display: none;
+  color: var(--ink-secondary);
+  background-color: var(--ink-surface);
+}
+
+blockquote {
+  border-left-width: 3px;
+  border-left-color: #586E75;
+  padding-left: 17px;
+  color: inherit;
+  font-style: normal;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li::marker {
+  color: inherit;
+}
+
+ol li::marker {
+  color: inherit;
+}
+
+.task {
+  width: 16px;
+  border-radius: 3px;
+  border-color: var(--ink-text);
+}
+
+.task:checked {
+  background-color: var(--ink-accent);
+  color: #ffffff;
+}
+
+.task-done {
+  color: rgba(131, 148, 150, 0.38);
+  text-decoration: line-through;
+}
+
+hr {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: var(--ink-divider);
+}
+
+table {
+  font-size: 14px;
+  line-height: 20px;
+  border-color: #1d424b;
+  border-radius: 0px;
+}
+
+th {
+  background-color: var(--ink-surface);
+}
+
+.callout {
+  border-radius: 4px;
+  border-width: 0px;
+  padding-top: 16px;
+  padding-left: 12px;
+}
+
+/* 代码高亮：Solarized Dark 的配色 */
+.token.comment {
+  color: #586E75;
+}
+
+.token.keyword {
+  color: #859900;
+}
+
+.token.tag {
+  color: #268BD2;
+}
+
+.token.string {
+  color: #2AA198;
+}
+
+.token.number {
+  color: #D33682;
+}
+
+.token.boolean {
+  color: #D33682;
+}
+
+.token.class-name {
+  color: #B58900;
+}
+
+.token.attr-name {
+  color: #2AA198;
+}
+
+.token.function {
+  color: #268BD2;
+}

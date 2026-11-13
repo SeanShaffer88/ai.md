@@ -1,0 +1,388 @@
+/*
+ * ai.md 文档主题：Solarized Light
+ *
+ * 灵感来自 Notepad++ 内置的 Solarized Light 主题。Solarized 的浅色一半：奶油纸面，同一套十六色，白天写长文正合适。
+ * 块的排版沿用内置主题的同一套尺寸，只是换了配色。
+ *
+ * 每个属性都写着当前的值。改完保存，应用里立即生效；说明见 docs/THEMES.md。
+ */
+
+:root {
+  --theme-name: "Solarized Light";
+  --theme-name-en: "Solarized Light";
+  --theme-author: "ai.md";
+  --theme-description: "Solarized 的浅色一半：奶油纸面，同一套十六色，白天写长文正合适。";
+  /* 块的画法：craft 或 feishu */
+  --theme-base: craft;
+
+  /* 本主题的基础色，下面的规则用 var() 引用 */
+  --ink-text: #657B83;
+  --ink-secondary: #93A1A1;
+  --ink-faint: rgba(101, 123, 131, 0.35);
+  --ink-accent: #268BD2;
+  --ink-divider: rgba(101, 123, 131, 0.16);
+  --ink-surface: #EEE8D5;
+
+  /* 文字颜色 */
+  --color-gray: #93A1A1;
+  --color-red: #DC322F;
+  --color-orange: #CB4B16;
+  --color-yellow: #B58900;
+  --color-green: #859900;
+  --color-blue: #268BD2;
+  --color-purple: #6C71C4;
+
+  /* 文字高亮 */
+  --highlight-light-gray: #eeeada;
+  --highlight-medium-gray: #e1e0d2;
+  --highlight-gray: #e1e0d2;
+  --highlight-light-red: #f8dbca;
+  --highlight-red: #f4c3b4;
+  --highlight-light-orange: #f6dec6;
+  --highlight-orange: #f0caae;
+  --highlight-light-yellow: #f3e7c3;
+  --highlight-yellow: #eadaa8;
+  --highlight-light-green: #ece9c3;
+  --highlight-green: #dedea8;
+  --highlight-light-blue: #dfe7e1;
+  --highlight-blue: #c5dadf;
+  --highlight-light-purple: #e9e3df;
+  --highlight-purple: #d7d3db;
+
+  /* 块背景 */
+  --background-light-gray: #eeeada;
+  --background-medium-gray: #e1e0d2;
+  --background-gray: #e1e0d2;
+  --background-light-red: #f8dbca;
+  --background-medium-red: #f4c3b4;
+  --background-light-orange: #f6dec6;
+  --background-medium-orange: #f0caae;
+  --background-light-yellow: #f3e7c3;
+  --background-medium-yellow: #eadaa8;
+  --background-light-green: #ece9c3;
+  --background-medium-green: #dedea8;
+  --background-light-blue: #dfe7e1;
+  --background-medium-blue: #c5dadf;
+  --background-light-purple: #e9e3df;
+  --background-medium-purple: #d7d3db;
+
+  /* 高亮块底色 */
+  --callout-light-gray: #eeeada;
+  --callout-medium-gray: #e1e0d2;
+  --callout-gray: #e1e0d2;
+  --callout-light-red: #f8dbca;
+  --callout-medium-red: #f4c3b4;
+  --callout-light-orange: #f6dec6;
+  --callout-medium-orange: #f0caae;
+  --callout-light-yellow: #f3e7c3;
+  --callout-medium-yellow: #eadaa8;
+  --callout-light-green: #ece9c3;
+  --callout-medium-green: #dedea8;
+  --callout-light-blue: #dfe7e1;
+  --callout-medium-blue: #c5dadf;
+  --callout-light-purple: #e9e3df;
+  --callout-medium-purple: #d7d3db;
+
+  /* 高亮块边框 */
+  --border-gray: #eeeada;
+  --border-red: #f8dbca;
+  --border-orange: #f6dec6;
+  --border-yellow: #f3e7c3;
+  --border-green: #ece9c3;
+  --border-blue: #dfe7e1;
+  --border-purple: #e9e3df;
+  /* 其它界面细节（文档内的选中、悬停、表格工具等） */
+  --token-text-caption: var(--ink-secondary);
+  --token-text-placeholder: var(--ink-faint);
+  --token-block-placeholder: var(--ink-faint);
+  --token-text-disabled: rgba(101, 123, 131, 0.3);
+  --token-text-code: #657B83;
+  --token-primary-500: var(--ink-accent);
+  --token-primary-fill-1: #dfe7e1;
+  --token-bg-overlay: var(--ink-surface);
+  --token-line-divider: rgba(101, 123, 131, 0.06);
+  --token-line-border: rgba(101, 123, 131, 0.08);
+  --token-fill-hover: rgba(101, 123, 131, 0.045);
+  --token-fill-hover-strong: rgba(101, 123, 131, 0.07);
+  --token-fill-pressed: rgba(101, 123, 131, 0.1);
+  --token-fill-turninto-active: #dfe7e1;
+  --token-block-hover: rgba(101, 123, 131, 0.04);
+  --token-block-selected: rgba(38, 139, 210, 0.16);
+  --token-handle-active: rgba(101, 123, 131, 0.06);
+  --token-size-cell: var(--ink-surface);
+  --token-size-cell-border: var(--ink-divider);
+  --token-size-cell-active: #c5dadf;
+  --token-size-cell-disabled: #dfe7e1;
+  --token-swatch-border: rgba(101, 123, 131, 0.08);
+  --token-block-bg-area: rgba(101, 123, 131, 0.03);
+  --token-scrollbar-thumb: rgba(101, 123, 131, 0.22);
+  --token-shadow: rgba(0, 0, 0, 0.08);
+  --token-code-hover-ring: rgba(38, 139, 210, 0.35);
+  --token-pinned: var(--ink-accent);
+  --token-table-bar-hover: rgba(101, 123, 131, 0.08);
+  --token-table-bar-selected: #c5dadf;
+  --token-danger-bar: #ff6467;
+  --token-danger-cell: #f8dbca;
+  --token-danger: #d92d20;
+  --token-sidebar-text: rgba(101, 123, 131, 0.85);
+  --token-sidebar-hover: rgba(101, 123, 131, 0.045);
+  --token-sidebar-selected: rgba(101, 123, 131, 0.07);
+  --token-sidebar-section: var(--ink-secondary);
+  --token-button-border: rgba(101, 123, 131, 0.075);
+  --token-code-gutter-line: var(--ink-divider);
+  --token-caption: var(--ink-secondary);
+  --token-menu-highlight: var(--ink-accent);
+  --token-popover-bg: var(--ink-surface);
+}
+
+.page {
+  background-color: #FDF6E3;
+  color: var(--ink-text);
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 708px;
+  caret-color: var(--ink-text);
+}
+
+::selection {
+  background-color: #E9E2CB;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: var(--ink-text);
+}
+
+h1 {
+  font-family: system-ui;
+  font-size: 30px;
+  line-height: 39px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 32px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-family: system-ui;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-family: system-ui;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h6 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h7 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h8 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h9 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(101, 123, 131, 0.35);
+}
+
+a:hover {
+  color: var(--ink-accent);
+}
+
+code {
+  color: #2AA198;
+  background-color: rgba(101, 123, 131, 0.08);
+  border-color: transparent;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+pre {
+  font-family: ui-monospace;
+  font-size: 13.6px;
+  line-height: 20.4px;
+  color: var(--ink-text);
+  background-color: var(--ink-surface);
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.line-numbers {
+  display: none;
+  color: var(--ink-secondary);
+  background-color: var(--ink-surface);
+}
+
+blockquote {
+  border-left-width: 3px;
+  border-left-color: #93A1A1;
+  padding-left: 17px;
+  color: inherit;
+  font-style: normal;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li::marker {
+  color: inherit;
+}
+
+ol li::marker {
+  color: inherit;
+}
+
+.task {
+  width: 16px;
+  border-radius: 3px;
+  border-color: var(--ink-text);
+}
+
+.task:checked {
+  background-color: var(--ink-accent);
+  color: #ffffff;
+}
+
+.task-done {
+  color: rgba(101, 123, 131, 0.38);
+  text-decoration: line-through;
+}
+
+hr {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: var(--ink-divider);
+}
+
+table {
+  font-size: 14px;
+  line-height: 20px;
+  border-color: #e6e4d5;
+  border-radius: 0px;
+}
+
+th {
+  background-color: var(--ink-surface);
+}
+
+.callout {
+  border-radius: 4px;
+  border-width: 0px;
+  padding-top: 16px;
+  padding-left: 12px;
+}
+
+/* 代码高亮：Solarized Light 的配色 */
+.token.comment {
+  color: #93A1A1;
+}
+
+.token.keyword {
+  color: #859900;
+}
+
+.token.tag {
+  color: #268BD2;
+}
+
+.token.string {
+  color: #2AA198;
+}
+
+.token.number {
+  color: #D33682;
+}
+
+.token.boolean {
+  color: #D33682;
+}
+
+.token.class-name {
+  color: #B58900;
+}
+
+.token.attr-name {
+  color: #2AA198;
+}
+
+.token.function {
+  color: #268BD2;
+}

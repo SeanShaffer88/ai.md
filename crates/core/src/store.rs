@@ -144,6 +144,18 @@ impl PageWidth {
     }
 }
 
+/// A sidebar Space (shelf): a named, coloured set of document ids.
+/// Scoping the sidebar to a Space is a view only — files never move.
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
+pub struct SpaceDef {
+    pub name: String,
+    /// Index into the app's shelf colour palette.
+    #[serde(default)]
+    pub color: usize,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub docs: Vec<String>,
+}
+
 /// Window-level UI state kept next to the library (`settings.json`).
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Settings {
@@ -155,6 +167,21 @@ pub struct Settings {
     /// 隐藏引用列表's 不再提示.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub refs_hide_no_ask: bool,
+    /// 删除文档时不再确认 (the dialog's 不再提示, or Settings).
+    /// Permanent deletes (purge, empty trash) always ask regardless.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub delete_no_ask: bool,
+    /// 本地助手桥: when on, ai.md serves a token-guarded JSON API on
+    /// 127.0.0.1 for tools on this machine. Off by default.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub agent_bridge: bool,
+    /// 本地助手桥's access token; generated the first time it is enabled.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub agent_bridge_token: String,
+    /// Closing the main window: "" asks every time, "exit" quits,
+    /// "tray" hides it to the tray (or minimizes where there is none).
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub exit_behavior: String,
     /// 主页: list instead of grid, and the sort order ("visited" …).
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub home_list: bool,
@@ -175,14 +202,34 @@ pub struct Settings {
     /// 目录: the remembered "can touch" filter (a risk tag).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub catalog_risk: Option<String>,
+    /// 目录: the remembered license filter.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub catalog_license: Option<String>,
+    /// 目录健康检查: entry id -> "ok 2026-11-13" / "dead 2026-11-13",
+    /// from the last link check the user ran.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub catalog_health: BTreeMap<String, String>,
     /// 运行提示词: the last values used per Run prompt sheet, keyed by
     /// the sheet's title, so reopening a prompt refills your answers.
     /// Answers for secret-looking variables are dropped in save_settings.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub run_values: BTreeMap<String, Vec<(String, String)>>,
+    /// 运行提示词: named value sets ("profiles") per Run prompt sheet,
+    /// keyed by the sheet's title, then the profile's name — e.g. one
+    /// set for local and one for production. Applying a profile fills
+    /// the whole sheet in one click. Secret-looking variables are
+    /// dropped in save_settings, like run_values.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub run_profiles: BTreeMap<String, BTreeMap<String, Vec<(String, String)>>>,
     /// Main window size, remembered like the quick note window's.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub window_size: Option<[f32; 2]>,
+    /// 侧栏空间: the user's shelves, and the one the sidebar is
+    /// currently scoped to (its name), if any.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub spaces: Vec<SpaceDef>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub active_space: Option<String>,
 }
 
 /// A document in the 回收站, as kept in `trash/index.json`.
@@ -1068,6 +1115,13 @@ impl Store {
             pairs.retain(|(name, _)| !is_secret_name(name));
         }
         s.run_values.retain(|_, pairs| !pairs.is_empty());
+        for by_name in s.run_profiles.values_mut() {
+            for pairs in by_name.values_mut() {
+                pairs.retain(|(name, _)| !is_secret_name(name));
+            }
+            by_name.retain(|_, pairs| !pairs.is_empty());
+        }
+        s.run_profiles.retain(|_, by_name| !by_name.is_empty());
         write_atomic(&self.root.join("settings.json"), &serde_json::to_vec_pretty(&s)?)
     }
 

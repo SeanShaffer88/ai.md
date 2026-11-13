@@ -22,6 +22,86 @@ const SUMMARY_SEP: &str = "\u{a0}\u{a0}\u{a0}";
 /// scrollbar) − row padding 12 / 8 − icon 24 + 10.
 const INFO_W: f32 = 474.;
 
+/// One row of the unified palette: a document, a catalog entry (the flag
+/// marks the prompt kinds, which get their own section), or an action.
+#[derive(Clone)]
+pub(crate) enum PalRow {
+    Doc(String),
+    Entry(String, bool),
+    Action(&'static str),
+}
+
+/// Palette sections in display order.
+#[derive(Clone, Copy, PartialEq)]
+enum PalSection { Docs, Catalog, Prompts, Actions }
+
+fn section_of(row: &PalRow) -> PalSection {
+    match row {
+        PalRow::Doc(_) => PalSection::Docs,
+        PalRow::Entry(_, prompt) => if *prompt { PalSection::Prompts } else { PalSection::Catalog },
+        PalRow::Action(_) => PalSection::Actions,
+    }
+}
+
+fn section_title(section: PalSection, empty_query: bool) -> &'static str {
+    match section {
+        PalSection::Docs => if empty_query { crate::settings::tr("最近浏览", "Recently viewed") } else { crate::settings::tr("笔记", "Notes") },
+        PalSection::Catalog => crate::settings::tr("目录", "Catalog"),
+        PalSection::Prompts => if empty_query { crate::settings::tr("置顶提示词", "Pinned prompts") } else { crate::settings::tr("提示词", "Prompts") },
+        PalSection::Actions => crate::settings::tr("操作", "Actions"),
+    }
+}
+
+fn section_header(title: &'static str) -> Div {
+    div().flex_none().h(px(36.)).pt(px(2.)).px(px(12.)).flex().items_center()
+        .text_size(px(12.)).line_height(px(18.)).text_color(Theme::text_caption()).child(title)
+}
+
+/// The prompt kinds group together in the palette and the catalog alike.
+pub(crate) fn is_prompt_kind(kind: &str) -> bool { kind == "prompt" || kind == "prompt-pack" }
+
+/// A typed palette query: `mcp:` / `skill:` / `guide:` / `prompt:` filter
+/// the catalog by kind, `note:` searches documents only, and a leading
+/// `>` lists actions. Anything else searches everything at once.
+struct PalQuery { kind: Option<&'static str>, docs_only: bool, actions_only: bool, text: String }
+
+fn parse_query(raw: &str) -> PalQuery {
+    let mut pq = PalQuery { kind: None, docs_only: false, actions_only: false, text: raw.to_string() };
+    if let Some(rest) = raw.strip_prefix('>') {
+        pq.actions_only = true;
+        pq.text = rest.trim().to_string();
+        return pq;
+    }
+    for (prefix, kind) in [("mcp:", "mcp"), ("skill:", "skill"), ("guide:", "guide"), ("prompt:", "prompt")] {
+        if let Some(rest) = raw.strip_prefix(prefix) {
+            pq.kind = Some(kind);
+            pq.text = rest.trim().to_string();
+            return pq;
+        }
+    }
+    if let Some(rest) = raw.strip_prefix("note:") {
+        pq.docs_only = true;
+        pq.text = rest.trim().to_string();
+    }
+    pq
+}
+
+/// One palette action: an existing app command the palette can run.
+struct PalAction { id: &'static str, en: &'static str, zh: &'static str, glyph: &'static str }
+
+const PAL_ACTIONS: &[PalAction] = &[
+    PalAction { id: "new-doc", en: "New document", zh: "新建文档", glyph: "plus" },
+    PalAction { id: "go-catalog", en: "Open Catalog", zh: "打开目录", glyph: "library" },
+    PalAction { id: "go-home", en: "Go to library home", zh: "回到文档库首页", glyph: "home-new" },
+    PalAction { id: "run-prompt", en: "Run a prompt…", zh: "运行提示词…", glyph: "braces" },
+    PalAction { id: "quick-capture", en: "Quick capture…", zh: "快速捕获…", glyph: "square-pen" },
+    PalAction { id: "insert-prompt", en: "Insert a prompt…", zh: "插入提示词…", glyph: "file-text" },
+    PalAction { id: "settings", en: "Open settings", zh: "打开设置", glyph: "ellipsis" },
+    PalAction { id: "appearance", en: "Appearance settings", zh: "外观设置", glyph: "eye" },
+];
+
+fn pal_action(id: &str) -> Option<&'static PalAction> { PAL_ACTIONS.iter().find(|a| a.id == id) }
+
 /// Case-insensitive match position in `hay`, in `hay`'s own byte offsets.
 pub(crate) fn find_ci(hay: &str, needle_lower: &str) -> Option<Range<usize>> {
     if needle_lower.is_empty() {
@@ -246,42 +326,108 @@ impl Workspace {
     /// Catalog entries matching the query (the quick switcher searches the
     /// library and the catalog together; catalog hits list after documents).
     pub(crate) fn catalog_hits(&self, cx: &App) -> Vec<fdl_core::catalog::CatalogEntry> {
-        let q = self.query(cx);
-        if q.is_empty() { return vec![]; }
+        let raw = self.query(cx);
+        let pq = parse_query(&raw);
+        if pq.text.is_empty() || pq.docs_only || pq.actions_only { return vec![]; }
         // Asked several times per frame while the switcher is open;
         // the answer only changes with the query.
-        if let Some((q0, hits)) = &*self.catalog.switcher_cache.borrow() && *q0 == q {
+        if let Some((q0, hits)) = &*self.catalog.switcher_cache.borrow() && *q0 == raw {
             return hits.clone();
         }
-        let hits: Vec<fdl_core::catalog::CatalogEntry> = self.catalog.data.search(&q, None).into_iter().cloned().collect();
-        *self.catalog.switcher_cache.borrow_mut() = Some((q, hits.clone()));
+        // A `prompt:` query searches all kinds, then keeps the prompt
+        // kinds; the other prefixes map straight onto the kind filter.
+        let kind = match pq.kind { Some("prompt") => None, k => k };
+        let mut hits: Vec<fdl_core::catalog::CatalogEntry> = self.catalog.data.search(&pq.text, kind).into_iter().cloned().collect();
+        if pq.kind == Some("prompt") { hits.retain(|e| is_prompt_kind(&e.kind)); }
+        *self.catalog.switcher_cache.borrow_mut() = Some((raw, hits.clone()));
         hits
     }
 
+    /// The palette's actions matching `text` (an empty text matches all).
+    /// Insert-a-prompt only exists while a document is open.
+    fn palette_actions(&self, text: &str) -> Vec<&'static PalAction> {
+        PAL_ACTIONS.iter().filter(|a| {
+            (a.id != "insert-prompt" || self.editor.is_some())
+                && (text.is_empty() || a.en.to_lowercase().contains(text) || a.zh.contains(text))
+        }).collect()
+    }
+
+    /// Every palette row in display order: documents, catalog entries,
+    /// prompts, then actions. An empty query lists the recently viewed
+    /// documents and the pinned (favorited) prompts.
+    pub(crate) fn palette_rows(&self, cx: &App) -> Vec<PalRow> {
+        let raw = self.query(cx);
+        let pq = parse_query(&raw);
+        if pq.actions_only {
+            return self.palette_actions(&pq.text).into_iter().map(|a| PalRow::Action(a.id)).collect();
+        }
+        let mut rows = vec![];
+        if pq.kind.is_none() {
+            let docs = if pq.docs_only { self.search_results_for(&pq.text) } else { self.search_results(cx) };
+            rows.extend(docs.into_iter().map(|e| PalRow::Doc(e.id.clone())));
+        }
+        if !pq.docs_only {
+            if raw.is_empty() {
+                for id in &self.catalog.favorites {
+                    if let Some(e) = self.catalog.entry(id) && is_prompt_kind(&e.kind) {
+                        rows.push(PalRow::Entry(id.clone(), true));
+                    }
+                }
+            } else {
+                let hits = self.catalog_hits(cx);
+                rows.extend(hits.iter().filter(|h| !is_prompt_kind(&h.kind)).map(|h| PalRow::Entry(h.id.clone(), false)));
+                rows.extend(hits.iter().filter(|h| is_prompt_kind(&h.kind)).map(|h| PalRow::Entry(h.id.clone(), true)));
+                rows.extend(self.palette_actions(&pq.text).into_iter().map(|a| PalRow::Action(a.id)));
+            }
+        }
+        rows
+    }
+
+    fn run_palette_action(&mut self, id: &str, window: &mut Window, cx: &mut Context<Self>) {
+        match id {
+            // Stay in the palette, narrowed to prompts.
+            "run-prompt" => {
+                self.search.update(cx, |s, cx| s.set_text("prompt:", cx));
+                self.search_sel = Some(0);
+                self.search_scroll.set_offset(point(px(0.), px(0.)));
+                cx.notify();
+            }
+            "quick-capture" => { self.close_search(window, cx); crate::quick_capture::open(cx); }
+            "new-doc" => { self.close_search(window, cx); self.new_doc(window, cx); }
+            "go-catalog" => { self.close_search(window, cx); self.show_view(crate::app::View::Catalog, cx); }
+            "go-home" => { self.close_search(window, cx); self.show_view(crate::app::View::Home, cx); }
+            "insert-prompt" => { self.close_search(window, cx); self.open_insert_palette(window, cx); }
+            "settings" => { self.close_search(window, cx); self.open_settings(crate::settings::Page::General, cx); }
+            "appearance" => { self.close_search(window, cx); self.open_settings(crate::settings::Page::Appearance, cx); }
+            _ => {}
+        }
+    }
+
     fn search_total(&self, cx: &App) -> usize {
-        self.search_results(cx).len() + self.catalog_hits(cx).len()
+        self.palette_rows(cx).len()
     }
 
     pub(crate) fn pick_search(&mut self, row: usize, window: &mut Window, cx: &mut Context<Self>) {
-        let docs = self.search_results(cx).len();
-        if row >= docs {
-            let hits = self.catalog_hits(cx);
-            let Some(hit) = hits.get(row - docs) else { return };
-            let id = hit.id.clone();
-            self.close_search(window, cx);
-            self.open_catalog_entry(&id, cx);
-            return;
-        }
-        let Some(id) = self.search_results(cx).get(row).map(|e| e.id.clone()) else { return };
-        self.close_search(window, cx);
-        self.open(&id, window, cx);
-        if let Some(ed) = &self.editor {
-            ed.read(cx).focus(window);
+        let Some(r) = self.palette_rows(cx).get(row).cloned() else { return };
+        match r {
+            PalRow::Doc(id) => {
+                self.close_search(window, cx);
+                self.open(&id, window, cx);
+                if let Some(ed) = &self.editor {
+                    ed.read(cx).focus(window);
+                }
+            }
+            PalRow::Entry(id, _) => {
+                self.close_search(window, cx);
+                self.open_catalog_entry(&id, cx);
+            }
+            PalRow::Action(a) => self.run_palette_action(a, window, cx),
         }
     }
 
     pub(crate) fn move_search_sel(&mut self, delta: isize, cx: &mut Context<Self>) {
-        let n = self.search_total(cx);
+        let rows = self.palette_rows(cx);
+        let n = rows.len();
         if n == 0 { self.search_sel = None; return; }
         let next = match self.search_sel {
             Some(i) => (i as isize + delta).rem_euclid(n as isize) as usize,
@@ -289,15 +435,98 @@ impl Workspace {
             None => n - 1,
         };
         self.search_sel = Some(next);
-        let title = usize::from(self.query(cx).is_empty());
-        let section = usize::from(!self.query(cx).is_empty() && !self.catalog_hits(cx).is_empty() && next >= self.search_results(cx).len());
-        self.search_scroll.scroll_to_item(next + title + section);
+        // Section headers are list items too; count the ones at or
+        // before the selection so scrolling lands on the row itself.
+        let mut headers = 0;
+        let mut prev: Option<PalSection> = None;
+        for r in &rows[..=next] {
+            let s = section_of(r);
+            if prev != Some(s) { headers += 1; prev = Some(s); }
+        }
+        self.search_scroll.scroll_to_item(next + headers);
         cx.notify();
+    }
+
+    fn palette_catalog_row(&self, hit: &fdl_core::catalog::CatalogEntry, ix: usize, cx: &mut Context<Self>) -> impl IntoElement {
+        div().id(("catalog-hit", ix)).flex_none().pt(px(8.)).pr(px(8.)).pb(px(8.)).pl(px(12.))
+            .flex().items_center().rounded(px(ROW_RADIUS)).cursor_pointer()
+            .when(self.search_sel == Some(ix), |d| d.bg(Theme::fill_hover()))
+            .on_hover(cx.listener(move |w, hovered: &bool, _, cx| {
+                if *hovered && w.search_sel != Some(ix) { w.search_sel = Some(ix); cx.notify(); }
+            }))
+            .on_click(cx.listener(move |w, _, window, cx| w.pick_search(ix, window, cx)))
+            .child(crate::ui::icon("library", 16., Theme::icon()))
+            .child(div().ml(px(10.)).flex_1().min_w_0().text_size(px(13.5)).text_color(Theme::text())
+                .overflow_hidden().whitespace_nowrap().text_ellipsis().child(hit.name.clone()))
+            .child(div().flex_none().text_size(px(12.)).text_color(Theme::text_disabled())
+                .child(format!("{} · {}", crate::settings::tr("目录", "Catalog"), crate::catalog::kind_label(&hit.kind))))
+    }
+
+    /// Peek card (#2): a preview of the palette's selected catalog
+    /// entry, shown beside the dialog so a hit can be judged — kind,
+    /// summary, license, risks, source, last check — without opening
+    /// it. Prompt entries also preview the start of their text.
+    fn palette_peek(&self, e: &fdl_core::catalog::CatalogEntry, h: f32) -> Div {
+        let meta: [(&str, &str, String); 4] = [
+            ("许可证", "License", e.license.clone()),
+            ("风险", "Risk", if e.risks.is_empty() { "—".into() } else { e.risks.join(" · ") }),
+            ("来源", "Source", e.source_name.clone()),
+            ("上次核查", "Last checked", e.verified.clone()),
+        ];
+        let mut card = div().flex_none().w(px(300.)).h(px(h)).flex().flex_col()
+            .rounded(px(16.)).bg(crate::theme::raised(Theme::bg_body())).shadow(theme::shadow_dialog())
+            .px(px(16.)).py(px(14.))
+            .child(div().flex_none().flex().items_center()
+                .child(div().flex_1().min_w_0().text_size(px(12.)).text_color(Theme::text_caption())
+                    .overflow_hidden().whitespace_nowrap().text_ellipsis()
+                    .child(format!("{} · {}", crate::settings::tr("目录", "Catalog"), crate::catalog::kind_label(&e.kind))))
+                .when(self.catalog.favorites.contains(&e.id), |d| d.child(div().flex_none().text_size(px(12.)).text_color(Theme::text_caption()).child(crate::settings::tr("已收藏", "Favorited")))))
+            .child(div().flex_none().mt(px(6.)).text_size(px(15.)).line_height(px(21.)).font_weight(FontWeight::SEMIBOLD).text_color(Theme::text()).child(e.name.clone()))
+            .child(div().flex_none().mt(px(6.)).text_size(px(12.5)).line_height(px(19.)).text_color(Theme::text()).line_clamp(6).child(e.summary.clone()));
+        if let Some(body) = &e.body {
+            let preview: String = body.chars().take(240).collect();
+            card = card.child(div().flex_none().mt(px(10.)).px(px(10.)).py(px(8.)).rounded(px(8.)).bg(Theme::fill_hover())
+                .text_size(px(12.)).line_height(px(18.)).text_color(Theme::text_caption()).line_clamp(5).child(preview));
+        }
+        if e.install.is_some() {
+            card = card.child(div().flex_none().mt(px(10.)).text_size(px(12.)).text_color(Theme::text_caption())
+                .child(crate::settings::tr("附带安装命令（运行时需再次同意）", "Includes an install command (asks again before running)")));
+        }
+        let mut meta_box = div().flex_none().mt(px(12.)).flex().flex_col().gap(px(5.));
+        for (zh, en, value) in meta {
+            meta_box = meta_box.child(div().flex().items_baseline()
+                .child(div().flex_none().w(px(76.)).text_size(px(12.)).text_color(Theme::text_caption()).child(crate::settings::tr(zh, en)))
+                .child(div().flex_1().min_w_0().text_size(px(12.5)).text_color(Theme::text()).overflow_hidden().whitespace_nowrap().text_ellipsis().child(value)));
+        }
+        card.child(meta_box)
+            .child(div().flex_1())
+            .child(div().flex_none().text_size(px(12.)).text_color(Theme::text_disabled())
+                .child(crate::settings::tr("Enter 打开详情", "Enter to open the full entry")))
+    }
+
+    fn palette_action_row(&self, a: &'static PalAction, ix: usize, cx: &mut Context<Self>) -> impl IntoElement {
+        let name = if crate::settings::english() { a.en } else { a.zh };
+        div().id(("palette-action", ix)).flex_none().pt(px(8.)).pr(px(8.)).pb(px(8.)).pl(px(12.))
+            .flex().items_center().rounded(px(ROW_RADIUS)).cursor_pointer()
+            .when(self.search_sel == Some(ix), |d| d.bg(Theme::fill_hover()))
+            .on_hover(cx.listener(move |w, hovered: &bool, _, cx| {
+                if *hovered && w.search_sel != Some(ix) { w.search_sel = Some(ix); cx.notify(); }
+            }))
+            .on_click(cx.listener(move |w, _, window, cx| w.pick_search(ix, window, cx)))
+            .child(crate::ui::icon(a.glyph, 16., Theme::icon()))
+            .child(div().ml(px(10.)).flex_1().min_w_0().text_size(px(13.5)).text_color(Theme::text())
+                .overflow_hidden().whitespace_nowrap().text_ellipsis().child(name))
+            .child(div().flex_none().text_size(px(12.)).text_color(Theme::text_disabled())
+                .child(crate::settings::tr("操作", "Action")))
     }
 
     /// Title hits first, then body hits; with no query, 最近浏览.
     pub fn search_results(&self, cx: &App) -> Vec<&Entry> {
-        let q = self.query(cx);
+        self.search_results_for(&self.query(cx))
+    }
+
+    fn search_results_for(&self, q: &str) -> Vec<&Entry> {
+        let q = q.to_string();
         if q.is_empty() {
             let mut recent: Vec<&Entry> = self.entries.iter().collect();
             recent.sort_by_key(|e| std::cmp::Reverse(e.meta.opened.max(e.meta.modified)));
@@ -354,8 +583,17 @@ impl Workspace {
         }
         let q = self.query(cx);
         let has_text = !self.search.read(cx).text.is_empty();
-        let results: Vec<Entry> = self.search_results(cx).into_iter().cloned().collect();
+        let rows = self.palette_rows(cx);
         let vh = f32::from(window.viewport_size().height);
+        let modal_h = 630f32.min(vh - 120.).max(200.);
+        // Peek (#2): beside the dialog when the selection is a catalog
+        // entry and the window is wide enough for both cards.
+        let peek = if f32::from(window.viewport_size().width) > 900. {
+            self.search_sel.and_then(|i| rows.get(i)).and_then(|r| match r {
+                PalRow::Entry(id, _) => self.catalog.entry(id).map(|e| self.palette_peek(e, modal_h)),
+                _ => None,
+            })
+        } else { None };
 
         let input = div()
             .flex_none()
@@ -398,22 +636,7 @@ impl Workspace {
             .flex_col()
             .overflow_y_scroll()
             .track_scroll(&self.search_scroll);
-        if q.is_empty() && !results.is_empty() {
-            list = list.child(
-                div()
-                    .flex_none()
-                    .h(px(36.))
-                    .pt(px(2.))
-                    .px(px(12.))
-                    .flex()
-                    .items_center()
-                    .text_size(px(12.))
-                    .line_height(px(18.))
-                    .text_color(Theme::text_caption())
-                    .child(crate::settings::tr("最近浏览", "Recently viewed")),
-            );
-        }
-        if results.is_empty() && self.catalog_hits(cx).is_empty() && !q.is_empty() {
+        if rows.is_empty() && !q.is_empty() {
             list = list.child(
                 div()
                     .flex_none()
@@ -425,33 +648,28 @@ impl Workspace {
                     .child(crate::settings::text("没有找到匹配的结果，尝试其他关键词进行搜索")),
             );
         }
-        for (i, e) in results.iter().enumerate() {
-            list = list.child(self.search_row(e, i, &q, window, cx));
-        }
-        let hits = self.catalog_hits(cx);
-        if !hits.is_empty() {
-            list = list.child(
-                div().flex_none().h(px(36.)).pt(px(2.)).px(px(12.)).flex().items_center()
-                    .text_size(px(12.)).line_height(px(18.)).text_color(Theme::text_caption())
-                    .child(crate::settings::tr("目录", "Catalog")),
-            );
-            for (j, hit) in hits.iter().enumerate() {
-                let ix = results.len() + j;
-                list = list.child(
-                    div().id(("catalog-hit", j)).flex_none().pt(px(8.)).pr(px(8.)).pb(px(8.)).pl(px(12.))
-                        .flex().items_center().rounded(px(ROW_RADIUS)).cursor_pointer()
-                        .when(self.search_sel == Some(ix), |d| d.bg(Theme::fill_hover()))
-                        .on_hover(cx.listener(move |w, hovered: &bool, _, cx| {
-                            if *hovered && w.search_sel != Some(ix) { w.search_sel = Some(ix); cx.notify(); }
-                        }))
-                        .on_click(cx.listener(move |w, _, window, cx| w.pick_search(ix, window, cx)))
-                        .child(crate::ui::icon("library", 16., Theme::icon()))
-                        .child(div().ml(px(10.)).flex_1().min_w_0().text_size(px(13.5)).text_color(Theme::text())
-                            .overflow_hidden().whitespace_nowrap().text_ellipsis().child(hit.name.clone()))
-                        .child(div().flex_none().text_size(px(12.)).text_color(Theme::text_disabled())
-                            .child(format!("{} · {}", crate::settings::tr("目录", "Catalog"), crate::catalog::kind_label(&hit.kind)))),
-                );
+        let text_q = parse_query(&q).text;
+        let mut prev: Option<PalSection> = None;
+        for (i, row) in rows.iter().enumerate() {
+            let section = section_of(row);
+            if prev != Some(section) {
+                list = list.child(section_header(section_title(section, q.is_empty())));
+                prev = Some(section);
             }
+            list = match row {
+                PalRow::Doc(id) => match self.entries.iter().find(|e| &e.id == id) {
+                    Some(e) => list.child(self.search_row(e, i, &text_q, window, cx)),
+                    None => list,
+                },
+                PalRow::Entry(id, _) => match self.catalog.entry(id) {
+                    Some(hit) => list.child(self.palette_catalog_row(hit, i, cx)),
+                    None => list,
+                },
+                PalRow::Action(aid) => match pal_action(aid) {
+                    Some(a) => list.child(self.palette_action_row(a, i, cx)),
+                    None => list,
+                },
+            };
         }
 
         let footer = div()
@@ -471,13 +689,13 @@ impl Workspace {
             .text_color(Theme::text_caption())
             .whitespace_nowrap()
             .overflow_hidden()
-            .child(ui_text(crate::settings::tr("支持 ↑↓ 键选择、Enter 键打开", "Use ↑↓ to select, Enter to open")));
+            .child(ui_text(crate::settings::tr("支持 ↑↓ 键选择、Enter 键打开 · 输入 > 查找操作", "Use ↑↓ to select, Enter to open · type > for actions")));
 
         let modal = div()
             .id("search-dialog")
             .occlude()
             .w(px(540.))
-            .h(px(630f32.min(vh - 120.).max(200.)))
+            .h(px(modal_h))
             .flex()
             .flex_col()
             .rounded(px(16.))
@@ -502,7 +720,7 @@ impl Workspace {
                     .justify_center()
                     .bg(scrim())
                     .on_mouse_down(MouseButton::Left, cx.listener(|w, _, window, cx| w.close_search(window, cx)))
-                    .child(modal),
+                    .child(div().flex().items_start().gap(px(12.)).child(modal).children(peek)),
             )
             .with_priority(3)
             .into_any_element(),
