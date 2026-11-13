@@ -43,6 +43,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "ai_md"
+version = "0.4.0"
+dependencies = [
+ "anyhow",
+ "async-lock",
+ "base64",
+ "core-foundation 0.10.0",
+ "core-graphics 0.24.0",
+ "dirs 7.0.0",
+ "fdl_core",
+ "gpui",
+ "html5ever",
+ "image",
+ "katex-rs",
+ "log",
+ "markup5ever_rcdom",
+ "minisign-verify",
+ "objc",
+ "quick-xml 0.37.5",
+ "raw-window-handle",
+ "regex",
+ "rustc-hash 2.1.3",
+ "serde",
+ "serde_json",
+ "sys-locale",
+ "unicode-segmentation",
+ "uuid",
+ "webview2-com",
+ "windows 0.61.3",
+ "windows-registry 0.5.3",
+]
+
+[[package]]
 name = "aligned"
 version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4244,39 +4277,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e660451e55124f798a69a5af3f49ccfbefbd41910eefd25caf2393e1f3473ec1"
 dependencies = [
  "memchr",
-]
-
-[[package]]
-name = "quiet_md"
-version = "0.4.0"
-dependencies = [
- "anyhow",
- "async-lock",
- "base64",
- "core-foundation 0.10.0",
- "core-graphics 0.24.0",
- "dirs 7.0.0",
- "fdl_core",
- "gpui",
- "html5ever",
- "image",
- "katex-rs",
- "log",
- "markup5ever_rcdom",
- "minisign-verify",
- "objc",
- "quick-xml 0.37.5",
- "raw-window-handle",
- "regex",
- "rustc-hash 2.1.3",
- "serde",
- "serde_json",
- "sys-locale",
- "unicode-segmentation",
- "uuid",
- "webview2-com",
- "windows 0.61.3",
- "windows-registry 0.5.3",
 ]
 
 [[package]]

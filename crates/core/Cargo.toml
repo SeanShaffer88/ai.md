@@ -4,7 +4,7 @@
 name = "fdl_core"
 version = "0.4.0"
 edition = "2024"
-description = "The document engine behind Quiet.md: model, DocxXML, editing core, library"
+description = "The document engine behind ai.md: model, DocxXML, editing core, library"
 license = "MIT"
 readme = "../../README.md"
 authors = ["s1dashu"]

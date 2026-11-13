@@ -8,11 +8,11 @@ macOS needs the Xcode Command Line Tools; Windows needs the Visual Studio 2022 C
 
 ```sh
 cargo build --release --locked
-./target/release/quiet_md                          # uses ~/Documents/Quiet.md
-QUIET_MD_HOME=/tmp/lib ./target/release/quiet_md   # uses another library
+./target/release/ai_md                          # uses ~/Documents/ai.md
+AI_MD_HOME=/tmp/lib ./target/release/ai_md   # uses another library
 ```
 
-While developing, point `QUIET_MD_HOME` at a scratch directory; don't test against your real library.
+While developing, point `AI_MD_HOME` at a scratch directory; don't test against your real library.
 
 The repository is a Cargo workspace: `crates/core` is the document engine (`fdl_core`), which does not depend on GPUI, and the root crate is the app. GPUI, taffy and xattr are locally patched copies in `vendor/`; the changes are listed in [vendor/PATCHES.md](vendor/PATCHES.md). `target/debug` can grow past 10 GB; if you only build release, `cargo clean --profile dev` clears it.
 
@@ -54,7 +54,7 @@ The declared macOS minimum is 13, not yet verified on real hardware. Intel packa
 Install the signing certificate, with its private key, in the login keychain and set up a notarytool keychain profile, then run:
 
 ```sh
-SIGNING_IDENTITY="Developer ID Application: …" NOTARY_PROFILE="quiet-md" scripts/release.sh
+SIGNING_IDENTITY="Developer ID Application: …" NOTARY_PROFILE="ai-md" scripts/release.sh
 ```
 
 The script stops if signing or notarization fails; whatever is left in the failed run's directory must not be shipped.
@@ -63,7 +63,7 @@ To build both architectures sequentially on one Apple Silicon Mac, install the I
 
 ```sh
 rustup target add x86_64-apple-darwin
-export SIGNING_IDENTITY="Developer ID Application: …" NOTARY_PROFILE="quiet-md"
+export SIGNING_IDENTITY="Developer ID Application: …" NOTARY_PROFILE="ai-md"
 scripts/release.sh
 MACOS_TARGET=x86_64-apple-darwin scripts/release.sh
 ```
@@ -87,7 +87,7 @@ Uses Inno Setup 7. In a Visual Studio x64 Developer PowerShell:
 
 Signing uses `signtool.exe` from the Windows SDK; `-SignTool` sets its path. The timestamp URL should be the certificate authority's RFC 3161 service (Certum in the example). The script signs the app, the installer and the uninstaller separately, checks the publisher, the trusted signature and the timestamp, and stops on any failure. The final installer and its SHA-256 go to `dist/windows/signed/` or `dist/windows/unsigned/`; the intermediate directories are not for release.
 
-The installer lets you choose the location and an optional desktop shortcut, and by default installs for the current user only. Uninstalling keeps your documents. On Windows, documents live in `Quiet.md` inside the system Documents folder.
+The installer lets you choose the location and an optional desktop shortcut, and by default installs for the current user only. Uninstalling keeps your documents. On Windows, documents live in `ai.md` inside the system Documents folder.
 
 On every platform, never commit credentials, private keys or certificate files.
 
@@ -98,18 +98,18 @@ On every platform, never commit credentials, private keys or certificate files.
 Generate the update signing key once (`brew install minisign`), keep the private key outside the repository and commit the public key:
 
 ```sh
-minisign -G -f -p packaging/update-key.pub -s ~/.minisign/quiet-md.key
+minisign -G -f -p packaging/update-key.pub -s ~/.minisign/ai-md.key
 ```
 
 The script verifies each freshly signed package against `packaging/update-key.pub` and stops if the keys don't match. A lost private key can only be replaced together with the public key, and installed copies of older versions then stop receiving updates, so keep a backup.
 
-To try the update flow locally, point `QUIET_MD_UPDATE_URL=http://127.0.0.1:<port>` at a directory holding a manifest and packages, and build with `QUIET_MD_UPDATE_PUBKEY=<test public key>`; with that variable set, unsigned builds check for updates too.
+To try the update flow locally, point `AI_MD_UPDATE_URL=http://127.0.0.1:<port>` at a directory holding a manifest and packages, and build with `AI_MD_UPDATE_PUBKEY=<test public key>`; with that variable set, unsigned builds check for updates too.
 
 For a new version, bump the version in both `Cargo.toml` files together, and write the version's highlights in `src/changelog.rs`: after updating, existing users see them once at the bottom of the sidebar.
 
 ### Linux (experimental)
 
-Install Rust through rustup, then run `scripts/linux-deps.sh` on Ubuntu/Debian or Arch-based systems. Run `scripts/preview-linux.sh` for an isolated temporary library, or set `QUIET_MD_HOME` to reuse a test library. `scripts/package-linux.sh` produces a tarball and SHA-256 in `dist/linux`; it includes a desktop entry and a 512×512 icon generated with ImageMagick. The binary is dynamically linked; build on the oldest distribution you intend to support and check `runtime-libraries.txt` on the target system.
+Install Rust through rustup, then run `scripts/linux-deps.sh` on Ubuntu/Debian or Arch-based systems. Run `scripts/preview-linux.sh` for an isolated temporary library, or set `AI_MD_HOME` to reuse a test library. `scripts/package-linux.sh` produces a tarball and SHA-256 in `dist/linux`; it includes a desktop entry and a 512×512 icon generated with ImageMagick. The binary is dynamically linked; build on the oldest distribution you intend to support and check `runtime-libraries.txt` on the target system.
 
 The Linux build and full checks run on Ubuntu 22.04. `scripts/package-appimage.sh` also produces an x86_64 AppImage in `dist/linux`, using a pinned, SHA-256-verified linuxdeploy. It bundles shared dependencies and checks the payload against a glibc 2.35 baseline; graphics drivers remain system-provided. SHA-256 and dependency reports are generated alongside it. AppImage can be run after `chmod +x`; if FUSE is unavailable, use `--appimage-extract-and-run`. Linux updates are manual. Interactive testing has been done on Omarchy 4.5 with Wayland, floating windows and 250% scaling, including Chinese title input. GNOME Wayland, X11 and systems without Noto fonts still need interactive verification; this is not a claim of support for every desktop distribution. Software Vulkan (`vulkan-swrast` on Arch) is useful in VMs or when no hardware Vulkan driver is available. Global quick-note shortcuts and automatic updates are not supported on Linux yet.
 

@@ -1,5 +1,5 @@
 /*
- * quiet.md 文档主题：飞书
+ * ai.md 文档主题：飞书
  *
  * 每个属性都写着当前的值。改完保存，应用里立即生效。
  * 选择器与属性的说明见 docs/THEMES.md。
@@ -8,7 +8,7 @@
 :root {
   --theme-name: "飞书";
   --theme-name-en: "Feishu";
-  --theme-author: "quiet.md";
+  --theme-author: "ai.md";
   --theme-description: "飞书文档的正文样式：16 / 26，标题 Medium，蓝色链接。";
   /* 块的画法：craft 或 feishu */
   --theme-base: feishu;

@@ -31,7 +31,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Windows build failed' }
     $version = (Select-String -Path Cargo.toml -Pattern '^version = "([^"]+)"' | Select-Object -First 1).Matches[0].Groups[1].Value
     New-Item -ItemType Directory -Force $stage | Out-Null
-    Copy-Item target/release/quiet_md.exe "$stage/ai_md.exe" -Force
+    Copy-Item target/release/ai_md.exe "$stage/ai_md.exe" -Force
     if (!$env:VCToolsRedistDir) { throw 'Run from a Visual Studio developer shell to locate the C++ runtime' }
     $runtime = Get-ChildItem (Join-Path $env:VCToolsRedistDir 'x64/Microsoft.VC*.CRT/vcruntime140.dll') | Select-Object -First 1
     if (!$runtime) { throw 'The redistributable x64 vcruntime140.dll was not found' }
@@ -46,11 +46,11 @@ try {
         $scriptPath = $signScript.Replace('$', '$$')
         $toolPath = $SignTool.Replace('$', '$$')
         $signCommand = '$q{0}$q -NoProfile -ExecutionPolicy Bypass -File $q{1}$q -CertificateThumbprint {2} -TimestampUrl $q{3}$q -SignTool $q{4}$q -FilePath $f' -f $ps, $scriptPath, $CertificateThumbprint, $TimestampUrl, $toolPath
-        $compilerArgs += @('/DSigned', "/Squietmd=$signCommand")
+        $compilerArgs += @('/DSigned', "/Saimd=$signCommand")
     }
-    & $Iscc @compilerArgs packaging/windows/quiet-md.iss
+    & $Iscc @compilerArgs packaging/windows/ai-md.iss
     if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
-    $name = "quiet-md-$version-windows-x64-setup.exe"
+    $name = "ai-md-$version-windows-x64-setup.exe"
     $installer = Join-Path $stage $name
     if ($signed) {
         & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $signScript -VerifyOnly -FilePath $installer -CertificateThumbprint $CertificateThumbprint -TimestampUrl $TimestampUrl -SignTool $SignTool

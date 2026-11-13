@@ -10,24 +10,24 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/s1dashu/quiet-md/releases/latest"><img src="https://img.shields.io/github/v/release/s1dashu/quiet-md?label=release&color=2f6feb" alt="最新リリース"></a>
-  <a href="https://github.com/s1dashu/quiet-md/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/s1dashu/quiet-md/ci.yml?branch=main&label=CI" alt="CI のステータス"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="https://img.shields.io/github/v/release/SeanShaffer88/ai.md?label=release&color=2f6feb" alt="最新リリース"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/SeanShaffer88/ai.md/ci.yml?branch=main&label=CI" alt="CI のステータス"></a>
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey" alt="macOS、Windows、Linux">
   <img src="https://img.shields.io/badge/built%20with-Rust%20%2B%20GPUI-dea584?logo=rust" alt="Rust と GPUI で構築">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/s1dashu/quiet-md?color=green" alt="MIT ライセンス"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/SeanShaffer88/ai.md?color=green" alt="MIT ライセンス"></a>
   <img src="https://img.shields.io/badge/status-beta-orange" alt="ベータ版">
 </p>
 
 <p align="center">
-  <a href="https://download.quiet.md/latest/quiet-md-macos-arm64.zip"><img src="docs/images/download-macos.svg" height="56" alt="macOS 版をダウンロード"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-macos.svg" height="56" alt="macOS 版をダウンロード"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe"><img src="docs/images/download-windows.svg" height="56" alt="Windows 版をダウンロード"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-windows.svg" height="56" alt="Windows 版をダウンロード"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-x86_64.AppImage"><img src="docs/images/download-linux.svg" height="56" alt="Linux 版をダウンロード"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-linux.svg" height="56" alt="Linux 版をダウンロード"></a>
 </p>
 
 <p align="center">
-  <a href="https://quiet.md/?lang=en"><b>Web サイト</b></a> ·
+  <a href="https://github.com/SeanShaffer88/ai.md"><b>Web サイト</b></a> ·
   <a href="#ダウンロード"><b>ダウンロード</b></a> ·
   <a href="#パフォーマンス">パフォーマンス</a> ·
   <a href="#機能">機能</a> ·
@@ -35,44 +35,44 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/home.png" width="100%" alt="Quiet.md のホーム画面。左にドキュメントのツリー、右にすべてのノートがグリッドで並んでいます。">
+  <img src="docs/images/home.png" width="100%" alt="ai.md のホーム画面。左にドキュメントのツリー、右にすべてのノートがグリッドで並んでいます。">
 </p>
 
 > [!NOTE]
-> Quiet.md は**ベータ版**で、急速に変化しています。バグを見つけたり、アイデアがあったりしたら、[issue を作成](https://github.com/s1dashu/quiet-md/issues)してください。プルリクエストを送ってもらえると、もっとうれしいです。
+> ai.md は**ベータ版**で、急速に変化しています。バグを見つけたり、アイデアがあったりしたら、[issue を作成](https://github.com/SeanShaffer88/ai.md/issues)してください。プルリクエストを送ってもらえると、もっとうれしいです。
 
-## Quiet.md を選ぶ理由
+## ai.md を選ぶ理由
 
 **⚡ 速い。ネイティブならではの速さです。** インターフェースはすべて、Rust と [GPUI](https://www.gpui.rs/) によって GPU で描画されます。WebView も Electron も使っていません。100 万文字のドキュメントでも、入力、削除、スクロールはすべて P95 で 1 フレームあたり 6 ms 未満に収まります。
 
-**🔒 ローカルファースト。ファイルはあなたのものです。** アカウントもクラウドもなく、デフォルトでは何もネットワークに送られません（オプションの更新チェックを除きます）。ライブラリはコンピューター上の普通のフォルダーで、ノートは 1 つずつ XML ファイルになっています。Git、iCloud、お好きな同期ツールで管理できます。Quiet.md を使うのをやめても、ファイルはそのまま残ります。
+**🔒 ローカルファースト。ファイルはあなたのものです。** アカウントもクラウドもなく、デフォルトでは何もネットワークに送られません（オプションの更新チェックを除きます）。ライブラリはコンピューター上の普通のフォルダーで、ノートは 1 つずつ XML ファイルになっています。Git、iCloud、お好きな同期ツールで管理できます。ai.md を使うのをやめても、ファイルはそのまま残ります。
 
 **📝 Feishu（Lark）の DocxXML に対応した、本格的なリッチテキストエディター。** ノートは Feishu（Lark）ドキュメントで使われている DocxXML 形式で保存されるので、コピー＆ペースト、インポート、エクスポートでも構造が保たれます。見出し、ToDo、表、段組み、コールアウト、コード、数式、画像、添付ファイルなど、ドキュメントを書くときに使うブロックがすべて揃っています。
 
 ## ダウンロード
 
 <p align="center">
-  <a href="https://download.quiet.md/latest/quiet-md-macos-arm64.zip"><img src="docs/images/download-macos.svg" height="56" alt="macOS 版をダウンロード"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-macos.svg" height="56" alt="macOS 版をダウンロード"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe"><img src="docs/images/download-windows.svg" height="56" alt="Windows 版をダウンロード"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-windows.svg" height="56" alt="Windows 版をダウンロード"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-x86_64.AppImage"><img src="docs/images/download-linux.svg" height="56" alt="Linux 版をダウンロード"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-linux.svg" height="56" alt="Linux 版をダウンロード"></a>
 </p>
 
 | プラットフォーム | パッケージ | 要件 |
 |---|---|---|
-| **macOS**（Apple シリコン） | [quiet-md-macos-arm64.zip](https://download.quiet.md/latest/quiet-md-macos-arm64.zip) | macOS 13 以降 |
-| **Windows**（x64） | [quiet-md-windows-x64-setup.exe](https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe) | Windows 10 バージョン 2004 以降 |
-| **Linux**（x86_64、試験的） | [quiet-md-x86_64.AppImage](https://download.quiet.md/latest/quiet-md-x86_64.AppImage) | glibc 2.35 以降（Ubuntu 22.04 以降） |
-| **macOS**（Intel） | [quiet-md-macos-x86_64.zip](https://download.quiet.md/latest/quiet-md-macos-x86_64.zip) | macOS 13 以降 |
+| **macOS**（Apple シリコン） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | macOS 13 以降 |
+| **Windows**（x64） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | Windows 10 バージョン 2004 以降 |
+| **Linux**（x86_64、試験的） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | glibc 2.35 以降（Ubuntu 22.04 以降） |
+| **macOS**（Intel） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | macOS 13 以降 |
 
-- **macOS**: 展開して、`quiet.md.app` をアプリケーションフォルダーにドラッグします。アプリは Apple によって署名・公証されています。
+- **macOS**: 展開して、`ai.md.app` をアプリケーションフォルダーにドラッグします。アプリは Apple によって署名・公証されています。
 - **Windows**: インストーラーを実行します。デフォルトでは現在のユーザーだけにインストールされ、アンインストールしてもノートが削除されることはありません。初回の起動時に SmartScreen が表示された場合は、**詳細情報 → 実行** をクリックしてください。
-- **Linux**（試験的）: `chmod +x quiet-md-*.AppImage` を実行してから起動します。FUSE がない場合は `--appimage-extract-and-run` を付けてください。AppImage 0.1.10 以降はアプリ内更新に対応します。以前の Linux 版からは一度手動でインストールしてください。現在の対話的なテストは Wayland 上の Omarchy のみです。詳しくは [Linux の説明](CONTRIBUTING.md#linux-experimental)を参照してください。
+- **Linux**（試験的）: `chmod +x ai-md-*.AppImage` を実行してから起動します。FUSE がない場合は `--appimage-extract-and-run` を付けてください。AppImage 0.1.10 以降はアプリ内更新に対応します。以前の Linux 版からは一度手動でインストールしてください。現在の対話的なテストは Wayland 上の Omarchy のみです。詳しくは [Linux の説明](CONTRIBUTING.md#linux-experimental)を参照してください。
 
-[Quiet.md](https://quiet.md/?lang=en) からもダウンロードできます。すべてのリリースとその SHA-256 チェックサムは [GitHub Releases](https://github.com/s1dashu/quiet-md/releases) にあります。
+[ai.md](https://github.com/SeanShaffer88/ai.md) からもダウンロードできます。すべてのリリースとその SHA-256 チェックサムは [GitHub Releases](https://github.com/SeanShaffer88/ai.md/releases) にあります。
 
-初回の起動時に、Quiet.md は空のライブラリに **Getting started** ガイドを入れます。主な機能を 10 分で紹介するツアーです。既存のノートが上書きされることはありません。
+初回の起動時に、ai.md は空のライブラリに **Getting started** ガイドを入れます。主な機能を 10 分で紹介するツアーです。既存のノートが上書きされることはありません。
 
 インターフェースは英語と簡体字中国語で利用できます。
 
@@ -106,9 +106,9 @@
 
 ## コントリビューター
 
-Quiet.md の開発に協力してくださったすべての方に感謝します。issue とプルリクエストを歓迎します。ビルド、テスト、コードの規約については [CONTRIBUTING.md](CONTRIBUTING.md) をご覧ください。
+ai.md の開発に協力してくださったすべての方に感謝します。issue とプルリクエストを歓迎します。ビルド、テスト、コードの規約については [CONTRIBUTING.md](CONTRIBUTING.md) をご覧ください。
 
-[![コントリビューター](https://raw.githubusercontent.com/s1dashu/quiet-md/contributors-assets/docs/images/contributors.svg?v=1)](https://github.com/s1dashu/quiet-md/graphs/contributors)
+[![コントリビューター](docs/images/contributors.svg)](https://github.com/SeanShaffer88/ai.md/graphs/contributors)
 
 ## 最近の更新
 
@@ -129,7 +129,7 @@ Quiet.md の開発に協力してくださったすべての方に感謝しま�
 - **0.1.2**（11 月 4 日）: macOS の標準のメニューとショートカット（Hide、Minimize、Zoom、Full Screen）に対応しました。最後のウインドウを閉じた後でも、Dock のアイコンをクリックするとウインドウが再び開きます。一部の中国語の文字が誤った字形で表示される問題を修正しました。
 - **0.1.1**（11 月 3 日）: 初めての Windows x64 版のリリースです。ユーザーごとにインストールされ、アンインストールしてもノートは残ります。中国語と英語のインターフェースと、内蔵のガイドを磨き上げました。
 
-各バージョンの詳しいリリースノートは [Releases](https://github.com/s1dashu/quiet-md/releases) にあります。
+各バージョンの詳しいリリースノートは [Releases](https://github.com/SeanShaffer88/ai.md/releases) にあります。
 
 ## ライセンス
 

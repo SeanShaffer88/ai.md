@@ -1,5 +1,5 @@
 //! On-disk library: one DocxXML file per document plus a small JSON index
-//! (pinned flag, timestamps) under `~/Documents/Quiet.md`.
+//! (pinned flag, timestamps) under `~/Documents/ai.md`.
 
 use crate::docxml;
 use crate::model::Document;
@@ -406,11 +406,12 @@ fn copy_dir_all(src: &std::path::Path, dst: &std::path::Path) -> Result<()> {
 }
 
 impl Store {
-    /// `QUIET_MD_HOME`, else the portable data folder when running portable,
+    /// `AI_MD_HOME` (the older `QUIET_MD_HOME` still works), else the
+    /// portable data folder when running portable,
     /// else a folder of its own in the user's Documents, where they can see
     /// and back it up.
     pub fn root_dir() -> PathBuf {
-        if let Some(p) = std::env::var_os("QUIET_MD_HOME") {
+        if let Some(p) = std::env::var_os("AI_MD_HOME").or_else(|| std::env::var_os("QUIET_MD_HOME")) {
             return PathBuf::from(p);
         }
         Self::exe_dir().and_then(|d| Self::portable_root(&d)).unwrap_or_else(Self::documents_root)
@@ -418,7 +419,7 @@ impl Store {
 
     /// The default library: a folder of its own in the user's Documents.
     fn documents_root() -> PathBuf {
-        dirs::document_dir().or_else(|| dirs::home_dir().map(|h| h.join("Documents"))).unwrap_or_else(|| PathBuf::from(".")).join("Quiet.md")
+        dirs::document_dir().or_else(|| dirs::home_dir().map(|h| h.join("Documents"))).unwrap_or_else(|| PathBuf::from(".")).join("ai.md")
     }
 
     /// The folder the running executable lives in.
@@ -434,12 +435,29 @@ impl Store {
         (exe_dir.join("portable.txt").is_file() || exe_dir.join("data").is_dir()).then(|| exe_dir.join("data"))
     }
 
+    /// The app was renamed from Quiet.md to ai.md: on the first run of the
+    /// renamed build, bring an existing `Documents/Quiet.md` library into
+    /// `Documents/ai.md`, so the rename never loses notes. A copy, not a
+    /// move — the old folder stays where it was as a backup, and the new
+    /// folder's format marker (written by `open_at`) keeps this one-time.
+    /// Runs before the portable first-run import, so a portable build
+    /// picks the migrated library up from there. Skipped when a home
+    /// override is set.
+    fn migrate_legacy_library_once() {
+        if std::env::var_os("AI_MD_HOME").is_some() || std::env::var_os("QUIET_MD_HOME").is_some() {
+            return;
+        }
+        let root = Self::documents_root();
+        let Some(parent) = root.parent() else { return };
+        Self::import_library(&root, &parent.join("Quiet.md"));
+    }
+
     /// First portable run: bring the existing Documents library into the
     /// portable data folder, so switching to the portable build never loses
     /// notes. The Documents copy is left untouched, and the data folder's
     /// format marker (written by `open_at`) keeps this a one-time copy.
     fn import_documents_library_once() {
-        if std::env::var_os("QUIET_MD_HOME").is_some() {
+        if std::env::var_os("AI_MD_HOME").is_some() || std::env::var_os("QUIET_MD_HOME").is_some() {
             return;
         }
         let Some(root) = Self::exe_dir().and_then(|d| Self::portable_root(&d)) else { return };
@@ -462,6 +480,7 @@ impl Store {
     }
 
     pub fn open() -> Result<Self> {
+        Self::migrate_legacy_library_once();
         Self::import_documents_library_once();
         Self::open_at(Self::root_dir())
     }
@@ -471,7 +490,7 @@ impl Store {
         let mut warnings = vec![];
         let marker = root.join("format.json");
         match std::fs::read(&marker).ok().and_then(|b| serde_json::from_slice::<FormatMarker>(&b).ok()) {
-            Some(m) if m.format > FORMAT => anyhow::bail!("这个文档库由更新版本的 Quiet.md 创建，请升级后再打开"),
+            Some(m) if m.format > FORMAT => anyhow::bail!("这个文档库由更新版本的 ai.md 创建，请升级后再打开"),
             Some(_) => {}
             None => write_atomic(&marker, &serde_json::to_vec_pretty(&FormatMarker { format: BASE_FORMAT })?)?,
         }
@@ -504,7 +523,7 @@ impl Store {
         let mut hash = std::collections::hash_map::DefaultHasher::new();
         self.root.hash(&mut hash);
         dirs::data_local_dir().unwrap_or_else(std::env::temp_dir)
-            .join("quiet-md/recovery").join(format!("{:016x}", hash.finish()))
+            .join("ai-md/recovery").join(format!("{:016x}", hash.finish()))
     }
 
     pub fn recover_later(&self, doc: &Document) -> Result<()> {
@@ -578,7 +597,7 @@ impl Store {
         f.lock()?;
         let lock = WriteLock(f);
         let marker: FormatMarker = serde_json::from_slice(&std::fs::read(self.root.join("format.json"))?)?;
-        anyhow::ensure!(marker.format <= FORMAT, "这个文档库由更新版本的 Quiet.md 创建，请升级后再打开");
+        anyhow::ensure!(marker.format <= FORMAT, "这个文档库由更新版本的 ai.md 创建，请升级后再打开");
         // An unreadable index is not judged here (that is `open`'s job): the
         // version in memory is written back unchanged.
         if let Some(index) = reread(&self.root.join("index.json")) { self.index = index; }

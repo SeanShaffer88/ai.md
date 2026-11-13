@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=Quiet.md
+Name=ai.md
 Comment=Local notes
-Exec=quiet_md %F
-Icon=com.s1dashu.quietmd
+Exec=ai_md %F
+Icon=com.aimd.app
 Terminal=false
 Categories=Office;TextEditor;
 MimeType=text/markdown;text/x-markdown;
-StartupWMClass=com.s1dashu.quietmd
+StartupWMClass=com.aimd.app

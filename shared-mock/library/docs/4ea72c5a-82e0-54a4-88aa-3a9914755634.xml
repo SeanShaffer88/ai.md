@@ -1,6 +1,6 @@
-<title>Welcome to Quiet.md</title>
-<p>Quiet.md is a quiet place for your notes. No account, no cloud workspace: every document is a file on your Mac. Jot down a thought, or work through something complex with headings, lists, tables, code and images.</p>
-<p>These guides will help you find your way around in about ten minutes. They were written in Quiet.md, so every layout you see is something you can make yourself. <b>Feel free to edit them.</b> They are working examples, not a read-only manual.</p>
+<title>Welcome to ai.md</title>
+<p>ai.md is a quiet place for your notes. No account, no cloud workspace: every document is a file on your Mac. Jot down a thought, or work through something complex with headings, lists, tables, code and images.</p>
+<p>These guides will help you find your way around in about ten minutes. They were written in ai.md, so every layout you see is something you can make yourself. <b>Feel free to edit them.</b> They are working examples, not a read-only manual.</p>
 <callout emoji="💡" background-color="light-blue" border-color="blue"><p>The best way to learn is to try things as you read. For a blank space to experiment, open <cite type="doc" doc-id="33f7e56d-02b5-58f6-a842-e9f96c39a86a" file-type="docx">Playground</cite>.</p></callout>
 <h1>A look around</h1>
 <img src="assets/guides/home.jpg" caption="Home: your documents at a glance" align="center"/>
@@ -42,7 +42,7 @@
 <tr><td><p><code>⌘ ]</code> / <code>⌘ /</code></p></td><td><p>Toggle the sidebar / View shortcuts</p></td></tr>
 </tbody></table>
 <h1>Your notes belong to you</h1>
-<p>Your documents are stored in <code>~/Documents/Quiet.md</code>. Each document is an XML file in <code>docs</code>; images and attachments are stored in <code>assets</code>. Back up the whole folder with Time Machine or copy it to another Mac.</p>
+<p>Your documents are stored in <code>~/Documents/ai.md</code>. Each document is an XML file in <code>docs</code>; images and attachments are stored in <code>assets</code>. Back up the whole folder with Time Machine or copy it to another Mac.</p>
 <blockquote><p>Writing and reading local notes do not require a network connection. Remote images can access the network when loaded; you can control automatic downloading in Settings.</p></blockquote>
 <p>For backup and migration details, see <cite type="doc" doc-id="f3a86f08-fa7b-5d70-bf15-82f7629bd818" file-type="docx">Import, export and back up</cite>.</p>
 <hr/><p align="center">Ready to start? Open <cite type="doc" doc-id="3e98a021-e013-5d8f-b41f-5c3fbf3dbfc3" file-type="docx">Writing: text, headings and paragraphs</cite>.</p>

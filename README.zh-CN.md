@@ -10,24 +10,24 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/s1dashu/quiet-md/releases/latest"><img src="https://img.shields.io/github/v/release/s1dashu/quiet-md?label=release&color=2f6feb" alt="最新版本"></a>
-  <a href="https://github.com/s1dashu/quiet-md/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/s1dashu/quiet-md/ci.yml?branch=main&label=CI" alt="CI 状态"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="https://img.shields.io/github/v/release/SeanShaffer88/ai.md?label=release&color=2f6feb" alt="最新版本"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/SeanShaffer88/ai.md/ci.yml?branch=main&label=CI" alt="CI 状态"></a>
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey" alt="支持 macOS、Windows 和 Linux">
   <img src="https://img.shields.io/badge/built%20with-Rust%20%2B%20GPUI-dea584?logo=rust" alt="使用 Rust 和 GPUI 构建">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/s1dashu/quiet-md?color=green" alt="MIT 许可"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/SeanShaffer88/ai.md?color=green" alt="MIT 许可"></a>
   <img src="https://img.shields.io/badge/status-beta-orange" alt="Beta">
 </p>
 
 <p align="center">
-  <a href="https://download.quiet.md/latest/quiet-md-macos-arm64.zip"><img src="docs/images/download-macos.svg" height="56" alt="下载 macOS 版"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-macos.svg" height="56" alt="下载 macOS 版"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe"><img src="docs/images/download-windows.svg" height="56" alt="下载 Windows 版"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-windows.svg" height="56" alt="下载 Windows 版"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-x86_64.AppImage"><img src="docs/images/download-linux.svg" height="56" alt="下载 Linux 版"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-linux.svg" height="56" alt="下载 Linux 版"></a>
 </p>
 
 <p align="center">
-  <a href="https://quiet.md"><b>官网</b></a> ·
+  <a href="https://github.com/SeanShaffer88/ai.md"><b>GitHub</b></a> ·
   <a href="#下载"><b>下载</b></a> ·
   <a href="#性能">性能</a> ·
   <a href="#功能">功能</a> ·
@@ -35,13 +35,13 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/home.png" width="100%" alt="Quiet.md 的主页：左侧是文档树，右侧按网格排列所有笔记。">
+  <img src="docs/images/home.png" width="100%" alt="ai.md 的主页：左侧是文档树，右侧按网格排列所有笔记。">
 </p>
 
 > [!NOTE]
-> Quiet.md 目前是 **Beta 版本**，还在快速迭代。遇到 bug 或有想法，欢迎[提 issue](https://github.com/s1dashu/quiet-md/issues)，更欢迎直接提 PR，一起把它打磨好。
+> ai.md 目前是 **Beta 版本**，还在快速迭代。遇到 bug 或有想法，欢迎[提 issue](https://github.com/SeanShaffer88/ai.md/issues)，更欢迎直接提 PR，一起把它打磨好。
 
-## 为什么是 Quiet.md
+## 为什么是 ai.md
 
 **⚡ 快，原生的那种快。** 整个界面由 Rust 和 [GPUI](https://www.gpui.rs/) 直接用 GPU 绘制，没有 WebView、没有 Electron。百万字文档实测中，输入、删除和滚动的帧处理 P95 均低于 6 ms。
 
@@ -52,25 +52,25 @@
 ## 下载
 
 <p align="center">
-  <a href="https://download.quiet.md/latest/quiet-md-macos-arm64.zip"><img src="docs/images/download-macos.svg" height="56" alt="下载 macOS 版"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-macos.svg" height="56" alt="下载 macOS 版"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe"><img src="docs/images/download-windows.svg" height="56" alt="下载 Windows 版"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-windows.svg" height="56" alt="下载 Windows 版"></a>
   &nbsp;
-  <a href="https://download.quiet.md/latest/quiet-md-x86_64.AppImage"><img src="docs/images/download-linux.svg" height="56" alt="下载 Linux 版"></a>
+  <a href="https://github.com/SeanShaffer88/ai.md/releases/latest"><img src="docs/images/download-linux.svg" height="56" alt="下载 Linux 版"></a>
 </p>
 
 | 平台 | 安装包 | 系统要求 |
 |---|---|---|
-| **macOS**（Apple Silicon） | [quiet-md-macos-arm64.zip](https://download.quiet.md/latest/quiet-md-macos-arm64.zip) | macOS 13 及以上 |
-| **Windows**（x64） | [quiet-md-windows-x64-setup.exe](https://download.quiet.md/latest/quiet-md-windows-x64-setup.exe) | Windows 10 2004 及以上 |
-| **Linux**（x86_64，实验性） | [quiet-md-x86_64.AppImage](https://download.quiet.md/latest/quiet-md-x86_64.AppImage) | glibc 2.35 及以上（Ubuntu 22.04 及更新） |
-| **macOS**（Intel） | [quiet-md-macos-x86_64.zip](https://download.quiet.md/latest/quiet-md-macos-x86_64.zip) | macOS 13 及以上 |
+| **macOS**（Apple Silicon） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | macOS 13 及以上 |
+| **Windows**（x64） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | Windows 10 2004 及以上 |
+| **Linux**（x86_64，实验性） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | glibc 2.35 及以上（Ubuntu 22.04 及更新） |
+| **macOS**（Intel） | [ai.md releases](https://github.com/SeanShaffer88/ai.md/releases/latest) | macOS 13 及以上 |
 
-- **macOS**：解压后把 `quiet.md.app` 拖进「应用程序」。安装包已签名并通过 Apple 公证。
+- **macOS**：解压后把 `ai.md.app` 拖进「应用程序」。安装包已签名并通过 Apple 公证。
 - **Windows**：运行安装程序，默认只装到当前用户目录，卸载不会删除笔记。如果首次运行出现 SmartScreen 提示，点「更多信息 → 仍要运行」即可。
-- **Linux**（实验性）：`chmod +x quiet-md-*.AppImage` 后直接运行；没有 FUSE 时加 `--appimage-extract-and-run`。AppImage 从 0.1.10 起支持应用内更新；更早的 Linux 版本需先手动安装本版。目前只在 Omarchy（Wayland）上做过交互测试，详见 [Linux 说明](CONTRIBUTING.md#linux-experimental)。
+- **Linux**（实验性）：`chmod +x ai-md-*.AppImage` 后直接运行；没有 FUSE 时加 `--appimage-extract-and-run`。AppImage 从 0.1.10 起支持应用内更新；更早的 Linux 版本需先手动安装本版。目前只在 Omarchy（Wayland）上做过交互测试，详见 [Linux 说明](CONTRIBUTING.md#linux-experimental)。
 
-也可以在官网 [Quiet.md](https://quiet.md) 下载。所有版本和 SHA-256 校验值见 [GitHub Releases](https://github.com/s1dashu/quiet-md/releases)。
+所有版本和 SHA-256 校验值见 [GitHub Releases](https://github.com/SeanShaffer88/ai.md/releases)。
 
 首次启动会在空文档库里放一套「开始指南」，十分钟带你过一遍主要功能；已有的笔记不会被覆盖。
 
@@ -104,9 +104,9 @@
 
 ## 贡献者
 
-感谢每一位参与 Quiet.md 的人。欢迎提 issue 和 PR，构建、测试和代码约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+感谢每一位参与 ai.md 的人。欢迎提 issue 和 PR，构建、测试和代码约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-[![Contributors](https://raw.githubusercontent.com/s1dashu/quiet-md/contributors-assets/docs/images/contributors.svg?v=1)](https://github.com/s1dashu/quiet-md/graphs/contributors)
+[![Contributors](docs/images/contributors.svg)](https://github.com/SeanShaffer88/ai.md/graphs/contributors)
 
 ## 近期更新
 
@@ -127,7 +127,7 @@
 - **0.1.2**（11 月 4 日）：补齐 macOS 的标准菜单和快捷键（隐藏、最小化、缩放、全屏）；关掉最后一个窗口后，点 Dock 图标可以重新打开。修复部分中文字显示成错误字形的问题。
 - **0.1.1**（11 月 3 日）：推出 Windows x64 版，按用户安装，卸载时保留笔记；同时完善中英文界面和内置指南。
 
-每个版本的完整说明见 [Releases](https://github.com/s1dashu/quiet-md/releases)。
+每个版本的完整说明见 [Releases](https://github.com/SeanShaffer88/ai.md/releases)。
 
 ## 许可
 
@@ -136,4 +136,4 @@
 以下内容不在 MIT 范围内，fork 时请替换：
 
 - `assets/icons/` 里的 67 个 Nucleo 图标使用 Nucleo 商业授权，请勿单独提取再分发；
-- 「Quiet.md」这个名字和应用图标。
+- 「ai.md」这个名字和应用图标。

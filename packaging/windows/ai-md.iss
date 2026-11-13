@@ -21,7 +21,7 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0.19041
 OutputDir=..\..\dist\windows
-OutputBaseFilename=quiet-md-{#AppVersion}-windows-x64-setup
+OutputBaseFilename=ai-md-{#AppVersion}-windows-x64-setup
 SetupIconFile=..\..\assets\branding\app-icon.ico
 UninstallDisplayIcon={app}\ai_md.exe
 WizardStyle=modern light
@@ -36,7 +36,7 @@ RestartApplications=no
 ChangesAssociations=yes
 SetupLogging=yes
 #ifdef Signed
-SignTool=quietmd
+SignTool=aimd
 SignedUninstaller=yes
 SignedUninstallerDir={#AppSource}
 #endif
@@ -64,11 +64,11 @@ Name: "{userdesktop}\ai.md"; Filename: "{app}\ai_md.exe"; WorkingDir: "{app}"; T
 
 ; "Open with" for Markdown files (not the default app): they are edited in place.
 [Registry]
-Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown"; ValueType: string; ValueName: ""; ValueData: "Markdown"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\ai_md.exe,0"
-Root: HKA; Subkey: "Software\Classes\QuietMd.Markdown\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\ai_md.exe"" ""%1"""
-Root: HKA; Subkey: "Software\Classes\.md\OpenWithProgids"; ValueType: string; ValueName: "QuietMd.Markdown"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\.markdown\OpenWithProgids"; ValueType: string; ValueName: "QuietMd.Markdown"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\AiMd.Markdown"; ValueType: string; ValueName: ""; ValueData: "Markdown"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\AiMd.Markdown\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\ai_md.exe,0"
+Root: HKA; Subkey: "Software\Classes\AiMd.Markdown\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\ai_md.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\.md\OpenWithProgids"; ValueType: string; ValueName: "AiMd.Markdown"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\.markdown\OpenWithProgids"; ValueType: string; ValueName: "AiMd.Markdown"; ValueData: ""; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\Applications\ai_md.exe\SupportedTypes"; ValueType: string; ValueName: ".md"; ValueData: ""; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\Applications\ai_md.exe\SupportedTypes"; ValueType: string; ValueName: ".markdown"; ValueData: ""
 

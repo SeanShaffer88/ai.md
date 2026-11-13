@@ -572,7 +572,7 @@ impl Workspace {
     pub(crate) fn check_export_safety(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         use crate::model::*;
         let root = crate::store::Store::root_dir();
-        assert!(std::env::var_os("FDL_SCRIPT").is_some() && std::env::var_os("QUIET_MD_HOME").is_some());
+        assert!(std::env::var_os("FDL_SCRIPT").is_some() && (std::env::var_os("AI_MD_HOME").is_some() || std::env::var_os("QUIET_MD_HOME").is_some()));
         std::fs::create_dir_all(root.join("assets")).unwrap();
         std::fs::write(root.join("assets/report.pdf"), b"attachment-content").unwrap();
         let outside = root.parent().unwrap().join("outside-private.txt");
