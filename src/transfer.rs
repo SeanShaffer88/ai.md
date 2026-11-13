@@ -401,7 +401,9 @@ impl Workspace {
                 .on_mouse_down_out(cx.listener(|w, _, _, cx| { w.import_menu = None; cx.notify(); }))
                 .child(item("import-md", "doc-md", crate::settings::tr("导入 Markdown 文件…", "Import Markdown Files…"), ImportKind::Markdown))
                 .child(item("import-folder", "folder", crate::settings::tr("导入文件夹…", "Import Folder…"), ImportKind::Folder))
-                .child(item("import-xml", "doc", crate::settings::tr("导入 DocxXML…", "Import DocxXML…"), ImportKind::DocxXml)),
+                .child(item("import-xml", "doc", crate::settings::tr("导入 DocxXML…", "Import DocxXML…"), ImportKind::DocxXml))
+                .child(row("import-pack", "braces", crate::settings::tr("导入提示词包…", "Import Prompt Pack…"))
+                    .on_click(cx.listener(|w, _, window, cx| w.open_import_pack(window, cx)))),
         )).with_priority(3).into_any_element())
     }
 

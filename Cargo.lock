@@ -44,7 +44,7 @@ dependencies = [
 
 [[package]]
 name = "ai_md"
-version = "0.6.0"
+version = "0.7.0"
 dependencies = [
  "anyhow",
  "async-lock",
@@ -1734,7 +1734,7 @@ dependencies = [
 
 [[package]]
 name = "fdl_core"
-version = "0.6.0"
+version = "0.7.0"
 dependencies = [
  "anyhow",
  "dirs 7.0.0",

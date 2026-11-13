@@ -190,8 +190,9 @@ pub enum View {
 /// A confirmation dialog and the pages it is about.
 #[derive(Clone, Debug)]
 pub enum Confirm {
-    /// 删除 (to the 回收站); `batch` for the 批量操作 selection.
-    Delete { ids: Vec<String>, batch: bool },
+    /// 删除 (to the 回收站); `batch` for the 批量操作 selection;
+    /// `no_ask` is the dialog's 不再提示 checkbox.
+    Delete { ids: Vec<String>, batch: bool, no_ask: bool },
     /// 回收站 → 恢复.
     Restore(String),
     /// 回收站 → 彻底删除.
@@ -268,6 +269,14 @@ pub struct Workspace {
     pub batch: Option<Vec<String>>,
     /// The open confirmation dialog.
     pub confirm: Option<Confirm>,
+    /// Slice 9: the exit dialog is showing (main window only).
+    pub exit_ask: bool,
+    /// Slice 9: the exit dialog's 不再提示 checkbox.
+    pub exit_no_ask: bool,
+    /// Slice 9: the exit dialog chose Exit; let the close through.
+    pub exit_approved: bool,
+    /// Slice 9: this is the main window (it owns the close behaviour).
+    pub is_main: bool,
     pub view: View,
     pub home: crate::home::Home,
     /// The bundled catalog (see `catalog.rs`); additive, read-only data.
@@ -281,7 +290,11 @@ pub struct Workspace {
     pub toast: Option<(ToastKind, SharedString, Instant)>,
     toast_task: Option<Task<()>>,
     /// Folded sidebar sections: 置顶, 我的文档.
-    pub folded: [bool; 3],
+    pub folded: [bool; 4],
+    /// Sidebar Spaces (shelves, #11): named document sets that scope
+    /// the sidebar; loaded from settings at startup, saved on change.
+    pub spaces: Vec<crate::store::SpaceDef>,
+    pub active_space: Option<String>,
     /// Expanded pages of the 我的文档 tree.
     pub expanded: HashSet<String>,
     pub move_dlg: Option<crate::tree::MoveDialog>,
@@ -334,6 +347,15 @@ impl Workspace {
 
     fn build_window(quick: bool, document: Option<String>, window: &mut Window, cx: &mut Context<Self>) -> Self {
         crate::settings::load();
+        // Slice 9: the main window owns the exit behaviour (dialog / tray).
+        let is_main = !quick && document.is_none();
+        if is_main {
+            let _ = crate::exit_tray::window_hwnd(window);
+            let handle = cx.entity();
+            window.on_window_should_close(&*cx, move |window, cx| {
+                handle.update(cx, |w, cx| w.window_should_close(window, cx))
+            });
+        }
         if !cx.has_global::<SharedStore>() { cx.set_global(SharedStore::open().expect("open document library")); }
         let mut store = cx.global::<SharedStore>().clone();
         let entries = store.list();
@@ -443,6 +465,10 @@ impl Workspace {
             row_sub_bounds: Rc::new(Cell::new(None)),
             batch: None,
             confirm: None,
+            exit_ask: false,
+            exit_no_ask: false,
+            exit_approved: false,
+            is_main,
             view: View::Doc,
             home: Default::default(),
             catalog: crate::catalog::CatalogState::new(window, cx),
@@ -456,7 +482,9 @@ impl Workspace {
             more_btn_bounds: Rc::new(Cell::new(None)),
             native_sidebar: Default::default(),
             shortcuts: false,
-            folded: [false; 3],
+            folded: [false; 4],
+            spaces: vec![],
+            active_space: None,
             expanded: HashSet::new(),
             move_dlg: None,
             export_md: None,
@@ -470,6 +498,7 @@ impl Workspace {
         };
         ws.sort();
         ws.load_home();
+        ws.load_spaces();
         ws.load_catalog_prefs();
         ws.load_custom_catalog();
         // An empty library opens on 主页's empty state; only a quick note
@@ -621,12 +650,18 @@ impl Workspace {
         self.create_doc(crate::settings::quick_new_markdown(), parent, window, cx);
     }
 
-    /// Ask before 删除: a confirmation, then the 回收站.
-    pub fn ask_delete(&mut self, id: &str, cx: &mut Context<Self>) {
+    /// 删除 a document: straight to the 回收站 when the user turned
+    /// confirmations off (Settings › 删除前确认), else ask first.
+    pub fn ask_delete(&mut self, id: &str, window: &mut Window, cx: &mut Context<Self>) {
         self.row_menu = None;
         self.doc_menu = false;
         self.doc_sub = None;
-        self.confirm = Some(Confirm::Delete { ids: vec![id.to_string()], batch: false });
+        if self.store.settings().delete_no_ask {
+            let ids = vec![id.to_string()];
+            self.delete_docs(&ids, window, cx);
+        } else {
+            self.confirm = Some(Confirm::Delete { ids: vec![id.to_string()], batch: false, no_ask: false });
+        }
         cx.notify();
     }
 
@@ -1318,11 +1353,13 @@ impl Render for Workspace {
         let import_menu = self.render_import_menu(cx);
         let search = self.render_search(window, cx);
         let run_sheet = self.render_run_sheet(window, cx);
+        let tidy_sheet = self.render_tidy_sheet(window, cx);
         let run_consent = self.render_run_consent(cx);
         let insert_palette = self.render_insert_palette(window, cx);
         let doc_menu = self.render_doc_menu(window, cx);
         let doc_info = self.render_doc_info(cx);
         let confirm = self.render_confirm(cx);
+        let exit_ask = self.render_exit_ask(cx);
         let trash_menu = self.render_trash_menu(cx);
         let home_menus = self.render_home_menus(cx);
         let theme_menu = self.render_theme_menu(cx);
@@ -1427,6 +1464,26 @@ impl Render for Workspace {
                 cx.notify();
             }))
             .on_key_down(cx.listener(|w, ev: &KeyDownEvent, window, cx| {
+                // Catalog detail shortcuts: with an entry open and no
+                // sheet or dialog up, plain C / R / S / F act on it.
+                if w.view == View::Catalog && !w.search_open && w.catalog.run.is_none() && w.catalog.confirm_run.is_none() && !w.catalog.insert_open
+                    && let Some(id) = w.catalog.selected.clone()
+                {
+                    let m = &ev.keystroke.modifiers;
+                    if !m.control && !m.alt && !m.platform && !m.function {
+                        let handled = match ev.keystroke.key.as_str() {
+                            "s" => { w.save_catalog_entry(&id, window, cx); true }
+                            "f" => { w.toggle_favorite(&id, cx); true }
+                            "r" if w.catalog.entry(&id).is_some_and(|e| e.body.is_some()) => { w.open_run_sheet_for_entry(&id, window, cx); true }
+                            "c" => match w.catalog.entry(&id).and_then(|e| e.install.clone().or_else(|| e.config.clone()).or_else(|| e.body.clone())) {
+                                Some(t) => { w.copy_text(&t, cx); true }
+                                None => false,
+                            },
+                            _ => false,
+                        };
+                        if handled { cx.stop_propagation(); return; }
+                    }
+                }
                 // The theme dropdown: ↑ ↓ preview, ↩ applies, Esc closes it (not 设置).
                 if w.theme_menu.is_some() && w.theme_menu_key(&ev.keystroke.key, cx) {
                     cx.stop_propagation();
@@ -1448,7 +1505,7 @@ impl Render for Workspace {
                 }
             }))
             // Esc leaves 批量操作 (closing its menu or confirmation first), even from the editor.
-            .capture_key_down(cx.listener(|w, ev: &KeyDownEvent, _, cx| {
+            .capture_key_down(cx.listener(|w, ev: &KeyDownEvent, window, cx| {
                 if w.file_history.busy && !(ev.keystroke.modifiers.secondary() && matches!(ev.keystroke.key.as_str(), "z" | "y")) { cx.stop_propagation(); return; }
                 if ev.keystroke.key == "escape" && w.has_home_drag() {
                     w.cancel_home_drag(cx); cx.stop_propagation(); return;
@@ -1457,6 +1514,20 @@ impl Render for Workspace {
                     w.end_folder_drag(true, cx); cx.stop_propagation(); return;
                 }
                 if w.record_shortcut(ev, cx) { return; }
+                // Esc dismisses the exit dialog.
+                if ev.keystroke.key == "escape" && w.exit_ask {
+                    w.exit_ask = false;
+                    cx.stop_propagation();
+                    cx.notify();
+                    return;
+                }
+                // Enter confirms a confirmation dialog.
+                if ev.keystroke.key == "enter" && w.confirm.is_some() {
+                    w.confirm_ok(window, cx);
+                    cx.stop_propagation();
+                    cx.notify();
+                    return;
+                }
                 // Esc cancels a confirmation dialog.
                 if ev.keystroke.key == "escape" && (w.confirm.is_some() || w.export_md.is_some()) {
                     w.confirm = None;
@@ -1493,10 +1564,12 @@ impl Render for Workspace {
             .children(home_menus)
             .children(theme_menu)
             .children(confirm)
+            .children(exit_ask)
             .children(move_dlg)
             .children(export_md)
             .children(search)
             .children(run_sheet)
+            .children(tidy_sheet)
             .children(run_consent)
             .children(insert_palette)
             .children(resize_overlay)

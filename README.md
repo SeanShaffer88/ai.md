@@ -104,7 +104,8 @@ A 120 Hz display gives each frame 8.3 ms. Even at P95 on a million-character doc
 - **Organizing**: a document tree, pinning, favorites, full-text search and a trash.
 - **Import and export**: import Markdown and Feishu (Lark) DocxXML; export Markdown and PDF, or print directly. Pasting from Feishu or a web page keeps the structure.
 - **Shortcuts**: press `⌘ /` (`Ctrl+/` on Windows) to see them all. Every one can be rebound. On Windows, Ctrl stands in for ⌘ and Alt for ⌥; the app and the Getting started guides show the keys for your system.
-- **Themes**: four built-in styles — Craft, Feishu, Notion and Obsidian — each with a dark variant, or write your own in CSS; see [docs/THEMES.md](docs/THEMES.md).
+- **Themes**: fourteen built-in styles — Craft, Feishu, Notion and Obsidian, plus ten inspired by Notepad++ (Twilight, Zenburn, Solarized Dark and Light, Ruby Blue, Blackboard, Bespin, Vibrant Ink, Navajo, Choco) — or write your own in CSS; see [docs/THEMES.md](docs/THEMES.md).
+- **For AI work**: a built-in Catalog of prompts, MCP servers, skills and guides with a Run sheet for prompt variables (and reusable Run profiles), a unified command palette with typed queries and previews, a quick-capture window, prompt pack export/import, and an opt-in, token-guarded local agent bridge for tools on your own machine (off by default).
 
 ## Screenshots
 
@@ -133,6 +134,7 @@ Thanks to everyone who has helped build ai.md. Issues and pull requests are welc
 
 ## Recent updates
 
+- **0.7.0** (Nov 13): a unified command palette with typed queries and preview cards; a Today rail and Library Spaces; quick capture (Alt+Space); prompt packs, Run profiles, catalog link checks and duplicate tidy-up; an opt-in local agent bridge; exit dialog with minimize-to-tray; ten new document themes; Enter confirms dialogs and deletes can skip the confirmation.
 - **0.1.10** (Nov 10): choose a document type from the New menu, scroll wide tables horizontally, preserve Markdown column alignment, and keep the caret visible in long fields.
 - **0.1.9** (Nov 8): fix Cmd+Q on macOS, unresponsive window controls on Windows, and text selection hidden by highlight colors.
 - **0.1.8** (Nov 9): edit local Markdown files in place, import folders while keeping `.md`, and organize notes in nested folders with drag and undo. Lower image and preview memory use; steadier table resizing and refined menus. First launch chooses a supported system language. Experimental Linux AppImage packaging.

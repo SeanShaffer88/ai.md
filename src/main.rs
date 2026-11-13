@@ -37,7 +37,11 @@ mod native_header;
 #[cfg(not(target_os = "macos"))]
 #[path = "native_header_fallback.rs"]
 mod native_header;
+mod agent_bridge;
+mod exit_tray;
 mod printing;
+mod prompt_pack;
+mod quick_capture;
 mod search;
 mod sidebar;
 mod local_files;
@@ -151,7 +155,9 @@ fn main() {
             Err(err) => logging::fatal("无法打开文档库 / Could not open the library", &err),
         }
         let quick_enabled = !scripted;
-        if quick_enabled { quick_note::install(cx); }
+        if quick_enabled { quick_note::install(cx); quick_capture::install(cx); }
+        agent_bridge::install(cx);
+        exit_tray::install_poll(cx);
         app::set_menus(cx);
         update::init(cx);
         open_main_window(scripted, cx);

@@ -1,0 +1,388 @@
+/*
+ * ai.md 文档主题：Blackboard
+ *
+ * 灵感来自 Notepad++ 内置的 Blackboard 主题。墨蓝黑板底、黄关键字、绿字符串，高对比的经典教学楼配色。
+ * 块的排版沿用内置主题的同一套尺寸，只是换了配色。
+ *
+ * 每个属性都写着当前的值。改完保存，应用里立即生效；说明见 docs/THEMES.md。
+ */
+
+:root {
+  --theme-name: "Blackboard";
+  --theme-name-en: "Blackboard";
+  --theme-author: "ai.md";
+  --theme-description: "墨蓝黑板底、黄关键字、绿字符串，高对比的经典教学楼配色。";
+  /* 块的画法：craft 或 feishu */
+  --theme-base: craft;
+
+  /* 本主题的基础色，下面的规则用 var() 引用 */
+  --ink-text: #F8F8F8;
+  --ink-secondary: #AEAEAE;
+  --ink-faint: rgba(248, 248, 248, 0.35);
+  --ink-accent: #61CE3C;
+  --ink-divider: rgba(248, 248, 248, 0.16);
+  --ink-surface: #11162B;
+
+  /* 文字颜色 */
+  --color-gray: #AEAEAE;
+  --color-red: #FF6B68;
+  --color-orange: #FF8C4C;
+  --color-yellow: #FBDE2D;
+  --color-green: #61CE3C;
+  --color-blue: #6FB3E0;
+  --color-purple: #C39BD3;
+
+  /* 文字高亮 */
+  --highlight-light-gray: #262938;
+  --highlight-medium-gray: #40434e;
+  --highlight-gray: #40434e;
+  --highlight-light-red: #331f2c;
+  --highlight-red: #5a2d38;
+  --highlight-light-orange: #332428;
+  --highlight-orange: #5a382f;
+  --highlight-light-yellow: #323123;
+  --highlight-yellow: #585225;
+  --highlight-light-green: #1a2e25;
+  --highlight-green: #274d2a;
+  --highlight-light-blue: #1c2a40;
+  --highlight-blue: #2c445e;
+  --highlight-light-purple: #29263d;
+  --highlight-purple: #473c5a;
+
+  /* 块背景 */
+  --background-light-gray: #262938;
+  --background-medium-gray: #40434e;
+  --background-gray: #40434e;
+  --background-light-red: #331f2c;
+  --background-medium-red: #5a2d38;
+  --background-light-orange: #332428;
+  --background-medium-orange: #5a382f;
+  --background-light-yellow: #323123;
+  --background-medium-yellow: #585225;
+  --background-light-green: #1a2e25;
+  --background-medium-green: #274d2a;
+  --background-light-blue: #1c2a40;
+  --background-medium-blue: #2c445e;
+  --background-light-purple: #29263d;
+  --background-medium-purple: #473c5a;
+
+  /* 高亮块底色 */
+  --callout-light-gray: #262938;
+  --callout-medium-gray: #40434e;
+  --callout-gray: #40434e;
+  --callout-light-red: #331f2c;
+  --callout-medium-red: #5a2d38;
+  --callout-light-orange: #332428;
+  --callout-medium-orange: #5a382f;
+  --callout-light-yellow: #323123;
+  --callout-medium-yellow: #585225;
+  --callout-light-green: #1a2e25;
+  --callout-medium-green: #274d2a;
+  --callout-light-blue: #1c2a40;
+  --callout-medium-blue: #2c445e;
+  --callout-light-purple: #29263d;
+  --callout-medium-purple: #473c5a;
+
+  /* 高亮块边框 */
+  --border-gray: #262938;
+  --border-red: #331f2c;
+  --border-orange: #332428;
+  --border-yellow: #323123;
+  --border-green: #1a2e25;
+  --border-blue: #1c2a40;
+  --border-purple: #29263d;
+  /* 其它界面细节（文档内的选中、悬停、表格工具等） */
+  --token-text-caption: var(--ink-secondary);
+  --token-text-placeholder: var(--ink-faint);
+  --token-block-placeholder: var(--ink-faint);
+  --token-text-disabled: rgba(248, 248, 248, 0.3);
+  --token-text-code: #F8F8F8;
+  --token-primary-500: var(--ink-accent);
+  --token-primary-fill-1: #1a2e25;
+  --token-bg-overlay: var(--ink-surface);
+  --token-line-divider: rgba(248, 248, 248, 0.06);
+  --token-line-border: rgba(248, 248, 248, 0.08);
+  --token-fill-hover: rgba(248, 248, 248, 0.045);
+  --token-fill-hover-strong: rgba(248, 248, 248, 0.07);
+  --token-fill-pressed: rgba(248, 248, 248, 0.1);
+  --token-fill-turninto-active: #1a2e25;
+  --token-block-hover: rgba(248, 248, 248, 0.04);
+  --token-block-selected: rgba(97, 206, 60, 0.16);
+  --token-handle-active: rgba(248, 248, 248, 0.06);
+  --token-size-cell: var(--ink-surface);
+  --token-size-cell-border: var(--ink-divider);
+  --token-size-cell-active: #274d2a;
+  --token-size-cell-disabled: #1a2e25;
+  --token-swatch-border: rgba(248, 248, 248, 0.08);
+  --token-block-bg-area: rgba(248, 248, 248, 0.03);
+  --token-scrollbar-thumb: rgba(248, 248, 248, 0.22);
+  --token-shadow: rgba(0, 0, 0, 0.25);
+  --token-code-hover-ring: rgba(97, 206, 60, 0.35);
+  --token-pinned: var(--ink-accent);
+  --token-table-bar-hover: rgba(248, 248, 248, 0.08);
+  --token-table-bar-selected: #274d2a;
+  --token-danger-bar: #ff6467;
+  --token-danger-cell: #331f2c;
+  --token-danger: #ff6b68;
+  --token-sidebar-text: rgba(248, 248, 248, 0.85);
+  --token-sidebar-hover: rgba(248, 248, 248, 0.045);
+  --token-sidebar-selected: rgba(248, 248, 248, 0.07);
+  --token-sidebar-section: var(--ink-secondary);
+  --token-button-border: rgba(248, 248, 248, 0.075);
+  --token-code-gutter-line: var(--ink-divider);
+  --token-caption: var(--ink-secondary);
+  --token-menu-highlight: var(--ink-accent);
+  --token-popover-bg: var(--ink-surface);
+}
+
+.page {
+  background-color: #0C1021;
+  color: var(--ink-text);
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 708px;
+  caret-color: var(--ink-text);
+}
+
+::selection {
+  background-color: #253B76;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: var(--ink-text);
+}
+
+h1 {
+  font-family: system-ui;
+  font-size: 30px;
+  line-height: 39px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 32px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-family: system-ui;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+h3 {
+  font-family: system-ui;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h6 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h7 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h8 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+h9 {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(248, 248, 248, 0.35);
+}
+
+a:hover {
+  color: var(--ink-accent);
+}
+
+code {
+  color: #FBDE2D;
+  background-color: rgba(248, 248, 248, 0.08);
+  border-color: transparent;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+pre {
+  font-family: ui-monospace;
+  font-size: 13.6px;
+  line-height: 20.4px;
+  color: var(--ink-text);
+  background-color: var(--ink-surface);
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.line-numbers {
+  display: none;
+  color: var(--ink-secondary);
+  background-color: var(--ink-surface);
+}
+
+blockquote {
+  border-left-width: 3px;
+  border-left-color: #AEAEAE;
+  padding-left: 17px;
+  color: inherit;
+  font-style: normal;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li::marker {
+  color: inherit;
+}
+
+ol li::marker {
+  color: inherit;
+}
+
+.task {
+  width: 16px;
+  border-radius: 3px;
+  border-color: var(--ink-text);
+}
+
+.task:checked {
+  background-color: var(--ink-accent);
+  color: #ffffff;
+}
+
+.task-done {
+  color: rgba(248, 248, 248, 0.38);
+  text-decoration: line-through;
+}
+
+hr {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: var(--ink-divider);
+}
+
+table {
+  font-size: 14px;
+  line-height: 20px;
+  border-color: #404350;
+  border-radius: 0px;
+}
+
+th {
+  background-color: var(--ink-surface);
+}
+
+.callout {
+  border-radius: 4px;
+  border-width: 0px;
+  padding-top: 16px;
+  padding-left: 12px;
+}
+
+/* 代码高亮：Blackboard 的配色 */
+.token.comment {
+  color: #AEAEAE;
+}
+
+.token.keyword {
+  color: #FBDE2D;
+}
+
+.token.tag {
+  color: #FBDE2D;
+}
+
+.token.string {
+  color: #61CE3C;
+}
+
+.token.number {
+  color: #D8FA3C;
+}
+
+.token.boolean {
+  color: #FBDE2D;
+}
+
+.token.class-name {
+  color: #FF6400;
+}
+
+.token.attr-name {
+  color: #61CE3C;
+}
+
+.token.function {
+  color: #FF6400;
+}

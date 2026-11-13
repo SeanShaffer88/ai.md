@@ -15,6 +15,14 @@ const RADIUS: f32 = 12.;
 /// Each version's notes: (version, [(中文, English)]). Only the running
 /// version's are shown; a version without notes shows nothing.
 const NOTES: &[(&str, &[(&str, &str)])] = &[
+    ("0.7.0", &[
+        ("统一命令面板：输入 mcp:、skill:、prompt:、note: 或 > 按类型查找，选中条目有预览卡", "One command palette for documents, catalog entries and actions, with typed queries (mcp:, skill:, prompt:, note:, >) and preview cards"),
+        ("侧栏新增「今天」栏和文档空间，文档可以按空间分组查看", "A Today rail and Library Spaces in the sidebar"),
+        ("快速捕获窗口（Alt+Space）：运行收藏的提示词，或随手记一条进文档库", "Quick capture (Alt+Space): run a favorite prompt, or jot a note into the library"),
+        ("提示词包导出与导入、运行变量档案、目录链接健康检查、重复文档整理", "Prompt pack export and import, Run profiles, catalog link health checks, and duplicate tidy-up"),
+        ("本地助手桥（默认关闭）：本机的 AI 工具可凭口令读取文档与目录、新建文档", "An opt-in local agent bridge (off by default): AI tools on this machine can read documents and the catalog, and create documents, with a token"),
+        ("退出时可选最小化到托盘；十款新文档主题；回车确认对话框，删除可设置不再确认", "Minimize to tray on exit, ten new document themes, Enter confirms dialogs, and deletes can skip the confirmation"),
+    ]),
     ("0.1.10", &[
         ("Linux AppImage 支持应用内检查、下载并重启更新", "Check, download, and restart to update the Linux AppImage in the app"),
         ("新建菜单可选择文档、Markdown 或文件夹，快捷新建支持记住上次类型", "Choose Document, Markdown, or Folder from the New menu; quick creation can remember your last choice"),

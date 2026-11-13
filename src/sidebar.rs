@@ -37,6 +37,11 @@ pub(crate) const SECTION_TOP: f32 = 6.;
 /// 批量操作 caps at 50 pages.
 pub(crate) const BATCH_LIMIT: usize = 50;
 
+/// Shelf colours for Spaces (#11): hues cycled as spaces are created.
+pub(crate) const SPACE_HUES: [f32; 6] = [0.98, 0.07, 0.36, 0.58, 0.75, 0.88];
+
+pub(crate) fn space_color(i: usize) -> Hsla { gpui::hsla(SPACE_HUES[i % SPACE_HUES.len()], 0.65, 0.55, 1.) }
+
 /// The footer row: like 主页 (same pill, glyph and label columns) under
 /// the footer line, so the bottom corner mirrors the top.
 pub(crate) fn footer_row(id: &'static str, glyph: &'static str, label: &'static str) -> Stateful<Div> {
@@ -96,6 +101,98 @@ impl Workspace {
         let vw = f32::from(window.viewport_size().width);
         let max = theme::SIDEBAR_MAX.min(vw - theme::SIDEBAR_MIN_CONTENT).max(theme::SIDEBAR_MIN);
         self.sidebar_width.clamp(theme::SIDEBAR_MIN, max)
+    }
+
+    /// Spaces load once at startup; changes save straight back.
+    pub(crate) fn load_spaces(&mut self) {
+        let s = self.store.settings();
+        self.spaces = s.spaces;
+        self.active_space = s.active_space.filter(|n| self.spaces.iter().any(|sp| &sp.name == n));
+    }
+
+    fn save_spaces(&self) {
+        let mut s = self.store.settings();
+        s.spaces = self.spaces.clone();
+        s.active_space = self.active_space.clone();
+        if let Err(e) = self.store.save_settings(&s) { crate::logging::write(&format!("spaces: {e}")); }
+    }
+
+    /// The Space the sidebar is scoped to, if any (#11).
+    pub(crate) fn active_space_def(&self) -> Option<&crate::store::SpaceDef> {
+        self.active_space.as_ref().and_then(|n| self.spaces.iter().find(|sp| &sp.name == n))
+    }
+
+    /// Whether a document shows under the active Space (all do when
+    /// no Space is active).
+    fn space_allows(&self, id: &str) -> bool {
+        self.active_space_def().is_none_or(|sp| sp.docs.iter().any(|d| d == id))
+    }
+
+    fn set_active_space(&mut self, name: Option<String>, cx: &mut Context<Self>) {
+        self.active_space = name;
+        self.save_spaces();
+        cx.notify();
+    }
+
+    fn new_space(&mut self, cx: &mut Context<Self>) {
+        let base = crate::settings::tr("空间", "Space");
+        let mut n = self.spaces.len() + 1;
+        while self.spaces.iter().any(|sp| sp.name == format!("{base} {n}")) { n += 1; }
+        let name = format!("{base} {n}");
+        let color = self.spaces.len() % SPACE_HUES.len();
+        self.spaces.push(crate::store::SpaceDef { name: name.clone(), color, docs: vec![] });
+        self.active_space = Some(name);
+        self.save_spaces();
+        self.show_toast(crate::settings::tr("新空间已建好：从文档的“…”菜单把它加进来", "New space created — add documents from a document's … menu"), cx);
+        cx.notify();
+    }
+
+    fn delete_active_space(&mut self, cx: &mut Context<Self>) {
+        let Some(name) = self.active_space.clone() else { return };
+        self.spaces.retain(|sp| sp.name != name);
+        self.active_space = None;
+        self.save_spaces();
+        self.show_toast(crate::settings::tr("空间已删除，文档都还在", "Space deleted — every document is still here"), cx);
+        cx.notify();
+    }
+
+    /// Add or remove a document from a Space (the row menu's toggles).
+    pub(crate) fn toggle_doc_space(&mut self, doc: &str, space: &str, cx: &mut Context<Self>) {
+        if let Some(sp) = self.spaces.iter_mut().find(|sp| sp.name == space) {
+            if let Some(i) = sp.docs.iter().position(|d| d == doc) { sp.docs.remove(i); } else { sp.docs.push(doc.to_string()); }
+        }
+        self.save_spaces();
+        self.row_menu = None;
+        cx.notify();
+    }
+
+    /// The Spaces chip row (#11): 全部, one chip per shelf, then
+    /// new-space and (while one is active) delete-space chips.
+    fn spaces_row(&self, cx: &mut Context<Self>) -> Div {
+        let chip = |id: String, dot: Option<Hsla>, label: String, on: bool| {
+            let mut c = div().id(SharedString::from(id)).flex_none().h(px(24.)).px(px(9.)).flex().items_center().gap(px(6.))
+                .rounded(px(999.)).border_1().border_color(if on { Theme::primary() } else { Theme::line_border() })
+                .cursor_pointer().text_size(px(12.)).line_height(px(16.)).text_color(Theme::text());
+            if on { c = c.bg(Theme::sidebar_selected()); }
+            if let Some(col) = dot { c = c.child(div().flex_none().size(px(8.)).rounded(px(4.)).bg(col)); }
+            c.child(label)
+        };
+        let mut row = div().flex_none().px(px(SB_X)).pb(px(6.)).flex().flex_wrap().gap(px(6.))
+            .child(chip("space-all".into(), None, crate::settings::tr("全部", "All").into(), self.active_space.is_none())
+                .on_click(cx.listener(|w, _, _, cx| w.set_active_space(None, cx))));
+        for sp in &self.spaces {
+            let name = sp.name.clone();
+            let on = self.active_space.as_deref() == Some(sp.name.as_str());
+            row = row.child(chip(format!("space-{}", sp.name), Some(space_color(sp.color)), sp.name.clone(), on)
+                .on_click(cx.listener(move |w, _, _, cx| w.set_active_space(Some(name.clone()), cx))));
+        }
+        row = row.child(chip("space-new".into(), None, crate::settings::tr("＋ 新建", "+ New").into(), false)
+            .on_click(cx.listener(|w, _, _, cx| w.new_space(cx))));
+        if self.active_space.is_some() {
+            row = row.child(chip("space-del".into(), None, crate::settings::tr("删除空间", "Delete space").into(), false)
+                .on_click(cx.listener(|w, _, _, cx| w.delete_active_space(cx))));
+        }
+        row
     }
 
     pub(crate) fn render_sidebar(&mut self, window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
@@ -189,8 +286,31 @@ impl Workspace {
             );
 
         let mut list = div().flex().flex_col().px(px(SB_X)).pb(px(8.));
-        // Pinned docs are shortcuts: they stay in 我的文档 too.
-        let pinned: Vec<&Entry> = entries.iter().filter(|e| e.meta.pinned).collect();
+        // Today rail (#8): what was edited or opened today, newest
+        // first. A surface only — it never hides or moves anything.
+        {
+            let t = fdl_core::time::civil(fdl_core::time::now());
+            let today_key = (t.0, t.1, t.2);
+            let mut today: Vec<&Entry> = entries.iter().filter(|e| {
+                let m = fdl_core::time::civil(e.meta.modified);
+                let o = fdl_core::time::civil(e.meta.opened);
+                (m.0, m.1, m.2) == today_key || (o.0, o.1, o.2) == today_key
+            }).collect();
+            today.sort_by_key(|e| std::cmp::Reverse(e.meta.opened.max(e.meta.modified)));
+            today.truncate(5);
+            if !today.is_empty() {
+                list = list.child(self.section(3, crate::settings::tr("今天", "Today"), cx));
+                if !self.folded[3] {
+                    for e in today {
+                        list = list.child(self.doc_row(e, "today", 0, false, cx));
+                    }
+                }
+                list = list.child(div().h(px(GROUP_GAP - SECTION_TOP)));
+            }
+        }
+        // Pinned docs are shortcuts: they stay in 我的文档 too. Under a
+        // Space (#11) both sections scope to the shelf's documents.
+        let pinned: Vec<&Entry> = entries.iter().filter(|e| e.meta.pinned && self.space_allows(&e.id)).collect();
         if !pinned.is_empty() {
             list = list.child(self.section(0, crate::settings::text("置顶"), cx));
             if !self.folded[0] {
@@ -261,7 +381,7 @@ impl Workspace {
                     div().h(px(46.)).mx(px(SB_X + 6. + 10. - 18.)).flex().items_center().gap(px(4.))
                         .child(footer_btn("bt-copy", "copy", crate::settings::text("创建副本"), some, false).on_click(cx.listener(|w, _, _, cx| w.batch_copy(cx))))
                         .child(footer_btn("bt-move", "folder-input", crate::settings::text("移动到"), some, false).on_click(cx.listener(|w, _, window, cx| w.batch_move(window, cx))))
-                        .child(footer_btn("bt-delete", "bin", crate::settings::text("删除"), some, false).on_click(cx.listener(|w, _, _, cx| w.ask_batch_delete(cx)))),
+                        .child(footer_btn("bt-delete", "bin", crate::settings::text("删除"), some, false).on_click(cx.listener(|w, _, window, cx| w.ask_batch_delete(window, cx)))),
                 )
             });
 
@@ -273,6 +393,7 @@ impl Workspace {
             .flex_col()
             .child(header)
             .child(nav)
+            .child(self.spaces_row(cx))
             .child(div().id("doc-list").flex_1().min_h_0().overflow_y_scroll().track_scroll(&self.list_scroll).child(list))
             .children(crate::changelog::card(cx.listener(|_, _, _, cx| cx.notify())))
             .child(footer)
@@ -494,13 +615,17 @@ impl Workspace {
         }
     }
 
-    pub(crate) fn ask_batch_delete(&mut self, cx: &mut Context<Self>) {
+    pub(crate) fn ask_batch_delete(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         let ids = self.checked();
-        if !ids.is_empty() {
-            self.confirm = Some(Confirm::Delete { ids, batch: true });
-            self.row_menu = None;
-            cx.notify();
+        if ids.is_empty() { return; }
+        self.row_menu = None;
+        if self.store.settings().delete_no_ask {
+            self.batch = None;
+            self.delete_docs(&ids, window, cx);
+        } else {
+            self.confirm = Some(Confirm::Delete { ids, batch: true, no_ask: false });
         }
+        cx.notify();
     }
 
     fn row_base(&self, e: &Entry, key: &str, cx: &mut Context<Self>) -> Stateful<Div> {
@@ -748,7 +873,7 @@ impl Workspace {
                 .child(div().h(px(ROW_ITEM)).px(px(8.)).flex().items_center().text_size(px(12.)).text_color(Theme::text_placeholder()).child(crate::localized_format!("已选 {n} 项", "Selected: {n}")))
                 .child(item("bm-copy", "copy", crate::settings::text("创建副本")).on_click(cx.listener(|w, _, _, cx| w.batch_copy(cx))))
                 .child(item("bm-move", "folder-input", crate::settings::text("移动到")).on_click(cx.listener(|w, _, window, cx| w.batch_move(window, cx))))
-                .child(item("bm-delete", "bin", crate::settings::text("删除")).on_click(cx.listener(|w, _, _, cx| w.ask_batch_delete(cx))));
+                .child(item("bm-delete", "bin", crate::settings::text("删除")).on_click(cx.listener(|w, _, window, cx| w.ask_batch_delete(window, cx))));
             return vec![
                 deferred(anchored().anchor(m.corner).position(m.pos).snap_to_window_with_margin(px(8.)).child(menu))
                     .with_priority(2)
@@ -766,6 +891,23 @@ impl Workspace {
         };
         let (dup, mv, pin, star, dl, ren, del) = (m.id.clone(), m.id.clone(), m.id.clone(), m.id.clone(), m.id.clone(), m.id.clone(), m.id.clone());
         let pdf = m.id.clone();
+        // Space membership toggles (#11): one row per shelf, checked
+        // while this document is in it.
+        let space_items: Vec<AnyElement> = self.spaces.iter().enumerate().map(|(i, sp)| {
+            let has = sp.docs.iter().any(|d| d == &m.id);
+            let (doc2, name2) = (m.id.clone(), sp.name.clone());
+            let g = SharedString::from(format!("rm-space-{i}"));
+            crate::ui::menu_row(SharedString::from(format!("rm-space-{i}")), g.clone())
+                .mx(px(0.))
+                .text_color(Theme::text())
+                .on_hover(set_sub(false))
+                .child(div().w(px(16.)).flex_none().flex().items_center().justify_center()
+                    .child(div().size(px(8.)).rounded(px(4.)).bg(space_color(sp.color))))
+                .child(div().flex_1().min_w_0().child(crate::ui::menu_label(sp.name.clone(), g, gpui::white())))
+                .when(has, |d| d.child(icon("todo-check", 12., Theme::primary())))
+                .on_click(cx.listener(move |w, _, _, cx| w.toggle_doc_space(&doc2, &name2, cx)))
+                .into_any_element()
+        }).collect();
         let new_window = m.id.clone();
         let sub_bounds = self.row_sub_bounds.clone();
         // The row menu leaves out the cloud entries 在新标签页打开, 分享,
@@ -812,6 +954,7 @@ impl Workspace {
                     .on_hover(set_sub(false))
                     .on_click(cx.listener(move |w, _, _, cx| w.toggle_star(&star, cx))),
             )
+            .children(space_items)
             .child(divider())
             .child(
                 item("rm-download", "export", crate::settings::text("下载"))
@@ -828,10 +971,10 @@ impl Workspace {
             .child(
                 item_c("rm-del", "bin", crate::settings::text("删除"), Theme::danger(), Theme::danger())
                     .on_hover(set_sub(false))
-                    .on_click(cx.listener(move |w, _, _, cx| w.ask_delete(&del, cx))),
+                    .on_click(cx.listener(move |w, _, window, cx| w.ask_delete(&del, window, cx))),
             );
         let vh = f32::from(window.viewport_size().height);
-        let menu_h = row_menu_height(8, 2);
+        let menu_h = row_menu_height(8 + self.spaces.len(), 2);
         // From the "…" button: hang 2px below it, or sit 2px above it when
         // there's no room below. From a right-click: at the pointer.
         let (origin, corner) = if m.pos.x < px(0.) {
@@ -856,8 +999,9 @@ impl Workspace {
         if m.sub {
             let record = self.row_sub_bounds.clone();
             record.set(None);
-            // Level the submenu's first item with 下载 (the 5th item, after one divider).
-            let top = menu_top + 4. * ROW_ITEM + ROW_DIVIDER;
+            // Level the submenu's first item with 下载 (after the base
+            // items, the Space toggles, and one divider).
+            let top = menu_top + (4 + self.spaces.len()) as f32 * ROW_ITEM + ROW_DIVIDER;
             let left = match corner {
                 Corner::TopRight | Corner::BottomRight => origin.x - px(ROW_MENU_W),
                 _ => origin.x,

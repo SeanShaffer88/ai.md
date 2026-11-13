@@ -631,6 +631,31 @@ impl Workspace {
                     segmented("lang", &["简体中文", "English"], p.english as usize, |w, i, cx| w.set_pref(|p| p.english = i == 1, cx), cx)).into_any_element(),
                 row(tr("自动下载网络图片", "Download web images"), desc(tr("关闭后不联网，网络图片显示为占位，点击单独加载。", "When off the app stays offline; web images show a placeholder you can click to load.")),
                     switch("pref-remote", p.remote_images).on_click(cx.listener(|w, _, _, cx| w.set_pref(|p| p.remote_images = !p.remote_images, cx)))).into_any_element(),
+                row(tr("删除前确认", "Ask before deleting"), desc(tr("关掉后，删除文档直接进回收站，不再弹窗确认。彻底删除和清空回收站仍会确认，因为它们无法恢复。", "When off, deleting a document goes straight to the Trash with no dialog. Permanent deletes still ask, because they cannot be undone.")),
+                    switch("pref-delete-ask", !self.store.settings().delete_no_ask).on_click(cx.listener(|w, _, _, cx| {
+                        let mut s = w.store.settings();
+                        s.delete_no_ask = !s.delete_no_ask;
+                        if let Err(e) = w.store.save_settings(&s) { crate::logging::write(&format!("delete-ask setting: {e}")); }
+                        cx.notify();
+                    }))).into_any_element(),
+                row(tr("本地助手桥", "Local agent bridge"), desc(tr("打开后，本机的 AI 工具凭口令读取文档库的 agent-bridge.json 找到接口，可以读取文档与目录、新建文档。只监听本机地址，不联网；关掉即停止并删除该文件。", "When on, AI tools on this computer can find the bridge through agent-bridge.json in your library and, with its token, read documents and the catalog and create documents. It listens on this machine only and never uses the network; turning it off stops it and removes that file.")),
+                    switch("pref-bridge", self.store.settings().agent_bridge).on_click(cx.listener(|w, _, _, cx| {
+                        let mut s = w.store.settings();
+                        s.agent_bridge = !s.agent_bridge;
+                        if let Err(e) = w.store.save_settings(&s) { crate::logging::write(&format!("agent bridge setting: {e}")); }
+                        cx.notify();
+                    }))).into_any_element(),
+                row(tr("关闭窗口时", "When the window closes"), desc(tr("点主窗口的关闭按钮时怎么做。点按钮切换。", "What clicking the main window's close button does. Click the button to change it.")),
+                    crate::catalog::pill_button("pref-exit-cycle", match self.store.settings().exit_behavior.as_str() {
+                        "exit" => tr("直接退出", "Quit right away"),
+                        "tray" => if cfg!(target_os = "windows") { tr("最小化到托盘", "Minimize to tray") } else { tr("最小化", "Minimize") },
+                        _ => tr("每次询问", "Ask every time"),
+                    }, false).on_click(cx.listener(|w, _, _, cx| {
+                        let mut s = w.store.settings();
+                        s.exit_behavior = match s.exit_behavior.as_str() { "" => "exit".into(), "exit" => "tray".into(), _ => String::new() };
+                        if let Err(e) = w.store.save_settings(&s) { crate::logging::write(&format!("exit behaviour setting: {e}")); }
+                        cx.notify();
+                    }))).into_any_element(),
                 row(tr("快捷新建默认类型", "Quick new (⌘N)"), desc(tr("⌘N 新建时创建的类型；「记住上次」沿用你上次从新建菜单选的类型。", "What ⌘N creates; “Last used” repeats the type you last picked from the New menu.")), {
                     let sel = match p.new_default.as_str() { "doc" => 1, "markdown" => 2, _ => 0 };
                     segmented("quick-new", &[tr("记住上次", "Last used"), tr("文档", "Document"), "Markdown"], sel,
@@ -1055,9 +1080,15 @@ pub(crate) fn localize(text: &str, english: bool) -> &str {
         "文档保存失败" => "Could not save document",
         "重试" => "Retry",
         "不再提示" => "Do not ask again",
+        "关闭 ai.md" => "Close ai.md",
+        "退出后，未保存的内容会先自动保存。收起到托盘可以让 ai.md 在后台继续待命。" => "Unsaved work is saved first if you quit. Sending it to the tray keeps ai.md running in the background.",
+        "退出后，未保存的内容会先自动保存。最小化只是把窗口收起来，应用仍在运行。" => "Unsaved work is saved first if you quit. Minimizing just puts the window away; the app keeps running.",
+        "最小化到托盘" => "Minimize to tray",
+        "最小化" => "Minimize",
         "放弃修改" => "Discard changes",
         "Quiet.md · 快速笔记" => "ai.md · Quick note",
         "ai.md · 快速笔记" => "ai.md · Quick note",
+        "ai.md · 快速捕获" => "ai.md · Quick capture",
         "没有匹配结果，换个关键词试试吧" => "No results. Try another search term.",
         "本文被以下文档所引用" => "Referenced by these documents",
         "隐藏引用列表" => "Hide references",
