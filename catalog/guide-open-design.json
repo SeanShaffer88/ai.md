@@ -1,0 +1,20 @@
+{
+  "id": "guide-open-design",
+  "name": "OpenDesign",
+  "kind": "guide",
+  "summary": "OpenDesign is a local-first, open-source collaborative workspace where teams and AI coding agents create prototypes, websites, apps, dashboards, presentations, images and videos from a brief, sharing feedback and iterating in one project.",
+  "source_name": "nexu-io/open-design (GitHub)",
+  "source_url": "https://github.com/nexu-io/open-design",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "commands",
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

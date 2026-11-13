@@ -1,0 +1,20 @@
+{
+  "id": "mcp-android",
+  "name": "Android MCP Server",
+  "kind": "mcp",
+  "summary": "An MCP server that gives AI clients control over an Android device or emulator through ADB: execute ADB commands, capture screenshots, inspect the current UI layout and list installed packages.",
+  "source_name": "minhalvp/android-mcp-server (GitHub)",
+  "source_url": "https://github.com/minhalvp/android-mcp-server",
+  "license": "Apache-2.0",
+  "clients": [
+    "Claude",
+    "Cursor"
+  ],
+  "risks": [
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "install": "git clone https://github.com/minhalvp/android-mcp-server.git && cd android-mcp-server && uv sync",
+  "config": "{\n  \"mcpServers\": {\n    \"android\": {\n      \"command\": \"uv\",\n      \"args\": [\"--directory\", \"path/to/android-mcp-server\", \"run\", \"server.py\"]\n    }\n  }\n}"
+}

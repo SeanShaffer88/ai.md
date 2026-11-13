@@ -1,0 +1,22 @@
+{
+  "id": "mcp-read-website-fast",
+  "name": "Read Website Fast MCP",
+  "kind": "mcp",
+  "summary": "An MCP server that fetches web pages and converts them to clean Markdown using Mozilla Readability, with optional depth crawling, robots.txt support and a local disk cache, so agents can read websites with a small token footprint.",
+  "source_name": "just-every/mcp-read-website-fast (GitHub)",
+  "source_url": "https://github.com/just-every/mcp-read-website-fast",
+  "license": "MIT",
+  "clients": [
+    "Claude",
+    "Cursor",
+    "VS Code"
+  ],
+  "risks": [
+    "network",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "install": "npx -y @just-every/mcp-read-website-fast",
+  "config": "{\n  \"mcpServers\": {\n    \"read-website-fast\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@just-every/mcp-read-website-fast\"]\n    }\n  }\n}"
+}

@@ -403,7 +403,11 @@ impl Workspace {
                 .child(item("import-folder", "folder", crate::settings::tr("导入文件夹…", "Import Folder…"), ImportKind::Folder))
                 .child(item("import-xml", "doc", crate::settings::tr("导入 DocxXML…", "Import DocxXML…"), ImportKind::DocxXml))
                 .child(row("import-pack", "braces", crate::settings::tr("导入提示词包…", "Import Prompt Pack…"))
-                    .on_click(cx.listener(|w, _, window, cx| w.open_import_pack(window, cx)))),
+                    .on_click(cx.listener(|w, _, window, cx| w.open_import_pack(window, cx))))
+                .child(row("backup-library", "export", crate::settings::tr("备份文档库…", "Back Up Library…"))
+                    .on_click(cx.listener(|w, _, window, cx| w.open_backup_library(window, cx))))
+                .child(row("restore-backup", "import", crate::settings::tr("从备份恢复…", "Restore from Backup…"))
+                    .on_click(cx.listener(|w, _, window, cx| w.open_restore_backup(window, cx)))),
         )).with_priority(3).into_any_element())
     }
 

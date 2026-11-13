@@ -1,0 +1,18 @@
+{
+  "id": "guide-generative-ai-google-cloud",
+  "name": "Generative AI on Google Cloud",
+  "kind": "guide",
+  "summary": "Google Cloud's sample code and notebooks for building generative AI applications with Gemini on Google Cloud, covering agents, embeddings, RAG grounding, vision, audio and search.",
+  "source_name": "GoogleCloudPlatform/generative-ai (GitHub)",
+  "source_url": "https://github.com/GoogleCloudPlatform/generative-ai",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

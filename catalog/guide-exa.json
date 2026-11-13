@@ -1,0 +1,18 @@
+{
+  "id": "guide-exa",
+  "name": "Exa",
+  "kind": "guide",
+  "summary": "Exa is a web search and content API built for AI applications, providing search, page-content retrieval, and agent runs that return structured, LLM-ready results through Python, JavaScript, and HTTP clients.",
+  "source_name": "Exa documentation",
+  "source_url": "https://exa.ai/docs",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

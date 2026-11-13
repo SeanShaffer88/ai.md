@@ -1,0 +1,17 @@
+{
+  "id": "guide-azure-ai-foundry",
+  "name": "Azure AI Foundry",
+  "kind": "guide",
+  "summary": "Microsoft's AI platform (now branded Microsoft Foundry) for building, deploying, and governing AI apps and agents, with a broad model catalog including Azure OpenAI, agent services, SDKs, and evaluation tooling.",
+  "source_name": "Microsoft Learn",
+  "source_url": "https://learn.microsoft.com/en-us/azure/ai-foundry/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

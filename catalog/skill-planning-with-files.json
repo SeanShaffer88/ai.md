@@ -1,0 +1,20 @@
+{
+  "id": "skill-planning-with-files",
+  "name": "Planning with Files",
+  "kind": "skill",
+  "summary": "An agent skill that keeps a persistent file-based plan (task_plan.md, findings.md and progress.md) for long-running coding tasks, with lifecycle hooks that re-inject the plan so work survives context resets, /clear and crashes.",
+  "source_name": "OthmanAdi/planning-with-files (GitHub)",
+  "source_url": "https://github.com/OthmanAdi/planning-with-files",
+  "license": "MIT",
+  "clients": [
+    "Claude Code",
+    "Codex",
+    "Cursor"
+  ],
+  "risks": [
+    "files",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

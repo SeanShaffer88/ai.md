@@ -1,0 +1,19 @@
+{
+  "id": "guide-agenticseek",
+  "name": "AgenticSeek",
+  "kind": "guide",
+  "summary": "AgenticSeek is a fully local, voice-enabled autonomous agent in the style of Manus: it browses the web, writes and runs code, and plans multi-step tasks using models running on your own hardware, with no cloud dependency required.",
+  "source_name": "Fosowl/agenticSeek (GitHub)",
+  "source_url": "https://github.com/Fosowl/agenticSeek",
+  "license": "GPL-3.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "commands",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

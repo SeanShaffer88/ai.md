@@ -1,0 +1,17 @@
+{
+  "id": "guide-sptag",
+  "name": "SPTAG",
+  "kind": "guide",
+  "summary": "Microsoft's distributed approximate nearest neighbor search library for large-scale vector search, providing high-quality vector index building, search and distributed online serving toolkits.",
+  "source_name": "microsoft/SPTAG (GitHub)",
+  "source_url": "https://github.com/microsoft/SPTAG",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

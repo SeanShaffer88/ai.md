@@ -3,6 +3,7 @@
 //! and Markdown / HTML import plus Markdown export, the prompt template
 //! engine, and the bundled catalog.
 
+pub mod backup;
 pub mod catalog;
 pub mod docxml;
 pub mod editor;

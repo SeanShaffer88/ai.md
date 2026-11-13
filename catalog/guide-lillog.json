@@ -1,0 +1,17 @@
+{
+  "id": "guide-lillog",
+  "name": "Lil'Log",
+  "kind": "guide",
+  "summary": "Lil'Log is Lilian Weng's long-running blog of carefully cited, long-form explainers on machine learning and AI, covering topics such as LLM agents, reward hacking, diffusion models, and alignment.",
+  "source_name": "Lilian Weng (lilianweng.github.io)",
+  "source_url": "https://lilianweng.github.io/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

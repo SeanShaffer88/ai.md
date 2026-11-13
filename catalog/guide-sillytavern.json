@@ -1,0 +1,18 @@
+{
+  "id": "guide-sillytavern",
+  "name": "SillyTavern",
+  "kind": "guide",
+  "summary": "A locally installed front-end for large language models and roleplay chat for power users, supporting many LLM API backends, character cards, group chats and extensions.",
+  "source_name": "SillyTavern/SillyTavern (GitHub)",
+  "source_url": "https://github.com/SillyTavern/SillyTavern",
+  "license": "AGPL-3.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

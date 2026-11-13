@@ -1,0 +1,18 @@
+{
+  "id": "guide-gpt-load",
+  "name": "GPT-Load",
+  "kind": "guide",
+  "summary": "A self-hosted AI gateway that unifies multiple channels and credentials behind one entry point, with traffic scheduling, failover, request logs and usage accounting for OpenAI-, Anthropic- and Gemini-style clients.",
+  "source_name": "tbphp/gpt-load (GitHub)",
+  "source_url": "https://github.com/tbphp/gpt-load",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

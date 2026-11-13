@@ -1,0 +1,17 @@
+{
+  "id": "guide-awesome-aitools",
+  "name": "Awesome AI Tools",
+  "kind": "guide",
+  "summary": "A community-curated list of AI tools organized by category, covering assistants and models, agents and coding tools, MCP, image and video creation, speech, writing and more.",
+  "source_name": "ikaijua/Awesome-AITools (GitHub)",
+  "source_url": "https://github.com/ikaijua/Awesome-AITools",
+  "license": "CC-BY-4.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

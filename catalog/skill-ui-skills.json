@@ -1,0 +1,18 @@
+{
+  "id": "skill-ui-skills",
+  "name": "UI Skills",
+  "kind": "skill",
+  "summary": "A collection of skills for design engineers, browsable and fetchable through a CLI (npx ui-skills) and connectable over MCP, with a playbook of distilled UI lessons.",
+  "source_name": "ibelick/ui-skills (GitHub)",
+  "source_url": "https://github.com/ibelick/ui-skills",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

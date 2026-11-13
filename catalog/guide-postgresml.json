@@ -1,0 +1,17 @@
+{
+  "id": "guide-postgresml",
+  "name": "PostgresML",
+  "kind": "guide",
+  "summary": "A PostgreSQL extension that runs machine learning and AI inference inside the database with GPU acceleration, including in-database RAG functions for chunking, embedding, ranking and transforming text, and vector search through pgvector integration.",
+  "source_name": "postgresml/postgresml (GitHub)",
+  "source_url": "https://github.com/postgresml/postgresml",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

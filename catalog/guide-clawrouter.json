@@ -1,0 +1,18 @@
+{
+  "id": "guide-clawrouter",
+  "name": "ClawRouter",
+  "kind": "guide",
+  "summary": "An open-source LLM router for autonomous agents that scores each request locally and routes it to a capable model, with payment by USDC via the x402 protocol or by a credit-card-funded API key.",
+  "source_name": "BlockRunAI/ClawRouter (GitHub)",
+  "source_url": "https://github.com/BlockRunAI/ClawRouter",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

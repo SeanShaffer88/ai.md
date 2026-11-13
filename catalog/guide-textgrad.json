@@ -1,0 +1,18 @@
+{
+  "id": "guide-textgrad",
+  "name": "TextGrad",
+  "kind": "guide",
+  "summary": "TextGrad is a Python framework from Stanford's zou-group that optimizes prompts and compound AI systems through automatic 'differentiation' via text, using LLM feedback as textual gradients in a PyTorch-like API; the work was published in Nature.",
+  "source_name": "zou-group/textgrad (GitHub)",
+  "source_url": "https://github.com/zou-group/textgrad",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

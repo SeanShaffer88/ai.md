@@ -1,0 +1,17 @@
+{
+  "id": "guide-baseten",
+  "name": "Baseten",
+  "kind": "guide",
+  "summary": "Baseten is a hosted platform for model inference and training: call hosted models through OpenAI-compatible APIs, deploy custom models on dedicated GPU infrastructure with autoscaling, or train models and serve the resulting checkpoints.",
+  "source_name": "Baseten documentation",
+  "source_url": "https://docs.baseten.co/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

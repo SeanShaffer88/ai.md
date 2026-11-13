@@ -1,0 +1,20 @@
+{
+  "id": "skill-dev-browser",
+  "name": "Dev Browser",
+  "kind": "skill",
+  "summary": "A skill that lets coding agents control Chrome through short JavaScript scripts using the Puppeteer API, with persistent named pages and compact accessibility snapshots; it can also be connected as an MCP server.",
+  "source_name": "SawyerHood/dev-browser (GitHub)",
+  "source_url": "https://github.com/SawyerHood/dev-browser",
+  "license": "MIT",
+  "clients": [
+    "Claude Code",
+    "Codex"
+  ],
+  "risks": [
+    "network",
+    "commands",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

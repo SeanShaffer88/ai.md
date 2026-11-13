@@ -1,0 +1,17 @@
+{
+  "id": "guide-awesome-startup",
+  "name": "Awesome Startup",
+  "kind": "guide",
+  "summary": "A curated list of books, videos, courses, essays and tools for building a startup, covering engineering, product, fundraising, marketing and hiring, with a section on AI for founders.",
+  "source_name": "KrishMunot/awesome-startup (GitHub)",
+  "source_url": "https://github.com/KrishMunot/awesome-startup",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

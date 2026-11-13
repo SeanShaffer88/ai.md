@@ -1,0 +1,17 @@
+{
+  "id": "guide-attention-is-all-you-need",
+  "name": "Attention Is All You Need",
+  "kind": "guide",
+  "summary": "The 2017 paper by Vaswani et al. that introduced the Transformer, a network architecture based solely on attention mechanisms, dispensing with recurrence and convolutions and setting state-of-the-art results on machine translation.",
+  "source_name": "arXiv (arXiv:1706.03762)",
+  "source_url": "https://arxiv.org/abs/1706.03762",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

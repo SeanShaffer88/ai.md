@@ -1,0 +1,18 @@
+{
+  "id": "guide-one-api",
+  "name": "One API",
+  "kind": "guide",
+  "summary": "An LLM API management and distribution system that exposes many providers, including OpenAI, Azure, Anthropic Claude, Google Gemini and DeepSeek, through one standard OpenAI-format API, with token management and load balancing across channels.",
+  "source_name": "songquanpeng/one-api (GitHub)",
+  "source_url": "https://github.com/songquanpeng/one-api",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

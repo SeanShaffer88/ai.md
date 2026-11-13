@@ -1,0 +1,18 @@
+{
+  "id": "guide-mux-ts",
+  "name": "Mux TypeScript API Library",
+  "kind": "guide",
+  "summary": "The official TypeScript and JavaScript SDK for Mux, giving server-side Node projects typed access to the Mux Video and Mux Data APIs, plus JWT signing helpers and webhook signature verification.",
+  "source_name": "muxinc/mux-ts (GitHub)",
+  "source_url": "https://github.com/muxinc/mux-ts",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

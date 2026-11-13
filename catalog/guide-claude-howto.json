@@ -1,0 +1,17 @@
+{
+  "id": "guide-claude-howto",
+  "name": "Claude Howto",
+  "kind": "guide",
+  "summary": "A visual, example-driven guide to Claude Code covering slash commands, memory, skills, subagents, MCP, hooks and plugins, with copy-paste templates and a guided learning path.",
+  "source_name": "luongnv89/claude-howto (GitHub)",
+  "source_url": "https://github.com/luongnv89/claude-howto",
+  "license": "MIT",
+  "clients": [
+    "Claude Code"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

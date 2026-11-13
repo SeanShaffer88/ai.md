@@ -1,0 +1,22 @@
+{
+  "id": "mcp-magg",
+  "name": "Magg",
+  "kind": "mcp",
+  "summary": "Magg is a meta MCP server - an aggregator that manages and proxies other MCP servers, so an AI client can search for, add, enable and disable servers and use all their tools through one connection, with configuration persisted across sessions.",
+  "source_name": "sitbon/magg (GitHub)",
+  "source_url": "https://github.com/sitbon/magg",
+  "license": "AGPL-3.0",
+  "clients": [
+    "Claude",
+    "Cline",
+    "Cursor"
+  ],
+  "risks": [
+    "commands",
+    "files",
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "install": "uv tool install magg"
+}

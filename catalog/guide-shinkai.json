@@ -1,0 +1,20 @@
+{
+  "id": "guide-shinkai",
+  "name": "Shinkai",
+  "kind": "guide",
+  "summary": "Shinkai is a cross-platform desktop app from dcSpark for creating local AI agents through a visual, no-code interface, with multi-agent workflows, MCP support and crypto payment features; agents can run on local or remote models.",
+  "source_name": "dcSpark/shinkai-local-ai-agents (GitHub)",
+  "source_url": "https://github.com/dcSpark/shinkai-local-ai-agents",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "commands",
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

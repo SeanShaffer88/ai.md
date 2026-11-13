@@ -1,0 +1,17 @@
+{
+  "id": "guide-hands-on-llms",
+  "name": "Hands-On Large Language Models",
+  "kind": "guide",
+  "summary": "The official code repository for the O'Reilly book Hands-On Large Language Models by Jay Alammar and Maarten Grootendorst, with illustrated notebooks on tokens and embeddings, Transformers, classification, semantic search and RAG, and fine-tuning.",
+  "source_name": "HandsOnLLM/Hands-On-Large-Language-Models (GitHub)",
+  "source_url": "https://github.com/HandsOnLLM/Hands-On-Large-Language-Models",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "none"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

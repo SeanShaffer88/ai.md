@@ -1,0 +1,19 @@
+{
+  "id": "guide-serviette",
+  "name": "Serviette (Pathway)",
+  "kind": "guide",
+  "summary": "Serviette is Pathway's no-code RAG server: point it at a folder of documents and one of eight supported vector databases and it serves cited answers through a chat UI and REST API, reflecting document edits, additions and deletions within seconds.",
+  "source_name": "pathwaycom/serviette (GitHub)",
+  "source_url": "https://github.com/pathwaycom/serviette",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files",
+    "network",
+    "api-key"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}
