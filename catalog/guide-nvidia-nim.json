@@ -1,0 +1,17 @@
+{
+  "id": "guide-nvidia-nim",
+  "name": "NVIDIA NIM",
+  "kind": "guide",
+  "summary": "NVIDIA NIM is a set of easy-to-use inference microservices, part of NVIDIA AI Enterprise, for accelerating deployment of foundation models on any cloud or data center with production-grade runtimes.",
+  "source_name": "NVIDIA documentation",
+  "source_url": "https://docs.nvidia.com/nim/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "guide-everos",
+  "name": "EverOS",
+  "kind": "guide",
+  "summary": "EverOS is a local-first, Markdown-native memory layer for AI agents that builds portable, user-owned, self-evolving long-term memory from agent interactions.",
+  "source_name": "EverMind-AI/EverOS (GitHub)",
+  "source_url": "https://github.com/EverMind-AI/EverOS",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mcp-mobilebuildmcp",
+  "name": "MobileBuildMCP",
+  "kind": "mcp",
+  "summary": "MobileBuildMCP is an MCP server and CLI, maintained by Sentry, that gives AI coding agents tools for building, testing, and working on iOS and macOS apps with Xcode.",
+  "source_name": "getsentry/MobileBuildMCP (GitHub)",
+  "source_url": "https://github.com/getsentry/MobileBuildMCP",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "commands",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13",
+  "install": "npm install -g mobilebuildmcp@latest"
+}

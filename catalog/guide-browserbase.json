@@ -1,0 +1,17 @@
+{
+  "id": "guide-browserbase",
+  "name": "Browserbase",
+  "kind": "guide",
+  "summary": "Browserbase is a cloud platform for building and deploying agents that browse the web, offering managed cloud browsers, web search and page-fetch APIs, and the Stagehand SDK under one API key.",
+  "source_name": "Browserbase documentation",
+  "source_url": "https://docs.browserbase.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

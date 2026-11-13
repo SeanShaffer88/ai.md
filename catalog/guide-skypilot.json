@@ -1,0 +1,18 @@
+{
+  "id": "guide-skypilot",
+  "name": "SkyPilot",
+  "kind": "guide",
+  "summary": "SkyPilot is an open-source framework for running AI workloads on any cloud or Kubernetes cluster, turning fragmented compute across providers into one unified interface.",
+  "source_name": "skypilot-org/skypilot (GitHub)",
+  "source_url": "https://github.com/skypilot-org/skypilot",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

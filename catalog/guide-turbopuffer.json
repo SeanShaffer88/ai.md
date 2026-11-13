@@ -1,0 +1,17 @@
+{
+  "id": "guide-turbopuffer",
+  "name": "turbopuffer",
+  "kind": "guide",
+  "summary": "turbopuffer is a serverless search engine built natively on object storage, providing vector, full-text, and filtered search that scales to petabytes for retrieval workloads.",
+  "source_name": "turbopuffer documentation",
+  "source_url": "https://turbopuffer.com/docs",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

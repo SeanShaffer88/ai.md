@@ -1,0 +1,18 @@
+{
+  "id": "guide-hindsight",
+  "name": "Hindsight",
+  "kind": "guide",
+  "summary": "Hindsight, by Vectorize, is an agent memory system that learns from experience, giving AI agents long-term memory that is stored, recalled, and improved over time.",
+  "source_name": "vectorize-io/hindsight (GitHub)",
+  "source_url": "https://github.com/vectorize-io/hindsight",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

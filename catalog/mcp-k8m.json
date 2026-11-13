@@ -1,0 +1,18 @@
+{
+  "id": "mcp-k8m",
+  "name": "k8m",
+  "kind": "mcp",
+  "summary": "k8m is a lightweight Kubernetes AI dashboard that also works as an MCP server, exposing dozens of multi-cluster Kubernetes tools to LLM clients while applying the caller's own cluster permissions to every call.",
+  "source_name": "weibaohui/k8m (GitHub)",
+  "source_url": "https://github.com/weibaohui/k8m",
+  "license": "MIT",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "commands"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}
