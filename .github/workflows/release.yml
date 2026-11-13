@@ -107,6 +107,9 @@ jobs:
           $runtime = Get-ChildItem (Join-Path $env:VCToolsRedistDir 'x64/Microsoft.VC*.CRT/vcruntime140.dll') | Select-Object -First 1
           if (!$runtime) { throw 'The redistributable x64 vcruntime140.dll was not found' }
           Copy-Item $runtime.FullName $stage
+          $runtime1 = Get-ChildItem (Join-Path $env:VCToolsRedistDir 'x64/Microsoft.VC*.CRT/vcruntime140_1.dll') | Select-Object -First 1
+          if (!$runtime1) { throw 'The redistributable x64 vcruntime140_1.dll was not found' }
+          Copy-Item $runtime1.FullName $stage
           Copy-Item 'LICENSE' $stage
           Copy-Item 'THIRD_PARTY.md' $stage
           & $seanpak pack seanpak.json $stage --out-dir dist-seanpak --json
@@ -134,7 +137,7 @@ jobs:
           @"
           ai.md $env:TAG.
 
-          A Catalog of AI prompts, MCP servers, skills and guides (one file per entry under catalog/), prompt variables with a Run prompt fill-in sheet, an Insert prompt palette, catalog results in the quick switcher, and a consent-gated Run for install commands. Every feature of the original app is unchanged, and existing libraries open as before. The application executable is ai_md.exe.
+          New in 0.7.0: a unified command palette with typed queries (mcp:, skill:, prompt:, note:, >) and preview cards; a Today rail and Library Spaces in the sidebar; a quick-capture window (Alt+Space) for running a favorite prompt or jotting a note; prompt packs you can export and import; Run profiles for prompt variables; catalog link health checks, license filters and duplicate tidy-up; an opt-in, token-guarded local agent bridge (off by default); an exit dialog with minimize-to-tray; ten new document themes inspired by Notepad++; and Enter now confirms dialogs, with an option to stop asking before deletes. Plus the Catalog of AI prompts, MCP servers, skills and guides, prompt variables with a Run prompt fill-in sheet, and a consent-gated Run for install commands. Every feature of the original app is unchanged, and existing libraries open as before. The application executable is ai_md.exe.
 
           Windows: **$env:SETUP_NAME** (installs for the current user with SeanPak, no admin rights needed; uninstalling never deletes your notes) or **$env:ZIP_NAME** (portable, no install; keeps its library in a data folder beside ai_md.exe). The builds are unsigned — if SmartScreen appears on first launch, click **More info → Run anyway**.
           "@ | Set-Content 'release-notes.md'
@@ -142,7 +145,7 @@ jobs:
       - name: Publish the release
         shell: pwsh
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           $ErrorActionPreference = 'Stop'
           gh release view $env:TAG 2>$null | Out-Null
