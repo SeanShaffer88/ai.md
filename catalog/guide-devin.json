@@ -1,0 +1,17 @@
+{
+  "id": "guide-devin",
+  "name": "Devin",
+  "kind": "guide",
+  "summary": "Devin, built by Cognition, is an autonomous AI software engineer that writes, runs, and tests code, taking on tickets, new features, bug fixes, and migrations through a web app, API, and terminal CLI.",
+  "source_name": "Devin documentation",
+  "source_url": "https://docs.devin.ai/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

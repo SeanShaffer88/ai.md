@@ -1,0 +1,17 @@
+{
+  "id": "guide-apify",
+  "name": "Apify",
+  "kind": "guide",
+  "summary": "Apify is a cloud platform for web scraping and automation built around Actors — packaged programs you can develop, run, and share — with managed storage, proxies, scheduling, and an API, SDKs, and CLI.",
+  "source_name": "Apify documentation",
+  "source_url": "https://docs.apify.com/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

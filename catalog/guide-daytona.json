@@ -1,0 +1,17 @@
+{
+  "id": "guide-daytona",
+  "name": "Daytona",
+  "kind": "guide",
+  "summary": "Daytona is a secure, elastic cloud platform for running AI-generated code in isolated sandboxes that spin up in milliseconds, with SDKs, APIs, and a CLI for Python, TypeScript, and other languages.",
+  "source_name": "Daytona documentation",
+  "source_url": "https://www.daytona.io/docs/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

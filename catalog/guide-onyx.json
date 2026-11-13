@@ -1,0 +1,18 @@
+{
+  "id": "guide-onyx",
+  "name": "Onyx",
+  "kind": "guide",
+  "summary": "Onyx (formerly Danswer) is an open-source AI platform for chat and enterprise search that connects to a team's documents and tools and works with every major LLM.",
+  "source_name": "onyx-dot-app/onyx (GitHub)",
+  "source_url": "https://github.com/onyx-dot-app/onyx",
+  "license": "MIT (core); enterprise (ee) directories under the Onyx Enterprise License",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

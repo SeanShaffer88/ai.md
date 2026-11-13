@@ -1,0 +1,17 @@
+{
+  "id": "guide-restack",
+  "name": "Restack",
+  "kind": "guide",
+  "summary": "Restack is a framework and platform for building AI agents at enterprise scale, built on Python and Kubernetes, designed so product teams can refine agent behavior with domain experts while engineers build the integrations.",
+  "source_name": "Restack documentation",
+  "source_url": "https://docs.restack.io/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "guide-memori",
+  "name": "Memori",
+  "kind": "guide",
+  "summary": "Memori is an LLM-agnostic memory layer that turns agent executions and conversations into structured long-term memory for AI agents.",
+  "source_name": "MemoriLabs/Memori (GitHub)",
+  "source_url": "https://github.com/MemoriLabs/Memori",
+  "license": "Apache-2.0",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network",
+    "files"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}

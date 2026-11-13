@@ -1,0 +1,17 @@
+{
+  "id": "guide-amazon-bedrock",
+  "name": "Amazon Bedrock",
+  "kind": "guide",
+  "summary": "Amazon Bedrock is AWS's managed service for building generative AI applications, offering foundation models through a single API together with agents, knowledge bases for retrieval, guardrails, and prompt management.",
+  "source_name": "Amazon Bedrock documentation",
+  "source_url": "https://docs.aws.amazon.com/bedrock/",
+  "license": "See site",
+  "clients": [
+    "AI developers"
+  ],
+  "risks": [
+    "network"
+  ],
+  "starter": false,
+  "verified": "2026-11-13"
+}
